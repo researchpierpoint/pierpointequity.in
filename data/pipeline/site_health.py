@@ -13,6 +13,8 @@ EXPECTED={
 "amfi-nav-history.json":30*3600,
 "company-intelligence.json":8*3600,
 "nse-integrated-financials.json":8*3600,
+"nse-financial-statements.json":8*3600,
+"nse-etf-snapshot.json":8*3600,
 }
 def load(n):
  p=GEN/n
