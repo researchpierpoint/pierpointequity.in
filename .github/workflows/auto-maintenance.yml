@@ -16,7 +16,9 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install data connector
         run: pip install --disable-pip-version-check -q "jugaad-data==0.35.5"
-      - name: Refresh mutual-fund NAV\n        run: python data/pipeline/amfi_nav.py\n      - name: Refresh NSE universe and market
+      - name: Refresh mutual-fund NAV
+        run: python data/pipeline/amfi_nav.py
+      - name: Refresh NSE universe and market
         run: |
           python data/pipeline/nse_universe.py
           python data/pipeline/market_snapshot.py
