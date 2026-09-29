@@ -1,0 +1,37 @@
+{
+  "entity_id":"nse-polycab",
+  "snapshot":{"as_of":"2026-03-31","status":"verified"},
+  "sections":{
+    "business":"Polycab India Limited is an electrical-products company with wires and cables as its core business and FMEG as another operating segment.",
+    "financials":[
+      {"metric":"Revenue","value":"₹288,838 million","period":"FY26","source_ids":["poly-fy26-ar"]},
+      {"metric":"EBITDA","value":"₹40,057 million","period":"FY26","source_ids":["poly-fy26-ar"]},
+      {"metric":"PAT","value":"₹27,084 million","period":"FY26","source_ids":["poly-fy26-ar"]},
+      {"metric":"RoCE","value":"31.5%","period":"FY26","source_ids":["poly-fy26-ar"]},
+      {"metric":"Net cash","value":"₹41,940 million","period":"FY26","source_ids":["poly-fy26-ar"]}
+    ],
+    "valuation":[
+      {"metric":"Current valuation","status":"needs-current-market-data"},
+      {"metric":"Historical valuation range","status":"needs-validated-history"}
+    ],
+    "ownership":[
+      {"metric":"Promoter/shareholding","status":"needs-current-filing"}
+    ],
+    "events":[
+      {"date":"2026-05-06","event":"FY26 results / press release","source_ids":["poly-fy26-pr"]}
+    ],
+    "risks":[
+      {"risk":"Current valuation may diverge materially from operating fundamentals.","status":"monitor"},
+      {"risk":"Competitive intensity and channel economics may affect margins.","status":"monitor"},
+      {"risk":"Project Spring capex execution requires ongoing verification.","status":"monitor"}
+    ],
+    "evidence":[
+      {"source_id":"poly-fy26-ar","tier":1,"status":"verified"},
+      {"source_id":"poly-fy26-pr","tier":1,"status":"verified"}
+    ],
+    "timeline":[
+      {"date":"2026-05-06","type":"result","title":"FY26 results disclosed","source_ids":["poly-fy26-pr"]},
+      {"date":"2026-06-08","type":"report","title":"FY26 annual report published","source_ids":["poly-fy26-ar"]}
+    ]
+  }
+}
