@@ -5,25 +5,46 @@
 2. Search and discovery
 3. Research orchestration
 4. Evidence/source layer
-5. Structured financial data
-6. Analysis and scenario engine
-7. Red-team/quality engine
-8. Compliance release gate
-9. Publishing
-10. Monitoring and audit
+5. Structured market and financial data
+6. Analysis and valuation engine
+7. Risk/change monitoring
+8. Coverage and quality audit
+9. Compliance/release gate
+10. Publishing and deployment
+11. Scheduled maintenance
+
+## Current source layer
+
+### NSE
+- listed-equity master
+- end-of-day market snapshot
+- financial-result comparison
+- Integrated Filing Financials
+- XBRL financial statements
+- shareholding filings
+- corporate announcements
+- ETF market/i-NAV/NAV feed
+
+### AMFI / fund enrichment
+- AMFI NAV and NAV history are the primary NAV layer.
+- Secondary fund analytics can enrich scheme metadata, AUM, TER, returns, ratios and portfolio-family information when available.
 
 ## Core principle
-Evidence is immutable; interpretation can change.
+
+Evidence is immutable within a generated observation. Interpretation can change as newer evidence arrives.
 
 ## Automation
-Routine collection and validation can run automatically. Material publication, regulatory ambiguity, security incidents, and high-risk external actions require human approval.
 
-## Future integrations
-- authoritative company/regulatory sources
-- market-data providers with permitted licensing
-- search-demand signals
-- database/storage
-- notification service
-- AI model providers
+Routine collection, freshness validation, coverage auditing, testing and deployment run through GitHub Actions. The main maintenance workflow is scheduled every 30 minutes, while specialized jobs handle slower or more expensive datasets.
 
-Credentials must never be committed to the repository. Use encrypted secrets/environment variables.
+The system fails closed when required evidence is absent. It does not manufacture financial or valuation values.
+
+## External constraints
+
+- licensed market-data feeds may require commercial permissions;
+- exchange rate limits can constrain refresh depth;
+- some company metrics are not disclosed uniformly;
+- some ETF i-NAV/NAV fields are only available through exchange feeds;
+- personalised/advisory functionality and regulated publication decisions remain outside unattended automation.
+
+Credentials must never be committed to the repository.
