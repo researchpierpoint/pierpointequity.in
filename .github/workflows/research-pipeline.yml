@@ -1,0 +1,23 @@
+name: PirePoint Research Pipeline
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 2 * * 1-5"
+
+permissions:
+  contents: read
+
+jobs:
+  research-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate research structure
+        run: |
+          test -f data/schema/company.schema.json
+          test -f data/README.md
+          test -f research/README.md
+          test -f compliance/README.md
+          test -f monitoring/README.md
+          echo "PirePoint research foundation is present and ready for the next data-connector stage."
