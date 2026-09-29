@@ -85,7 +85,7 @@ def main():
         historical_pe=[]
         for year, snap in hv.get("years",{}).items():
             px=snap.get("prices",{}).get(s)
-            eps=annual.get("eps",{}).get(year)
+            eps=next((v for k,v in annual.get("eps",{}).items() if str(k)[:4]==str(year)),None)
             if px is not None and eps not in (None,0):
                 historical_pe.append({"year":year,"price":px,"eps":eps,"pe":round(px/eps,2)})
         if historical_pe:
