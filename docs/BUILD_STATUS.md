@@ -30,3 +30,13 @@ These require external access, credentials, contractual/licensing review, or hum
 
 ## Operating principle
 No credential is committed to GitHub. No unverified market number is presented as live. No regulated/personalised recommendation is silently generated.
+
+
+## 2026-09-30 progress
+- Correct repository confirmed: `researchpierpoint/pierpointequity.in`.
+- NSE equity-master universe refresh workflow added.
+- Fail-closed pipeline validation added.
+- Public search index and client-side search activated.
+- Polycab company intelligence promoted from template to live foundation surface.
+- Sitemap extended with company and What Changed pages.
+- Research CI now runs the test suite.
