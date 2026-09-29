@@ -1,55 +1,33 @@
 name: PirePoint Data Refresh
-
 on:
   push:
     branches: ["main"]
-    paths-ignore:
-      - "data/generated/**"
+    paths-ignore: ["data/generated/**"]
   workflow_dispatch:
   schedule:
     - cron: "15 3 * * 1-5"
-
-permissions:
-  contents: write
-
-concurrency:
-  group: "pirepoint-data-refresh"
-  cancel-in-progress: true
-
+permissions: {contents: write}
+concurrency: {group: pirepoint-data-refresh, cancel-in-progress: true}
 jobs:
   refresh:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Refresh NSE listed universe
-        run: python data/pipeline/nse_universe.py
-      - name: Refresh NSE market snapshot
-        run: python data/pipeline/market_snapshot.py
-      - name: Refresh AMFI NAV snapshot
-        run: python data/pipeline/amfi_nav.py
-      - name: Validate all data and tests
+      - run: python data/pipeline/nse_universe.py
+      - run: python data/pipeline/market_snapshot.py
+      - name: Validate
         run: |
           python -m compileall data/pipeline compliance
           python -m unittest discover -s tests -p "test_*.py" -v
           python data/pipeline/validate_pipeline.py
           python - <<'PY'
           import json
-          u=json.load(open("data/generated/nse-equity-universe.json",encoding="utf-8"))
-          m=json.load(open("data/generated/nse-market-snapshot.json",encoding="utf-8"))
-          f=json.load(open("data/generated/amfi-nav.json",encoding="utf-8"))
-          assert u["count"] >= 1000
-          assert m["count"] >= 1000
-          assert f["count"] >= 1000
-          print("ALL DATA VALIDATED",u["count"],m["count"],f["count"])
+          u=json.load(open("data/generated/nse-equity-universe.json")); m=json.load(open("data/generated/nse-market-snapshot.json"))
+          assert u["count"]>=1000 and m["count"]>=1000
           PY
-      - name: Commit all generated data atomically
+      - name: Commit
         run: |
           git config user.name "pirepoint-bot"
           git config user.email "research.pirepoint@gmail.com"
-          git add data/generated/nse-equity-universe.json data/generated/nse-market-snapshot.json data/generated/amfi-nav.json
-          if git diff --cached --quiet; then
-            echo "No generated data change."
-          else
-            git commit -m "data: refresh public market and fund datasets"
-            git push
-          fi
+          git add data/generated/nse-equity-universe.json data/generated/nse-market-snapshot.json
+          if git diff --cached --quiet; then echo "No generated data change."; else git commit -m "data: refresh public NSE datasets"; git push; fi
