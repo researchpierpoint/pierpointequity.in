@@ -32,3 +32,5 @@ def main():
     p=ROOT/"data/generated/company-intelligence.json";p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(out,indent=2,ensure_ascii=False)+"\n",encoding="utf-8")
     print("Company intelligence records:",len(records))
 if __name__=="__main__":main()
+
+# Automated pipeline heartbeat: rebuild on source-data changes and scheduled runs.
