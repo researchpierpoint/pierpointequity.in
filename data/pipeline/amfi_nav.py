@@ -11,7 +11,7 @@ def main():
  req=Request(URL,headers={"User-Agent":"Mozilla/5.0 PirePointEquity/1.0"})
  text=urlopen(req,timeout=30).read().decode("utf-8-sig",errors="replace")
  rows=[]
- for raw in csv.reader(io.StringIO(text)):
+ for raw in csv.reader(io.StringIO(text),delimiter=";"):
   if len(raw)<6: continue
   if raw[0].strip().lower() in {"scheme code",""} or not raw[0].strip().isdigit(): continue
   nav=raw[4].strip()
