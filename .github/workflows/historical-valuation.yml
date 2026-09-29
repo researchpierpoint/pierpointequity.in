@@ -1,7 +1,5 @@
 name: PirePoint Historical Valuation
 on:
-  schedule:
-    - cron: "20 */6 * * *"
   workflow_dispatch:
 permissions:
   contents: write
