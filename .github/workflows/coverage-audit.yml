@@ -1,0 +1,23 @@
+name: PirePoint Coverage Audit
+on:
+  schedule:
+    - cron: "10,40 * * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: pirepoint-coverage-audit
+  cancel-in-progress: true
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build coverage audit
+        run: python data/pipeline/coverage_audit.py
+      - name: Commit
+        run: |
+          git config user.name "pirepoint-bot"
+          git config user.email "research.pirepoint@gmail.com"
+          git add data/generated/coverage-audit.json
+          if git diff --cached --quiet; then echo "No coverage changes."; else git commit -m "auto: refresh coverage audit"; git push; fi
