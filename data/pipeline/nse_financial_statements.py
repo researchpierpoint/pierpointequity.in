@@ -61,6 +61,7 @@ MAP={
 "cfo":["cashflowsfromoperatingactivities","netcashfromoperatingactivities"],
 "cfi":["cashflowsfrominvestingactivities","netcashusedininvestingactivities"],
 "capex":["purchaseofpropertyplantandequipment","purchaseofpropertyplantandequipmentandintangibleassets","capitalexpenditure"],
+"shares":["numberofshares","numberofequityshares","paidupnumberofshares"],
 "dividend":["dividendper share","dividendpershare"],
 }
 
