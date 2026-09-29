@@ -1,0 +1,46 @@
+{
+  "version": "1.0",
+  "updated_at": "2026-09-29",
+  "source": "NSE results comparison",
+  "coverage": 1,
+  "attempted": 1,
+  "successful": 1,
+  "records": {
+    "20MICRONS": {
+      "as_of": null,
+      "rows": [
+        {
+          "re_to_dt": "31-DEC-2024",
+          "re_from_dt": "01-OCT-2024",
+          "re_total_inc": "18726.86",
+          "re_net_profit": "1006.36"
+        },
+        {
+          "re_to_dt": "30-SEP-2024",
+          "re_from_dt": "01-JUL-2024",
+          "re_total_inc": "21176.41",
+          "re_net_profit": "1530.05"
+        },
+        {
+          "re_to_dt": "30-JUN-2024",
+          "re_from_dt": "01-APR-2024",
+          "re_total_inc": "20461.69",
+          "re_net_profit": "1627.21"
+        },
+        {
+          "re_to_dt": "31-MAR-2024",
+          "re_from_dt": "01-JAN-2024",
+          "re_total_inc": "18889.52",
+          "re_net_profit": "1216.08"
+        },
+        {
+          "re_to_dt": "31-DEC-2023",
+          "re_from_dt": "01-OCT-2023",
+          "re_total_inc": "15285.1",
+          "re_net_profit": "998.4"
+        }
+      ],
+      "source_url": "https://www.nseindia.com/api/results-comparision?index=equities&symbol=20MICRONS"
+    }
+  }
+}
