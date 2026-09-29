@@ -1,0 +1,26 @@
+name: PirePoint Historical Valuation
+on:
+  schedule:
+    - cron: "20 */6 * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: pirepoint-historical-valuation
+  cancel-in-progress: true
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Refresh year-end prices
+        run: python data/pipeline/historical_valuation.py
+      - name: Rebuild company intelligence
+        run: python data/pipeline/build_company_intelligence.py
+      - name: Commit
+        run: |
+          git config user.name "pirepoint-bot"
+          git config user.email "research.pirepoint@gmail.com"
+          git add data/generated/nse-historical-valuation.json data/generated/company-intelligence.json
+          if git diff --cached --quiet; then echo "No valuation changes."; else git commit -m "auto: refresh historical valuation"; git push; fi
