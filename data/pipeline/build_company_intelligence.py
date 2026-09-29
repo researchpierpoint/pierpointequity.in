@@ -137,7 +137,9 @@ def main():
         if own:
             for k,label in [("promoter","Promoter & promoter group"),("fii","FII"),("dii","DII"),("public","Public"),("pledged","Pledged / encumbered")]:
                 if k in own.get("values",{}):ownership.append(card_metric(label,f"{own['values'][k]:.2f}%",own.get("as_on"),"nse-shareholding"))
-        if not ownership: ownership.append(card_metric("Shareholding","Not available in latest validated filing",own.get("as_on"),"nse-shareholding"))
+        if own.get("filing_history"):
+            ownership.append(card_metric("Shareholding filing history",f"{len(own['filing_history'])} recent filings available",own.get("as_on"),"nse-shareholding"))
+        if not ownership: ownership.append(card_metric("Shareholding","Not available in latest source filing",own.get("as_on"),"nse-shareholding"))
         order_events=[]
         risks=[]
         for z in anns:
