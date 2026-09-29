@@ -120,6 +120,12 @@ def main():
         if nd is not None:hist.append(card_metric("Net debt",f"{nd:g}","latest reported period","nse-xbrl"))
         fcf=x.get("derived",{}).get("free_cash_flow")
         if fcf is not None:hist.append(card_metric("Free cash flow",f"{fcf:g}","latest reported period","nse-xbrl"))
+        if rev and profit:
+            hist.append(card_metric("Net margin",f"{profit/rev*100:.2f}%","TTM","nse-xbrl"))
+        if rev and ebit:
+            hist.append(card_metric("EBIT margin",f"{ebit['value']/rev*100:.2f}%","latest/TTM source basis","nse-xbrl"))
+        if debt is not None and equity and equity>0:
+            hist.append(card_metric("Debt / equity",f"{debt/equity:.2f}x","latest reported period","nse-xbrl"))
         ownership=[]
         if own:
             for k,label in [("promoter","Promoter & promoter group"),("fii","FII"),("dii","DII"),("public","Public"),("pledged","Pledged / encumbered")]:
