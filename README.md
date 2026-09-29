@@ -2,4 +2,4 @@
 
 Investment intelligence. Evidence first.
 
-Initial repository bootstrap for pirepointequity.in.
+Initial repository bootstrap for pierpointequity.in.
