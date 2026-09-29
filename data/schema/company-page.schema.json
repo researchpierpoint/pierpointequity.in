@@ -1,0 +1,24 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"PirePoint Company Intelligence Page",
+  "type":"object",
+  "required":["entity_id","snapshot","sections"],
+  "properties":{
+    "entity_id":{"type":"string"},
+    "snapshot":{"type":"object","required":["as_of","status"],"properties":{"as_of":{"type":"string"},"status":{"enum":["verified","review","unverified"]}}},
+    "sections":{
+      "type":"object",
+      "required":["business","financials","valuation","ownership","events","risks","evidence","timeline"],
+      "properties":{
+        "business":{"type":"string"},
+        "financials":{"type":"array","items":{"type":"object"}},
+        "valuation":{"type":"array","items":{"type":"object"}},
+        "ownership":{"type":"array","items":{"type":"object"}},
+        "events":{"type":"array","items":{"type":"object"}},
+        "risks":{"type":"array","items":{"type":"object"}},
+        "evidence":{"type":"array","items":{"type":"object"}},
+        "timeline":{"type":"array","items":{"type":"object"}}
+      }
+    }
+  }
+}
