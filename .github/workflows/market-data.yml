@@ -1,0 +1,43 @@
+name: PirePoint Market Data
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "45 11 * * 1-5"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: "market-data"
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Refresh NSE market snapshot
+        run: python data/pipeline/market_snapshot.py
+      - name: Run validation and tests
+        run: |
+          python -m compileall data/pipeline compliance
+          python -m unittest discover -s tests -p "test_*.py" -v
+          python - <<'PY'
+          import json
+          d=json.load(open("data/generated/nse-market-snapshot.json",encoding="utf-8"))
+          assert d["count"] >= 1000
+          assert len(d["records"]) == d["count"]
+          print("Market snapshot validated:",d["count"],d["as_of"])
+          PY
+      - name: Commit market snapshot
+        run: |
+          git config user.name "pirepoint-bot"
+          git config user.email "research.pirepoint@gmail.com"
+          git add data/generated/nse-market-snapshot.json
+          if git diff --cached --quiet; then
+            echo "No market snapshot change."
+          else
+            git commit -m "data: refresh NSE market snapshot"
+            git push
+          fi
