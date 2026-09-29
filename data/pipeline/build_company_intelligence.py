@@ -43,6 +43,7 @@ def main():
     r=load(ROOT/"data/generated/nse-financial-results.json",{"records":{}})
     i=load(ROOT/"data/generated/nse-integrated-financials.json",{"records":{}})
     fs=load(ROOT/"data/generated/nse-financial-statements.json",{"records":{}})
+    hv=load(ROOT/"data/generated/nse-historical-valuation.json",{"years":{}})
     o=load(ROOT/"data/generated/nse-shareholding.json",{"records":{}})
     a=load(ROOT/"data/generated/nse-announcements.json",{"records":{}})
     records={}
@@ -81,6 +82,21 @@ def main():
             if close is not None and bvps>0:val.append(card_metric("P/B",round(close/bvps,2),"latest filing","nse-xbrl"))
         elif close is not None: val.append(card_metric("P/B","Not computable","latest filing","nse-xbrl","Share count and equity not jointly available"))
         hist=[]
+        historical_pe=[]
+        for year, snap in hv.get("years",{}).items():
+            px=snap.get("prices",{}).get(s)
+            eps=annual.get("eps",{}).get(year)
+            if px is not None and eps not in (None,0):
+                historical_pe.append({"year":year,"price":px,"eps":eps,"pe":round(px/eps,2)})
+        if historical_pe:
+            vals=[z["pe"] for z in historical_pe]
+            hist.append(card_metric("Historical P/E",", ".join(f"{z['year']}: {z['pe']:.2f}x" for z in historical_pe),"year-end","nse-historical-valuation"))
+            hist.append(card_metric("Historical P/E average",f"{sum(vals)/len(vals):.2f}x","available year-end observations","nse-historical-valuation"))
+            hist.append(card_metric("Historical P/E median",f"{sorted(vals)[len(vals)//2]:.2f}x","available year-end observations","nse-historical-valuation"))
+            if close is not None and eps_ttm and eps_ttm>0:
+                current_pe=close/eps_ttm
+                avg=sum(vals)/len(vals)
+                hist.append(card_metric("Current P/E vs historical average",f"{(current_pe/avg-1)*100:+.2f}%","current TTM vs available year-end average","nse-historical-valuation"))
         for metric,label in [("revenue","Revenue"),("net_profit","Net profit"),("eps","EPS")]:
             vals=annual.get(metric,{})
             if len(vals)>=2:
@@ -122,7 +138,7 @@ def main():
         coverage={
             "identity":True,"market":bool(md),"financial_results":bool(rr),"integrated_filings":bool(filings),
             "xbrl_financials":bool(x),"ownership":bool(own),"announcements":bool(anns),
-            "historical_valuation":False,"balance_sheet":bool(equity or debt or cash),
+            "historical_valuation":bool(historical_pe),"balance_sheet":bool(equity or debt or cash),
             "cash_flow":bool(fcf is not None),"roe":bool(equity and facts.get("net_profit")),
             "roce":any(q["metric"]=="ROCE" for q in hist),"order_book":bool(order_events),
             "business_profile":True
@@ -131,7 +147,7 @@ def main():
         for src,present in [("nse-market-snapshot",bool(md)),("nse-results-comparison",bool(rr)),("nse-integrated-financials",bool(filings)),("nse-xbrl",bool(x)),("nse-shareholding",bool(own)),("nse-announcements",bool(anns))]:
             if present:evidence.append({"source_id":src,"tier":1,"status":"verified"})
         records[s]={"entity_id":c["entity_id"],"symbol":s,"name":c["legal_name"],
-          "snapshot":{"as_of":max(str(u.get("as_of","")),str(m.get("as_of","")),str(r.get("updated_at","")),str(i.get("updated_at","")),str(fs.get("updated_at","")),str(o.get("updated_at","")),str(a.get("updated_at",""))),"status":"current-source-set","generated_at":dt.datetime.now(dt.timezone.utc).isoformat()},
+          "snapshot":{"as_of":max(str(u.get("as_of","")),str(m.get("as_of","")),str(r.get("updated_at","")),str(i.get("updated_at","")),str(fs.get("updated_at","")),str(hv.get("updated_at","")),str(o.get("updated_at","")),str(a.get("updated_at",""))),"status":"current-source-set","generated_at":dt.datetime.now(dt.timezone.utc).isoformat()},
           "sections":{"business":f"{c['legal_name']} ({s}) is an NSE-listed equity.","financials":financials+hist,
           "filing_history":[{"metric":"Latest NSE Integrated Filing","value":(filings[0].get("periodEndDate") or filings[0].get("quarterEndDate") or filings[0].get("period_ended") or "Latest") if filings else "No filing returned","period":i.get("updated_at"),"source_ids":["nse-integrated-financials"]}],
           "valuation":val,"ownership":ownership,"events":events,"risks":risks,"order_book_events":order_events,"evidence":evidence,"timeline":events,"coverage":coverage}}
