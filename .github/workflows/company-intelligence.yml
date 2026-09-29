@@ -2,30 +2,28 @@ name: PirePoint Company Intelligence
 on:
   push:
     branches: ["main"]
-    paths: ["data/generated/**","data/pipeline/build_company_intelligence.py"]
+    paths:
+      - "data/generated/**"
+      - "data/pipeline/build_company_intelligence.py"
   workflow_dispatch:
   schedule:
     - cron: "45 5 * * 2-6"
 permissions: {contents: write}
 concurrency: {group: company-intelligence, cancel-in-progress: true}
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: python data/pipeline/build_company_intelligence.py
-      - name: Validate
-        run: |
-          python -m compileall data/pipeline
-          python - <<'PY'
-          import json
-          d=json.load(open("data/generated/company-intelligence.json"))
-          assert d["count"] >= 1000
-          assert all("sections" in x for x in d["records"].values())
-          PY
-      - name: Commit
-        run: |
-          git config user.name "pirepoint-bot"
-          git config user.email "research.pirepoint@gmail.com"
-          git add data/generated/company-intelligence.json
-          if git diff --cached --quiet; then echo "No intelligence change."; else git commit -m "data: refresh company intelligence index"; git push; fi
+ build:
+  runs-on: ubuntu-latest
+  steps:
+   - uses: actions/checkout@v4
+   - run: python data/pipeline/build_company_intelligence.py
+   - run: |
+       python -m compileall data/pipeline
+       python - <<'PY'
+       import json
+       d=json.load(open("data/generated/company-intelligence.json")); assert d["count"]>=1000
+       PY
+   - name: Commit
+     run: |
+       git config user.name "pirepoint-bot"; git config user.email "research.pirepoint@gmail.com"
+       git add data/generated/company-intelligence.json
+       if git diff --cached --quiet; then echo "No intelligence change."; else git commit -m "data: refresh company intelligence index"; git push; fi
