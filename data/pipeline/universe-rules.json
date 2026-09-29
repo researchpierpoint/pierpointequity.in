@@ -1,0 +1,9 @@
+{
+  "version":"1.0",
+  "rules":[
+    {"id":"identity","description":"One canonical entity per verified ISIN where available."},
+    {"id":"source","description":"Identity must be supported by an authoritative exchange/company source."},
+    {"id":"history","description":"Ticker/name changes create historical observations; they do not overwrite prior identity facts."},
+    {"id":"status","description":"Delisted/suspended/inactive entities remain in history."}
+  ]
+}
