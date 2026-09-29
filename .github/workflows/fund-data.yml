@@ -1,0 +1,32 @@
+name: PirePoint Fund Data
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "15 12 * * 1-6"
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Refresh AMFI NAV data
+        run: python data/pipeline/amfi_nav.py
+      - name: Validate fund data
+        run: |
+          python -m compileall data/pipeline
+          python - <<'PY'
+          import json
+          d=json.load(open("data/generated/amfi-nav.json",encoding="utf-8"))
+          assert d["count"] >= 1000
+          print("AMFI validated:",d["count"])
+          PY
+      - name: Commit changed fund snapshot
+        run: |
+          git config user.name "pirepoint-bot"
+          git config user.email "research.pirepoint@gmail.com"
+          git add data/generated/amfi-nav.json
+          if git diff --cached --quiet; then echo "No fund data change."; else git commit -m "data: refresh AMFI fund NAVs"; git push; fi
