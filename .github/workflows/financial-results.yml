@@ -1,0 +1,40 @@
+name: PirePoint Financial Results
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+  schedule:
+    - cron: "0 5 * * 2-6"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: "financial-results"
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch NSE financial results
+        env:
+          RESULT_LIMIT: "1"
+        run: python data/pipeline/nse_financial_results.py
+      - name: Validate snapshot
+        run: |
+          python -m compileall data/pipeline
+          python - <<'PY'
+          import json
+          d=json.load(open("data/generated/nse-financial-results.json",encoding="utf-8"))
+          assert d["coverage"] >= 1
+          print("Financial results smoke test:",d["coverage"])
+          PY
+      - name: Commit snapshot
+        run: |
+          git config user.name "pirepoint-bot"
+          git config user.email "research.pirepoint@gmail.com"
+          git add data/generated/nse-financial-results.json
+          if git diff --cached --quiet; then echo "No financial result change."; else git commit -m "data: refresh NSE financial results"; git push; fi
