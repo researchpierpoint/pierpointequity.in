@@ -1,0 +1,10 @@
+{
+  "version":"1.0",
+  "status":"foundation",
+  "design":"company-master",
+  "identity_fields":["entity_id","isin","nse_symbol","bse_code","legal_name","status"],
+  "dedupe_key_order":["isin","nse_symbol","bse_code"],
+  "required_source_tier":1,
+  "initial_scope":"NSE/BSE listed Indian companies",
+  "notes":"Universe ingestion remains connector-dependent; this registry deliberately contains no fabricated company rows."
+}
