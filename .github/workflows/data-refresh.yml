@@ -1,11 +1,6 @@
 name: PirePoint Data Refresh
 on:
-  push:
-    branches: ["main"]
-    paths-ignore: ["data/generated/**"]
   workflow_dispatch:
-  schedule:
-    - cron: "15 3 * * 1-5"
 permissions: {contents: write}
 concurrency: {group: pirepoint-data-refresh, cancel-in-progress: true}
 jobs:
