@@ -34,7 +34,7 @@ jobs:
           python data/pipeline/nse_integrated_financials.py
       - name: Parse current XBRL financial statements
         env:
-          XBRL_LIMIT: "80"
+          XBRL_LIMIT: "30"
         run: python data/pipeline/nse_financial_statements.py
       - name: Refresh ETF market, i-NAV and NAV
         run: python data/pipeline/nse_etf_snapshot.py
