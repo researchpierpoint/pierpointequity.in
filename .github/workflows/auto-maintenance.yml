@@ -59,9 +59,10 @@ jobs:
         run: python data/pipeline/site_health.py
       - name: Audit public website surface
         run: python data/pipeline/public_surface_audit.py
-      - name: Run tests
+      - name: Validate generated research foundation
         run: |
-          python -m compileall data/pipeline
+          python data/pipeline/validate_pipeline.py
+          python -m compileall data/pipeline compliance
           python -m unittest discover -s tests -p "test_*.py" -v
       - name: Commit all generated updates
         run: |
