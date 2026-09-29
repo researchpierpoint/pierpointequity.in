@@ -16,6 +16,9 @@ def pct(a,b):
 def cagr(a,b,years):
     a,b=n(a),n(b)
     return None if a is None or b is None or a<=0 or b<=0 or years<=0 else round(((b/a)**(1/years)-1)*100,2)
+def result_ttm(rows,key):
+    vals=[n(x.get(key)) for x in rows[:4]]
+    return sum(vals) if len(vals)==4 and all(v is not None for v in vals) else None
 def card_metric(metric,value,period=None,source="nse-xbrl",status=None):
     x={"metric":metric,"value":value,"source_ids":[source]}
     if period:x["period"]=period
@@ -62,7 +65,9 @@ def main():
             for key,label in [("re_total_inc","Reported total income"),("re_op_profit","Reported operating profit"),("re_net_profit","Reported net profit"),("re_eps","Reported EPS")]:
                 if latest.get(key) not in (None,""):
                     financials.append(card_metric(label,latest[key],latest.get("re_to_dt"),"nse-results-comparison"))
-        rev=ttm(series.get("revenue")); profit=ttm(series.get("net_profit")); eps_ttm=ttm(series.get("eps"))
+        rev=ttm(series.get("revenue")) or result_ttm(rr,"re_total_inc")
+        profit=ttm(series.get("net_profit")) or result_ttm(rr,"re_net_profit")
+        eps_ttm=ttm(series.get("eps")) or result_ttm(rr,"re_eps")
         # XBRL series uses normalized metric names; fall back to result-comparison EPS only if TTM is unavailable.
         if rev is not None: financials.append(card_metric("TTM revenue",rev,"TTM","nse-xbrl"))
         if profit is not None: financials.append(card_metric("TTM net profit",profit,"TTM","nse-xbrl"))
