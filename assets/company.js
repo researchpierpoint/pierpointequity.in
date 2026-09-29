@@ -9,6 +9,10 @@ async function loadCompany(){
   const md=await (await fetch("data/generated/nse-market-snapshot.json",{cache:"no-store"})).json();
   const m=md.records[symbol];
   document.querySelector("#market").innerHTML=m?[card("CLOSE","₹"+Number(m.close).toLocaleString("en-IN"),"NSE · "+md.as_of),card("DAY RANGE","₹"+Number(m.low).toLocaleString("en-IN")+" – ₹"+Number(m.high).toLocaleString("en-IN"),"Official end-of-day range"),card("VOLUME",Number(m.volume).toLocaleString("en-IN"),"Shares traded"),card("TURNOVER","₹"+Number(m.turnover_lakh).toLocaleString("en-IN")+" lakh","NSE reported turnover"),card("DELIVERY",m.delivery_pct==null?"Not reported":m.delivery_pct+"%","NSE delivery field")].join(""):'<article class="card"><h3>Market snapshot unavailable</h3><p>No validated NSE record was available for this symbol in the latest snapshot.</p></article>';
+  let resultData=null;
+  try{resultData=await (await fetch("data/generated/nse-financial-results.json",{cache:"no-store"})).json();}catch(e){}
+  const rr=resultData?.records?.[symbol]?.rows||[];
+  document.querySelector("#results").innerHTML=rr.length?rr.map(x=>card("PERIOD",x.re_to_dt||x.re_qtr_ending||"—",`Revenue: ${x.re_total_inc??"—"} · PAT: ${x.re_net_profit??"—"} · EPS: ${x.re_eps??"—"}`)).join(""):'<article class="card"><h3>Quarterly result data not yet available</h3><p>PirePoint will show source-returned NSE result-comparison data here after the exchange session is successfully collected.</p></article>';
   if(symbol!=="POLYCAB"){
    document.querySelector("#company-snapshot").innerHTML=[card("SYMBOL",row.nse_symbol,"NSE equity master"),card("ISIN",row.isin,"NSE equity master"),card("STATUS","LISTED","Identity verified")].join("");
    document.querySelector("#financials").innerHTML='<article class="card"><h3>Fundamental coverage</h3><p>Financial statements are not yet present in PirePoint’s verified research record for this company. The page will not invent or estimate them.</p><p><a href="https://www.nseindia.com/companies-listing/corporate-filings-financial-results">View NSE financial-results source →</a></p></article>';
