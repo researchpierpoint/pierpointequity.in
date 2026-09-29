@@ -35,8 +35,13 @@ def main():
   if age>=30:stale.append((age,s))
  stale.sort(reverse=True);limit=int(os.getenv("SHAREHOLDING_LIMIT","300"));targets=[s for _,s in stale[:limit]]
  ses=requests.Session();ses.headers.update(H)
- warm=ses.get("https://www.nseindia.com/",timeout=20)
- if warm.status_code>=400:raise RuntimeError("NSE session warmup failed")
+ warmed=False
+ for url in ["https://www.nseindia.com/","https://www.nseindia.com/market-data/live-equity-market","https://www.nseindia.com/companies-listing/corporate-filings-shareholding-pattern"]:
+  try:
+   warm=ses.get(url,timeout=20,headers=H)
+   if warm.status_code<400:warmed=True;break
+  except Exception: pass
+ if not warmed: raise RuntimeError("NSE session warmup failed")
  ok=0
  for s in targets:
   try:
