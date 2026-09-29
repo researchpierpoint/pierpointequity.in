@@ -1,0 +1,11 @@
+{
+  "version":"1.0",
+  "default_action":"stop_on_uncertainty",
+  "material_publication":"human_review",
+  "personalised_advice":"blocked",
+  "recommendation_language":"blocked",
+  "guaranteed_returns":"blocked",
+  "unsourced_material_fact":"blocked",
+  "conflict_disclosure":"required_when_applicable",
+  "note":"This is a product control and does not replace legal advice."
+}
