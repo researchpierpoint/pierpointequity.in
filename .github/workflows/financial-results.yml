@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Fetch NSE financial results
         env:
-          RESULT_LIMIT: "1"
+          RESULT_LIMIT: "500"
         run: python data/pipeline/nse_financial_results.py
       - name: Validate snapshot
         run: |
