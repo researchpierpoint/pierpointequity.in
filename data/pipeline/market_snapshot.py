@@ -20,7 +20,7 @@ def fetch_csv(d, timeout=30):
     with urlopen(req,timeout=timeout) as r:
         return r.read().decode("utf-8-sig",errors="replace"),url
 
-def parse(text):
+def parse(text, min_rows=1000):
     reader=csv.DictReader(io.StringIO(text))
     if not reader.fieldnames: raise RuntimeError("empty NSE bhavcopy")
     fields={clean(x) for x in reader.fieldnames}
@@ -39,7 +39,7 @@ def parse(text):
           "volume":num("TTL_TRD_QNTY"),"turnover_lakh":num("TURNOVER_LACS"),
           "delivery_qty":num("DELIV_QTY"),"delivery_pct":num("DELIV_PER")
         })
-    if len(rows)<1000: raise RuntimeError(f"unexpectedly small EQ snapshot: {len(rows)}")
+    if len(rows)<min_rows: raise RuntimeError(f"unexpectedly small EQ snapshot: {len(rows)}")
     return rows
 
 def latest(max_days=7):
