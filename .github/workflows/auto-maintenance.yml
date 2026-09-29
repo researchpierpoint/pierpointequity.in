@@ -10,7 +10,7 @@ permissions:
   contents: write
 concurrency:
   group: pirepoint-auto-maintenance
-  cancel-in-progress: true
+  cancel-in-progress: false
 jobs:
   maintain:
     runs-on: ubuntu-latest
