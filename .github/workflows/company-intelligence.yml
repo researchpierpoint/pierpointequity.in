@@ -2,17 +2,13 @@ name: PirePoint Company Intelligence
 on:
   push:
     branches: ["main"]
-    paths:
-      - "data/generated/**"
-      - "data/pipeline/build_company_intelligence.py"
-      - ".github/workflows/company-intelligence.yml"
-    paths-ignore:
-      - "data/generated/company-intelligence.json"
   workflow_dispatch:
   schedule:
-    - cron: "45 5 * * 2-6"
+    - cron: "45 7 * * 1-6"
 
-permissions: {contents: write}
+permissions:
+  contents: write
+
 concurrency:
   group: company-intelligence
   cancel-in-progress: true
