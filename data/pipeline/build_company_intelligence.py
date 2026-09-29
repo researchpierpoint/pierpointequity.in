@@ -135,6 +135,10 @@ def main():
             if any(k in low for k in ["debt","rating","pledge","default","litigation","auditor","resignation"]):
                 risks.append({"risk":subject,"date":z.get("date"),"status":"monitor","source_ids":["nse-announcements"]})
         events=[{"date":z.get("date"),"event":z.get("subject"),"source_ids":["nse-announcements"]} for z in anns[:30]]
+        alerts=[]
+        if risks: alerts.append({"type":"risk","message":f"{len(risks)} recent risk-monitoring announcement(s) detected.","source_ids":["nse-announcements"]})
+        if order_events: alerts.append({"type":"orders","message":f"{len(order_events)} recent order/contract announcement(s) detected; these are not a substitute for reported backlog.","source_ids":["nse-announcements"]})
+        if filings: alerts.append({"type":"filing","message":"A current NSE integrated filing is present in the source set.","source_ids":["nse-integrated-financials"]})
         coverage={
             "identity":True,"market":bool(md),"financial_results":bool(rr),"integrated_filings":bool(filings),
             "xbrl_financials":bool(x),"ownership":bool(own),"announcements":bool(anns),
@@ -150,7 +154,7 @@ def main():
           "snapshot":{"as_of":max(str(u.get("as_of","")),str(m.get("as_of","")),str(r.get("updated_at","")),str(i.get("updated_at","")),str(fs.get("updated_at","")),str(hv.get("updated_at","")),str(o.get("updated_at","")),str(a.get("updated_at",""))),"status":"current-source-set","generated_at":dt.datetime.now(dt.timezone.utc).isoformat()},
           "sections":{"business":f"{c['legal_name']} ({s}) is an NSE-listed equity.","financials":financials+hist,
           "filing_history":[{"metric":"Latest NSE Integrated Filing","value":(filings[0].get("periodEndDate") or filings[0].get("quarterEndDate") or filings[0].get("period_ended") or "Latest") if filings else "No filing returned","period":i.get("updated_at"),"source_ids":["nse-integrated-financials"]}],
-          "valuation":val,"ownership":ownership,"events":events,"risks":risks,"order_book_events":order_events,"evidence":evidence,"timeline":events,"coverage":coverage}}
+          "valuation":val,"ownership":ownership,"events":events,"risks":risks,"alerts":alerts,"order_book_events":order_events,"evidence":evidence,"timeline":events,"coverage":coverage}}
     out={"version":"2.0","generated_at":dt.datetime.now(dt.timezone.utc).isoformat(),"count":len(records),"records":records}
     p=ROOT/"data/generated/company-intelligence.json";p.write_text(json.dumps(out,indent=2,ensure_ascii=False)+"\n",encoding="utf-8")
     print("Company intelligence records:",len(records))
