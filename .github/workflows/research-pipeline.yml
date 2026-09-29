@@ -1,17 +1,10 @@
 name: PirePoint Research Pipeline
-
 on:
   workflow_dispatch:
   schedule:
     - cron: "30 2 * * 1-5"
-
-permissions:
-  contents: read
-
-concurrency:
-  group: "research-pipeline"
-  cancel-in-progress: true
-
+permissions: {contents: read}
+concurrency: {group: research-pipeline, cancel-in-progress: true}
 jobs:
   research-check:
     runs-on: ubuntu-latest
