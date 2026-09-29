@@ -20,7 +20,7 @@ for path in HTML:
     for target in re.findall(r'href=["\']([^"\'#?]+)', text):
         if target.startswith(("http://", "https://", "mailto:", "javascript:")):
             continue
-        target_path = (path.parent / target).resolve()
+        target_path = (ROOT / target.lstrip("/")).resolve()
         if not target_path.exists():
             errors.append(f"{path.name}: broken local link: {target}")
     for target in re.findall(r'src=["\']([^"\']+)', text):
