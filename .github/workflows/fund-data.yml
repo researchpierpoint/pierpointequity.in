@@ -1,8 +1,7 @@
 name: PirePoint Fund Data
 
 on:
-  push:
-    branches: ["main"]
+  # push refresh is handled by the serialized data-refresh workflow
   workflow_dispatch:
   schedule:
     - cron: "15 12 * * 1-6"
