@@ -1,6 +1,6 @@
 """Build a current What Changed feed from the latest validated exchange records."""
 from __future__ import annotations
-import datetime as dt,json
+import datetime as dt,json,hashlib
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 OUT=ROOT/"data/public/what-changed.json"
@@ -16,7 +16,7 @@ def main():
     for s,d in a.get("records",{}).items():
         for x in d.get("items",[])[:10]:
             subject=x.get("subject") or "Corporate announcement"
-            items.append({"id":f"ann-{s}-{x.get('date')}-{abs(hash(subject))}",
+            items.append({"id":f"ann-{s}-{x.get('date')}-{hashlib.sha1(subject.encode("utf-8")).hexdigest()[:10]}",
                           "symbol":s,"title":f"{names.get(s,s)}: {subject}",
                           "summary":"Recent NSE corporate announcement captured by the automated evidence feed.",
                           "date":x.get("date"),"classification":"exchange-announcement",
