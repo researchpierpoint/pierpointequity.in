@@ -31,8 +31,17 @@ def main():
     if limit: pending=pending[:limit]
     session=requests.Session()
     session.headers.update(HEADERS)
-    warm=session.get("https://www.nseindia.com/",timeout=20)
-    warm.raise_for_status()
+    warmed=False
+    for warm_url in ["https://www.nseindia.com/","https://www.nseindia.com/market-data/live-equity-market","https://www.nseindia.com/companies-listing/corporate-filings-financial-results"]:
+        try:
+            warm=session.get(warm_url,timeout=20,headers=HEADERS)
+            if warm.status_code < 400:
+                warmed=True
+                break
+        except Exception:
+            pass
+    if not warmed:
+        raise RuntimeError("NSE browser-session warmup failed")
     ok=0
     for symbol in pending:
         try:
