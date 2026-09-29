@@ -18,7 +18,7 @@ for path in HTML:
         if phrase.lower() in low:
             errors.append(f"{path.name}: contains unfinished public copy: {phrase}")
     for target in re.findall(r'href=["\']([^"\'#?]+)', text):
-        if target.startswith(("http://", "https://", "mailto:", "javascript:")):
+        if target.startswith(("#","http://", "https://", "mailto:", "javascript:")):
             continue
         target_path = (ROOT / target.lstrip("/")).resolve()
         if not target_path.exists():
