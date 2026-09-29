@@ -122,7 +122,7 @@ def main():
         if fcf is not None:hist.append(card_metric("Free cash flow",f"{fcf:g}","latest reported period","nse-xbrl"))
         ownership=[]
         if own:
-            for k,label in [("promoter","Promoter & promoter group"),("fii","FII"),("dii","DII"),("public","Public")]:
+            for k,label in [("promoter","Promoter & promoter group"),("fii","FII"),("dii","DII"),("public","Public"),("pledged","Pledged / encumbered")]:
                 if k in own.get("values",{}):ownership.append(card_metric(label,f"{own['values'][k]:.2f}%",own.get("as_on"),"nse-shareholding"))
         if not ownership: ownership.append(card_metric("Shareholding","Not available in latest validated filing",own.get("as_on"),"nse-shareholding"))
         order_events=[]
