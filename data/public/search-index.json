@@ -1,0 +1,43 @@
+{
+  "version": "1.0",
+  "updated_at": "2026-09-30",
+  "items": [
+    {
+      "type": "company",
+      "name": "Polycab India Limited",
+      "symbol": "POLYCAB",
+      "keywords": [
+        "polycab",
+        "wires",
+        "cables",
+        "fmeg"
+      ],
+      "url": "company.html",
+      "description": "Company intelligence, financial snapshot, evidence and risks."
+    },
+    {
+      "type": "research",
+      "name": "What Changed?",
+      "keywords": [
+        "changes",
+        "events",
+        "updates",
+        "research"
+      ],
+      "url": "what-changed.html",
+      "description": "Material evidence changes tracked by PirePoint."
+    },
+    {
+      "type": "methodology",
+      "name": "PirePoint Methodology",
+      "keywords": [
+        "methodology",
+        "evidence",
+        "sources",
+        "uncertainty"
+      ],
+      "url": "methodology.html",
+      "description": "How PirePoint separates evidence, calculations and interpretation."
+    }
+  ]
+}
