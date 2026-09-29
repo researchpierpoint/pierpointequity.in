@@ -1,17 +1,41 @@
 # Ingestion pipeline
 
-## Current stage
-The first connector is deliberately dry-run by default. This prevents an automated job from repeatedly requesting exchange pages before endpoint, rate-limit, caching and permitted-use rules have been reviewed.
+## Current flow
 
-## Target flow
-source -> retrieve -> raw snapshot -> parse -> normalize -> validate -> deduplicate -> provenance record -> materialized fact -> change event
+source -> retrieve -> raw/point-in-time snapshot -> parse -> normalize -> validate -> provenance -> generated dataset -> coverage audit -> deploy
 
-## Never do
-- bypass access controls
-- evade rate limits
-- publish unverified extracted values
-- overwrite prior observations
-- embed credentials in code
-- use a licensed feed outside its permitted use
+## Active sources
 
-NSE provides integrated filing and announcement interfaces with company, period and filing metadata. BSE also exposes corporate filing and financial-result interfaces. See the source registry for canonical links.
+### NSE
+- equity master
+- securities bhavcopy
+- financial results comparison
+- Integrated Filing Financials
+- XBRL financial statements
+- shareholding filings
+- corporate announcements
+- ETF market/i-NAV/NAV feed
+
+### AMFI
+- daily NAV universe
+- rolling NAV history
+
+### Secondary fund enrichment
+- mfdata.in is used only for additional scheme analytics such as category, AMC, AUM, TER, returns and ratios when available.
+- AMFI remains the primary NAV source.
+
+## Safety / quality rules
+
+- Never bypass access controls.
+- Never evade rate limits.
+- Never publish an unverified extracted value as current.
+- Never embed credentials in code.
+- Never use a licensed feed outside its permitted use.
+- Preserve source dates and provenance.
+- Fail closed when an endpoint changes unexpectedly.
+
+## Refresh model
+
+The main maintenance workflow runs every 30 minutes. Specialized workflows rotate slower datasets and rebuild derived analytics.
+
+The website labels exchange end-of-day data as end-of-day data. It does not pretend an EOD snapshot is a live tick feed.
