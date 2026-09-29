@@ -1,13 +1,7 @@
 name: PirePoint Financial Results
 
 on:
-  push:
-    branches: ["main"]
-    paths-ignore:
-      - "data/generated/**"
   workflow_dispatch:
-  schedule:
-    - cron: "0 5 * * 2-6"
 
 permissions:
   contents: write
