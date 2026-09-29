@@ -1,6 +1,6 @@
 """Build evidence-first company intelligence from validated exchange datasets."""
 from __future__ import annotations
-import datetime as dt, json
+import datetime as dt, json, re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -114,6 +114,16 @@ def main():
         events = [{"date":x.get("date"),"event":x.get("subject"),
                    "source_ids":["nse-announcements"]} for x in anns[:20]]
 
+        order_events = []
+        for x in anns:
+            subject = str(x.get("subject", ""))
+            low = subject.lower()
+            if any(k in low for k in ["order", "contract", "award", "bagging"]):
+                match = re.search(r"(?:₹|rs\\.?|inr)\\s*([0-9][0-9,]*(?:\\.\\d+)?)\\s*(crore|cr|million|mn|lakh)?", subject, re.I)
+                order_events.append({"event":subject,"date":x.get("date"),
+                                     "value":match.group(0) if match else None,
+                                     "source_ids":["nse-announcements"]})
+
         evidence = [{"source_id":"nse-equity-master","tier":1,"status":"verified"}]
         if md: evidence.append({"source_id":"nse-market-snapshot","tier":1,"status":"verified"})
         if latest: evidence.append({"source_id":"nse-results-comparison","tier":1,"status":"verified"})
@@ -124,9 +134,9 @@ def main():
         coverage = {
             "identity":True, "market":bool(md), "financial_results":bool(latest),
             "integrated_filings":bool(filings), "ownership":bool(own),
-            "announcements":bool(anns), "business_filing":False,
+            "announcements":bool(anns), "business_filing":bool(filings),
             "historical_valuation":False, "balance_sheet":False, "roce":False,
-            "order_book":bool(anns)
+            "order_book":False
         }
 
         records[s] = {
@@ -146,6 +156,7 @@ def main():
                 "ownership":ownership,
                 "events":events,
                 "risks":risks,
+                "order_book_events":order_events,
                 "evidence":evidence,
                 "timeline":events,
                 "coverage":coverage
