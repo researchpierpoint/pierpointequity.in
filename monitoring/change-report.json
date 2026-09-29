@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "status": "foundation",
+  "policy": {
+    "never_silently_overwrite": true,
+    "material_changes_require_event": true,
+    "source_first": true
+  },
+  "event_types": [
+    "new_filing",
+    "financial_result",
+    "shareholding_change",
+    "corporate_action",
+    "board_meeting",
+    "material_announcement",
+    "source_freshness",
+    "data_conflict",
+    "deployment_failure",
+    "compliance_flag"
+  ]
+}
