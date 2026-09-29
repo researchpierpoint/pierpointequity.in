@@ -1,5 +1,11 @@
 name: PirePoint Ownership and Filings
 on:
+ push:
+  branches: ["main"]
+  paths:
+   - "data/pipeline/nse_shareholding.py"
+   - "data/pipeline/nse_announcements.py"
+   - ".github/workflows/ownership-filings.yml"
  workflow_dispatch:
  schedule:
   - cron: "30 6 * * 1-6"
