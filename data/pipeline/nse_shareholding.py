@@ -21,6 +21,9 @@ def parse(xml):
    if f"in-bse-shp:{member}" in ms:
     try:facts[cat]=float(m.group(2));break
     except:pass
+ for m in re.finditer(r"<[^>]*(?:Pledge|Encumber|encumber|pledge)[^>]*contextRef="([^"]+)"[^>]*>([\\d.\\-]+)<",xml):
+  try:facts["pledged"]=float(m.group(2));break
+  except:pass
  if not facts:return None
  p=facts.get("promoter");q=facts.get("public"); total=(p or 0)+(q or 0)
  scale=.01 if total>1000 else (100 if 0<total<2 else 1)
