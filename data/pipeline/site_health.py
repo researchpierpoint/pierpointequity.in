@@ -17,6 +17,7 @@ EXPECTED={
 "nse-etf-snapshot.json":8*3600,
 "mf-intelligence.json":36*3600,
 "nse-historical-valuation.json":72*3600,
+"coverage-audit.json":36*3600,
 }
 def load(n):
  p=GEN/n
