@@ -151,7 +151,7 @@ def main():
             "identity":True,"market":bool(md),"financial_results":bool(rr),"integrated_filings":bool(filings),
             "xbrl_financials":bool(x),"ownership":bool(own),"announcements":bool(anns),
             "historical_valuation":bool(historical_pe),"balance_sheet":bool(equity or debt or cash),
-            "cash_flow":bool(fcf is not None),"roe":bool(equity and facts.get("net_profit")),
+            "cash_flow":bool(facts.get("cfo") or facts.get("cfi") or fcf is not None),"roe":bool(equity and facts.get("net_profit")),
             "roce":any(q["metric"]=="ROCE" for q in hist),"order_book":bool(order_events),
             "business_profile":True
         }
