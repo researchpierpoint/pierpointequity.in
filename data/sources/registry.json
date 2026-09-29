@@ -1,0 +1,9 @@
+{
+  "version": "1.0",
+  "sources": [
+    {"id":"sebi-corporate-filings","tier":1,"publisher":"SEBI","url":"https://www.sebi.gov.in/curation/corporate_filings.html","use":["filing-directory","regulatory-context"]},
+    {"id":"nse-corporate-filings","tier":1,"publisher":"NSE","url":"https://www.nseindia.com/companies-listing/corporate-filings-application","use":["announcements","results","shareholding","board-meetings","corporate-actions"]},
+    {"id":"nse-integrated-filings","tier":1,"publisher":"NSE","url":"https://www.nseindia.com/companies-listing/corporate-integrated-filing","use":["integrated-financial-filings"]},
+    {"id":"bse-corporate-filings","tier":1,"publisher":"BSE","url":"https://www.bseindia.com/corporates.html","use":["announcements","results","corporate-actions","board-meetings"]}
+  ]
+}
