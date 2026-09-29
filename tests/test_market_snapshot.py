@@ -7,7 +7,7 @@ class MarketSnapshotTests(unittest.TestCase):
 ABC,EQ,30-Sep-2026,100,101,105,99,104,103,102,10000,1020,500,6000,60
 BOND,GS,30-Sep-2026,100,101,105,99,104,103,102,10000,1020,500,6000,60
 """
-        rows=parse(text.replace("ABC,EQ","ABC,EQ").replace("BOND,GS","BOND,GS"))
+        rows=parse(text, min_rows=1)
         self.assertEqual(len(rows),1)
         self.assertEqual(rows[0]["symbol"],"ABC")
         self.assertEqual(rows[0]["close"],103.0)
