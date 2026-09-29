@@ -40,5 +40,5 @@ def main():
  out={"version":"1.0","checked_at":now.isoformat(),"status":"ok" if not missing and all(x["status"]=="fresh" for x in checks) else "needs_attention","checks":checks,"missing":missing}
  (GEN/"data-health.json").write_text(json.dumps(out,indent=2)+"\n",encoding="utf-8")
  print(json.dumps(out,indent=2))
- raise SystemExit(0)
+ raise SystemExit(0 if out["status"]=="ok" else 1)
 if __name__=="__main__":main()
