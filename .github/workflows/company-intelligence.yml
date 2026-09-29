@@ -3,15 +3,11 @@ on:
   push:
     branches: ["main"]
     paths:
+      - "data/generated/**"
       - "data/pipeline/build_company_intelligence.py"
       - ".github/workflows/company-intelligence.yml"
-  workflow_run:
-    workflows:
-      - "PirePoint Data Refresh"
-      - "PirePoint Financial Results"
-      - "PirePoint Fund Data"
-      - "PirePoint Ownership and Filings"
-    types: [completed]
+    paths-ignore:
+      - "data/generated/company-intelligence.json"
   workflow_dispatch:
   schedule:
     - cron: "45 5 * * 2-6"
@@ -23,9 +19,6 @@ concurrency:
 
 jobs:
   build:
-    if: >
-      github.event_name != 'workflow_run' ||
-      github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
