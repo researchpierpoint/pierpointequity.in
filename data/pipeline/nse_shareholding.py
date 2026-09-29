@@ -57,7 +57,8 @@ def main():
      elif x.startswith("http://"):x="https://"+x[7:]
      xr=ses.get(x,timeout=30,headers={"User-Agent":H["User-Agent"]})
      parsed=parse(xr.text if xr.status_code==200 else "")
-     rec[s]={"as_on":latest.get("date"),"submission_date":latest.get("submissionDate"),"retrieved_at":today.isoformat(),"source_url":x,"values":parsed or {}}
+     rec[s]={"as_on":latest.get("date"),"submission_date":latest.get("submissionDate"),"retrieved_at":today.isoformat(),"source_url":x,"values":parsed or {},
+             "filing_history":[{"as_on":q.get("date"),"submission_date":q.get("submissionDate"),"xbrl":q.get("xbrl")} for q in body[:8] if isinstance(q,dict)]}
      ok+=1
   except Exception as e:print(s,e)
   time.sleep(.8)
