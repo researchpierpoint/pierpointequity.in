@@ -6,8 +6,6 @@ on:
       - "data/pipeline/amfi_nav.py"
       - ".github/workflows/fund-data.yml"
   workflow_dispatch:
-  schedule:
-    - cron: "0 16 * * 1-6"
 permissions: {contents: write}
 concurrency: {group: fund-data, cancel-in-progress: true}
 jobs:
