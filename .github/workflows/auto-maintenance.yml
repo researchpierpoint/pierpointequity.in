@@ -1,0 +1,55 @@
+name: PirePoint Auto Maintenance
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/30 * * * *"
+permissions:
+  contents: write
+concurrency:
+  group: pirepoint-auto-maintenance
+  cancel-in-progress: true
+jobs:
+  maintain:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install data connector
+        run: pip install --disable-pip-version-check -q "jugaad-data==0.35.5"
+      - name: Refresh NSE universe and market
+        run: |
+          python data/pipeline/nse_universe.py
+          python data/pipeline/market_snapshot.py
+      - name: Refresh financial results and integrated filings
+        env:
+          RESULT_LIMIT: "150"
+          INTEGRATED_FINANCIAL_LIMIT: "150"
+        run: |
+          python data/pipeline/nse_financial_results.py
+          python data/pipeline/nse_integrated_financials.py
+      - name: Refresh ownership and announcements
+        env:
+          SHAREHOLDING_LIMIT: "100"
+          ANNOUNCEMENT_LIMIT: "150"
+        run: |
+          python data/pipeline/nse_shareholding.py
+          python data/pipeline/nse_announcements.py
+      - name: Rebuild company intelligence
+        run: python data/pipeline/build_company_intelligence.py
+      - name: Health check
+        run: python data/pipeline/site_health.py
+      - name: Run tests
+        run: |
+          python -m compileall data/pipeline
+          python -m unittest discover -s tests -p "test_*.py" -v
+      - name: Commit all generated updates
+        run: |
+          git config user.name "pirepoint-bot"
+          git config user.email "research.pirepoint@gmail.com"
+          git add data/generated/
+          if git diff --cached --quiet; then
+            echo "No data/code health changes."
+          else
+            git commit -m "auto: refresh PirePoint data and health"
+            git push
+          fi
