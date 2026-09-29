@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "status": "foundation",
+  "policy": {
+    "primary_first": true,
+    "preserve_history": true,
+    "never_silently_overwrite": true,
+    "require_source_for_material_fact": true
+  },
+  "next_connectors": [
+    "nse-filings",
+    "bse-filings",
+    "company-ir",
+    "market-data",
+    "search-demand"
+  ]
+}
