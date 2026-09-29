@@ -24,10 +24,13 @@ def clean(v):
     return re.sub(r"\s+", " ", (v or "").strip())
 
 def build(text):
-    rows = list(csv.DictReader(io.StringIO(text)))
+    reader = csv.DictReader(io.StringIO(text))
+    if reader.fieldnames:
+        reader.fieldnames = [clean(h) for h in reader.fieldnames]
+    rows = [{clean(k): clean(v) for k, v in row.items()} for row in reader]
     if not rows:
         raise RuntimeError("NSE equity master returned zero rows")
-    required = {"SYMBOL","NAME OF COMPANY","ISIN NUMBER"}
+    required = {"SYMBOL", "NAME OF COMPANY", "ISIN NUMBER"}
     if not required.issubset(rows[0].keys()):
         raise RuntimeError(f"Unexpected NSE columns: {sorted(rows[0].keys())}")
     out=[]
