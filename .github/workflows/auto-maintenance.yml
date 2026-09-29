@@ -43,6 +43,8 @@ jobs:
         run: python data/pipeline/build_company_intelligence.py
       - name: Health check
         run: python data/pipeline/site_health.py
+      - name: Audit public website surface
+        run: python data/pipeline/public_surface_audit.py
       - name: Run tests
         run: |
           python -m compileall data/pipeline
