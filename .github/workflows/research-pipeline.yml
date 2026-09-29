@@ -8,16 +8,21 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: "research-pipeline"
+  cancel-in-progress: true
+
 jobs:
   research-check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Validate research structure
+      - name: Validate research foundation
         run: |
+          python -m compileall data/pipeline compliance
           test -f data/schema/company.schema.json
-          test -f data/README.md
-          test -f research/README.md
-          test -f compliance/README.md
-          test -f monitoring/README.md
-          echo "PirePoint research foundation is present and ready for the next data-connector stage."
+          test -f data/schema/company-page.schema.json
+          test -f data/universe/company-master.json
+          test -f data/pipeline/universe-rules.json
+          test -f monitoring/monitor-policy.json
+          echo "PirePoint research foundation validated."
