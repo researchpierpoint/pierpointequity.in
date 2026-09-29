@@ -119,6 +119,8 @@ def main():
         nd=x.get("derived",{}).get("net_debt")
         if nd is not None:hist.append(card_metric("Net debt",f"{nd:g}","latest reported period","nse-xbrl"))
         fcf=x.get("derived",{}).get("free_cash_flow")
+        if facts.get("cfo"):hist.append(card_metric("Operating cash flow",f"{facts['cfo']['value']:g}","latest reported period","nse-xbrl"))
+        if facts.get("cfi"):hist.append(card_metric("Investing cash flow",f"{facts['cfi']['value']:g}","latest reported period","nse-xbrl"))
         if fcf is not None:hist.append(card_metric("Free cash flow",f"{fcf:g}","latest reported period","nse-xbrl"))
         if rev and profit:
             hist.append(card_metric("Net margin",f"{profit/rev*100:.2f}%","TTM","nse-xbrl"))
