@@ -1,0 +1,44 @@
+name: PirePoint Public Index
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["PirePoint Universe Refresh"]
+    types: [completed]
+  schedule:
+    - cron: "45 3 * * 1-5"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: "public-index"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build public search index
+        run: python data/pipeline/build_public_index.py
+      - name: Validate public index
+        run: python - <<'PY'
+import json
+d=json.load(open("data/public/search-index.json",encoding="utf-8"))
+assert d["item_count"] >= 2500
+assert len(d["items"]) == d["item_count"]
+print("Public index validated:", d["item_count"])
+PY
+      - name: Commit changed index
+        run: |
+          git config user.name "pirepoint-bot"
+          git config user.email "research.pirepoint@gmail.com"
+          git add data/public/search-index.json
+          if git diff --cached --quiet; then
+            echo "No public index change."
+          else
+            git commit -m "data: refresh public company search index"
+            git push
+          fi
