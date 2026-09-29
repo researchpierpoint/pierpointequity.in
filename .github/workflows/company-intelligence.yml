@@ -1,10 +1,6 @@
 name: PirePoint Company Intelligence
 on:
-  push:
-    branches: ["main"]
   workflow_dispatch:
-  schedule:
-    - cron: "45 7 * * 1-6"
 
 permissions:
   contents: write
