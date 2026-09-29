@@ -1,0 +1,24 @@
+name: PirePoint Fund Intelligence
+on:
+  schedule:
+    - cron: "5,35 * * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: pirepoint-fund-intelligence
+  cancel-in-progress: true
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Refresh fund dataset
+        run: python data/pipeline/mf_intelligence.py
+      - name: Commit
+        run: |
+          git config user.name "pirepoint-bot"
+          git config user.email "research.pirepoint@gmail.com"
+          git add data/generated/mf-intelligence.json
+          if git diff --cached --quiet; then echo "No fund changes."; else git commit -m "auto: refresh fund intelligence"; git push; fi
