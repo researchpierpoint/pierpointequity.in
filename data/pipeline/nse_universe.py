@@ -47,6 +47,7 @@ def build(text):
             "isin": isin,
             "nse_symbol": symbol,
             "legal_name": name,
+            "series": clean(r.get("SERIES")),
             "status": "listed-equity",
             "source_id": "nse-equity-master",
             "source_url": URL
