@@ -45,12 +45,12 @@ jobs:
         run: |
           python data/pipeline/nse_shareholding.py
           python data/pipeline/nse_announcements.py
-      - name: Rebuild company intelligence
-        run: python data/pipeline/build_company_intelligence.py
       - name: Refresh fund enrichment
         run: python data/pipeline/mf_intelligence.py
       - name: Refresh historical valuation
         run: python data/pipeline/historical_valuation.py
+      - name: Rebuild company intelligence
+        run: python data/pipeline/build_company_intelligence.py
       - name: Build coverage audit
         run: python data/pipeline/coverage_audit.py
       - name: Build change feed
