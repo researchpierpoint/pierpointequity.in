@@ -3,7 +3,7 @@ async function load(){
  const code=new URLSearchParams(location.search).get("code");const d=await (await fetch("data/generated/amfi-nav.json",{cache:"no-store"})).json();const f=(d.funds||[]).find(x=>String(x.scheme_code)===String(code));if(!f)throw Error("fund not found");
  document.querySelector("#name").textContent=f.name;document.querySelector("#meta").textContent=`Scheme code ${f.scheme_code} · ${f.isin||"ISIN unavailable"} · NAV date ${f.date}`;
  const h=(await (await fetch("data/generated/amfi-nav-history.json",{cache:"no-store"})).json()).dates||{},ds=Object.keys(h).sort(),last=ds.at(-1);
- const info=(await (await fetch("data/generated/mf-intelligence.json",{cache:"no-store"})).json()).schemes?.[String(code)]||{};
+ let info={};try{info=(await (await fetch("data/generated/mf-intelligence.json",{cache:"no-store"})).json()).schemes?.[String(code)]||{}}catch{}
  const cards=[card("LATEST NAV",f.nav,f.date)];
  if(info.amc)cards.push(card("AMC",info.amc,"Secondary enrichment source"));
  if(info.category)cards.push(card("CATEGORY",info.category,"Secondary enrichment source"));
