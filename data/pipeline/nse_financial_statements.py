@@ -155,14 +155,17 @@ def main():
                 f=choose(facts,metric)
                 if f:latest[metric]=f
             annual={m:annual_values(facts,m) for m in ("revenue","net_profit","eps") if annual_values(facts,m)}
-            if latest.get("finance_cost") and latest.get("ebit"):
-                pass
+            series={}
+            for metric in MAP:
+                xs=[x for x in facts if x["metric"]==metric]
+                xs=sorted(xs,key=lambda x:(x.get("instant") or x.get("end") or ""),reverse=True)
+                series[metric]=xs[:24]
             eq=latest.get("equity"); assets=latest.get("assets"); debt=latest.get("debt"); cash=latest.get("cash")
             net_debt=(debt["value"]-cash["value"]) if debt and cash else None
             cfo=latest.get("cfo"); cap=latest.get("capex")
             fcf=(cfo["value"]-abs(cap["value"])) if cfo and cap else None
             records[s]={"retrieved_at":today,"filing":filing_meta or {}, "xbrl_url":xurl,
-                        "facts":latest,"annual":annual,"derived":{"net_debt":net_debt,"free_cash_flow":fcf}}
+                        "facts":latest,"series":series,"annual":annual,"derived":{"net_debt":net_debt,"free_cash_flow":fcf}}
             ok+=1
         except Exception as e:
             print("xbrl",s,e)
