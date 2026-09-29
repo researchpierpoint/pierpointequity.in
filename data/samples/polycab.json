@@ -1,0 +1,44 @@
+{
+  "id": "nse-polycab",
+  "name": "Polycab India Limited",
+  "isin": "INE455K01017",
+  "ticker": "POLYCAB",
+  "exchange": "NSE",
+  "status": "verified-fy26-snapshot",
+  "updated_at": "2026-09-29T00:00:00Z",
+  "facts": [
+    {"field":"revenue","value":288838,"unit":"INR million","as_of":"2026-03-31","source_ids":["poly-fy26-ar"],"confidence":"high","classification":"fact"},
+    {"field":"ebitda","value":40057,"unit":"INR million","as_of":"2026-03-31","source_ids":["poly-fy26-ar"],"confidence":"high","classification":"fact"},
+    {"field":"pat","value":27084,"unit":"INR million","as_of":"2026-03-31","source_ids":["poly-fy26-ar"],"confidence":"high","classification":"fact"},
+    {"field":"roce","value":31.5,"unit":"percent","as_of":"2026-03-31","source_ids":["poly-fy26-ar"],"confidence":"high","classification":"fact"},
+    {"field":"net_cash","value":41940,"unit":"INR million","as_of":"2026-03-31","source_ids":["poly-fy26-ar"],"confidence":"high","classification":"fact"},
+    {"field":"debt_equity","value":0.01,"unit":"ratio","as_of":"2026-03-31","source_ids":["poly-fy26-ar"],"confidence":"high","classification":"fact"},
+    {"field":"capex","value":14799,"unit":"INR million","as_of":"2026-03-31","source_ids":["poly-fy26-ar"],"confidence":"high","classification":"fact"},
+    {"field":"fy26_revenue_growth","value":29,"unit":"percent","as_of":"2026-03-31","source_ids":["poly-fy26-pr"],"confidence":"high","classification":"fact"},
+    {"field":"fy26_pat_growth","value":32,"unit":"percent","as_of":"2026-03-31","source_ids":["poly-fy26-pr"],"confidence":"high","classification":"fact"}
+  ],
+  "sources": [
+    {
+      "id":"poly-fy26-ar",
+      "url":"https://polycab.com/ar2026/investors",
+      "title":"Polycab Integrated Annual Report 2025-26 — Investors / Financial Performance",
+      "publisher":"Polycab India Limited",
+      "published_at":"2026-06-08",
+      "retrieved_at":"2026-09-29",
+      "source_tier":1,
+      "document_ref":"FY 2025-26 Integrated Annual Report",
+      "notes":"Company-originated annual-report data; values are as of 31 March 2026."
+    },
+    {
+      "id":"poly-fy26-pr",
+      "url":"https://nsearchives.nseindia.com/corporate/POLYCAB_06052026144213_SubmissionofPressRelease.pdf",
+      "title":"Highest Ever Yearly & Quarterly Revenue & Profitability — FY26",
+      "publisher":"NSE filing / Polycab India Limited",
+      "published_at":"2026-05-06",
+      "retrieved_at":"2026-09-29",
+      "source_tier":1,
+      "document_ref":"NSE corporate filing",
+      "notes":"Exchange-hosted company press release."
+    }
+  ]
+}
