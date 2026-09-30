@@ -15,7 +15,8 @@ for p in pages:
     for href in re.findall(r'href=["\']([^"\'#]+)',s,re.I):
         if href.startswith(("http:","https:","mailto:","javascript:")): continue
         if any(x in href for x in legacy): errors.append(f"{p}: legacy product link {href}")
-        target=(p.parent/href).resolve()
+        clean=href.split("?",1)[0]
+        target=(p.parent/clean).resolve()
         if not target.exists(): errors.append(f"{p}: broken link {href}")
 for p in [ROOT/"guides.html",ROOT/"countries.html",ROOT/"glossary.html",ROOT/"compare.html"]:
     if not p.exists(): errors.append(f"missing hub: {p}")
