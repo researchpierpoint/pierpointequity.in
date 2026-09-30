@@ -16,7 +16,8 @@ def main():
     for s,d in a.get("records",{}).items():
         for x in d.get("items",[])[:10]:
             subject=x.get("subject") or "Corporate announcement"
-            digest=hashlib.sha1(subject.encode("utf-8")).hexdigest()[:10]\n            items.append({"id":f"ann-{s}-{x.get('date')}-{digest}",
+            digest=hashlib.sha1(subject.encode("utf-8")).hexdigest()[:10]
+            items.append({"id":f"ann-{s}-{x.get('date')}-{digest}",
                           "symbol":s,"title":f"{names.get(s,s)}: {subject}",
                           "summary":"Recent NSE corporate announcement captured by the automated evidence feed.",
                           "date":x.get("date"),"classification":"exchange-announcement",
