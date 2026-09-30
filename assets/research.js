@@ -1,9 +1,13 @@
 (function(){
-const KEY="pp-research-workspace-v1";
-const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+const KEY="pp-research-workspaces-v2",OLD="pp-research-workspace-v1";
+const $=s=>document.querySelector(s), $=s=>Array.from(document.querySelectorAll(s));
 const company=$("#researchCompany");
-function read(){try{return JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){return {}}}
-function write(x){localStorage.setItem(KEY,JSON.stringify(x))}
+const params=new URLSearchParams(location.search);
+let workspaceId=params.get("workspace")||"";
+function all(){try{return JSON.parse(localStorage.getItem(KEY)||"[]")}catch(e){return[]}}
+function migrate(){try{const old=JSON.parse(localStorage.getItem(OLD)||"null");if(old?.company&&!all().length){const id=old.company.toLowerCase().trim().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");localStorage.setItem(KEY,JSON.stringify([{id,company:old.company,created:new Date().toISOString(),updated:new Date().toISOString(),fields:old.fields||{},evidence:old.evidence||[],fin:old.fin||{},scenario:old.scenario||{},journal:[]} ]));workspaceId=id}}catch(e){}}
+function read(){migrate();const a=all();return a.find(x=>x.id===workspaceId)||{company:"",fields:{},evidence:[],fin:{},scenario:{},journal:[]}}
+function write(x){migrate();const a=all();const i=a.findIndex(z=>z.id===workspaceId);if(i>=0)a[i]={...x,updated:new Date().toISOString()};else{workspaceId=workspaceId||String(Date.now());a.push({...x,id:workspaceId,created:new Date().toISOString(),updated:new Date().toISOString()})}localStorage.setItem(KEY,JSON.stringify(a))}
 function collect(){
  const x=read(); x.company=company?.value||x.company||"";
  x.fields={...(x.fields||{})};
@@ -24,9 +28,9 @@ function restore(){
  updateCounts();
 }
 function showState(name){$("#researchStatus").hidden=false;$("#researchTitle").textContent=name;$("#researchStateText").textContent="Local research workspace · evidence and assumptions are kept separate."}
-window.startResearch=function(){const n=company.value.trim();if(!n){company.focus();return}showState(n);saveWorkspace("Workspace started locally.");location.hash="business"};
+window.startResearch=function(){const n=company.value.trim();if(!n){company.focus();return}if(!workspaceId){workspaceId=n.toLowerCase().trim().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||String(Date.now())}const x=read();x.company=n;write(x);showState(n);saveWorkspace("Workspace started locally.");location.hash="business"};
 window.saveWorkspace=function(msg){const x=collect();x.evidence=read().evidence||[];write(x);showState(x.company);$("#workspaceStatus").textContent=msg||"Saved on this device.";updateCounts()};
-window.clearWorkspace=function(){if(!confirm("Clear this research workspace from this browser?"))return;localStorage.removeItem(KEY);location.reload()};
+window.clearWorkspace=function(){if(!confirm("Clear this research workspace from this browser?"))return;localStorage.setItem(KEY,JSON.stringify(all().filter(x=>x.id!==workspaceId)));location.href="research-hub.html"};
 window.addEvidence=function(){
  const x=collect();x.evidence=x.evidence||[];const claim=$("#evClaim").value.trim();if(!claim){$("#evClaim").focus();return}
  x.evidence.push({id:Date.now(),claim,type:$("#evType").value,date:$("#evDate").value,source:$("#evSource").value.trim(),state:$("#evState").value});
@@ -97,5 +101,5 @@ EVIDENCE
  navigator.clipboard?.writeText(brief).then(()=>{const s=$("#workspaceStatus");if(s)s.textContent="Research brief copied."});
 };
 window.exportResearchJSON=function(){const x=collect();navigator.clipboard?.writeText(JSON.stringify(x,null,2)).then(()=>{const s=$("#workspaceStatus");if(s)s.textContent="Workspace data copied as JSON."})};
-\ndocument.addEventListener("DOMContentLoaded",()=>{restore();const d=$("#journalDate");if(d&&!d.value)d.value=new Date().toISOString().slice(0,10);refreshCockpit()});
+\ndocument.addEventListener("DOMContentLoaded",()=>{migrate();const x=read();if(!workspaceId&&x.company)workspaceId=x.id;restore();const d=$("#journalDate");if(d&&!d.value)d.value=new Date().toISOString().slice(0,10);refreshCockpit()});
 })();
