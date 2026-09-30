@@ -141,7 +141,7 @@ document.addEventListener("input",()=>{
   clearTimeout(window.__ppSave);window.__ppSave=setTimeout(()=>{saveWorkspace("Saved locally.");refreshCockpit()},700);
 });
 document.addEventListener("DOMContentLoaded",()=>{
-  migrate();const x=read();if(!workspaceId&&x.company)workspaceId=x.id;restore();
+  migrate();const requested=params.get("company");if(requested){company.value=requested;workspaceId=workspaceId||slug(requested);const seed=read();seed.company=requested;write(seed)}const x=read();if(!workspaceId&&x.company)workspaceId=x.id;restore();
   const d=qs("#journalDate");if(d&&!d.value)d.value=new Date().toISOString().slice(0,10);
   refreshCockpit();
 });
