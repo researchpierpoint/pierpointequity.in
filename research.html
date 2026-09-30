@@ -30,6 +30,16 @@
 <div class="state-pills"><span>Evidence <b id="evidenceCount">0</b></span><span>Questions <b id="questionCount">0</b></span><span>Assumptions <b id="assumptionCount">0</b></span></div>
 </section>
 
+<section class="research-cockpit card" id="cockpit">
+<div class="cockpit-top"><div><span class="tag">RESEARCH COCKPIT</span><h2>Know what you know—and what you still don't.</h2><p class="muted">Research quality improves when unanswered questions stay visible instead of disappearing into a spreadsheet.</p></div><div class="cockpit-actions"><button class="button secondary" type="button" onclick="copyResearchBrief()">Copy research brief</button><button class="button secondary" type="button" onclick="exportResearchJSON()">Copy workspace data</button></div></div>
+<div class="research-progress"><div><span>Research completeness</span><b id="researchProgressText">0%</b></div><div class="progress-track"><i id="researchProgressBar"></i></div></div>
+<div class="cockpit-grid">
+<article><span class="tag">RED TEAM</span><h3>Try to break the thesis</h3><ul class="red-team"><li>What fact, if false, would change the conclusion?</li><li>Which assumption is doing the most work?</li><li>What is the market already expecting?</li><li>What evidence would an intelligent skeptic ask for?</li></ul></article>
+<article><span class="tag">NEXT QUESTION</span><h3>Don't research everything.</h3><p id="nextQuestion" class="cockpit-question">Start with the business model. The next question will become clearer as evidence is entered.</p><button class="text-button" type="button" onclick="focusNextQuestion()">Jump to the most useful next section →</button></article>
+<article><span class="tag">DECISION JOURNAL</span><h3>Record the reason, not just the price.</h3><label>Research date<input id="journalDate" type="date"></label><label>What changed today?<textarea id="journalChange" rows="3" placeholder="New evidence, changed assumption or unanswered question"></textarea></label></article>
+</div>
+</section>
+
 <section class="research-layout">
 <aside class="research-nav card" aria-label="Research sections">
 <span class="tag">RESEARCH MAP</span>
