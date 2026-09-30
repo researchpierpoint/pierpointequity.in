@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "type": "home-country",
+  "slug": "china",
+  "name": "China",
+  "overlayCount": 60,
+  "domains": 6,
+  "stages": 10,
+  "context": "Residents of mainland China may face specific foreign-investment access, currency, capital-flow and tax considerations. The route must distinguish mainland resident rules from Hong Kong rules.",
+  "note": "This file supplies home-country overlay lessons. The shared engine expands it into 60 lessons and combines them with 240 target-market lessons."
+}
