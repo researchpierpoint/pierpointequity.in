@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "type": "target-market",
+  "slug": "south-korea",
+  "name": "South Korea",
+  "system": "KRX · FSC · FSS",
+  "sources": [
+    "https://global.krx.co.kr/",
+    "https://www.fsc.go.kr/eng/"
+  ],
+  "core": {
+    "nodeCount": 240,
+    "domains": 24,
+    "stages": 10
+  },
+  "note": "This market file supplies local context. The shared learning engine expands it into 240 destination-market lessons; it is never combined by hand with a home country."
+}
