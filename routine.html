@@ -111,6 +111,38 @@ const marketCases=[
 {id:"valuation",domains:["global","valuation"],title:"A familiar multiple may have a different context",body:"You use P/E in your home market. What should you investigate before comparing it directly with another market?",options:["Accounting, sector mix, rates, currency, capital structure and the earnings context","Only whether the number is lower","Only the five-year price chart"],correct:0},
 {id:"governance",domains:["global","risk"],title:"Governance cannot be copied from a label",body:"Two markets both have listed companies and boards. What should a cross-market researcher verify?",options:["Ownership, related parties, shareholder rights, disclosure and enforcement in the destination market","Assume board structure means governance works identically","Use the home-market governance checklist unchanged"],correct:0}
 ];
+const steps=[
+["goal","01 · PURPOSE","What do you want PirePoint to make you capable of doing?",[
+["research","Research companies independently","Build and defend a complete research process."],
+["market","Learn another market","Transfer what you know without carrying over dangerous assumptions."],
+["foundation","Build strong foundations","Understand the market before trying to analyse companies."],
+["advanced","Stress-test my understanding","Find blind spots, false confidence and weak reasoning."]
+]],
+["level","02 · STARTING POINT","Which description is closest today?",[
+["new","I'm genuinely new","Start from first principles."],
+["familiar","I know the language","I recognise the terms but want to prove I can apply them."],
+["one","I understand at least one market","Use that knowledge as a transfer baseline."],
+["experienced","I already research seriously","Skip basic definitions and attack the quality of my reasoning."]
+]],
+["sourceMarket","03 · MARKET YOU KNOW","If you already know a market, which one should PirePoint use as your baseline?",[
+["India","India",""],["United States","United States",""],["United Kingdom","United Kingdom",""],["Japan","Japan",""],["China / Hong Kong","China / Hong Kong",""],["Australia","Australia",""],["Other","Another market",""],["none","I don't have a reference market yet",""]
+]],
+["targetMarket","04 · MARKET TO LEARN","Which market should your routine actually prepare you for?",[
+["India","India",""],["United States","United States",""],["United Kingdom","United Kingdom",""],["Japan","Japan",""],["China / Hong Kong","China / Hong Kong",""],["Australia","Australia",""],["Global","Global / cross-market",""],["same","Stay with my reference market",""]
+]],
+["knowledge","05 · WHAT YOU ALREADY UNDERSTAND","Which areas would you confidently use without needing a definition?",[
+["market","Market structure & ownership"],["mechanics","Orders, trading & settlement"],["business","Business economics"],["financials","Financial statements & cash"],["valuation","Valuation"],["risk","Risk analysis"],["research","Company research"],["evidence","Evidence & sources"],["none","I would rather prove this than self-rate"]
+]],
+["time","06 · REALISTIC TIME","What can you reliably give the routine?",[
+["5","About 5 minutes"],["15","About 15 minutes"],["30","About 30 minutes"],["60","60+ minutes"]
+]],
+["mode","07 · LEARNING MODE","How should PirePoint behave when it is uncertain about what you know?",[
+["teach","Explain first","Give me the model before challenging it."],
+["practice","Challenge me early","Use cases and corrections quickly."],
+["research","Put me into research","Learn through real investigation."],
+["mixed","Adapt automatically","Choose the method from my performance."]
+]]
+];
 let s={i:0,a:{},queue:[],ci:0,answers:{},confidence:{},selectedDomains:[]};
 const q=document.getElementById("questionView"),cal=document.getElementById("calibration"),res=document.getElementById("result"),next=document.getElementById("next"),back=document.getElementById("back"),bar=document.getElementById("progress");
 const esc=x=>String(x??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;");
