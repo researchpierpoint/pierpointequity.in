@@ -19,10 +19,10 @@ const index=[
 ["United Kingdom","LSE, FCA and UK market structure.","countries/united-kingdom.html","uk britain london fca"],
 ["Glossary","Plain-English definitions of stock-market language.","glossary.html","glossary terms definition"],
 ["Compare Markets","Compare exchanges, regulators, currencies and market structures.","compare.html","compare markets countries"],
-["Research Studio","Interactive valuation, earnings, risk and research-note tools.","tools.html#research-studio","research studio valuation dcf pe earnings position size risk calculator research memo"]
+["Research Workspace","Build a company thesis with business, financials, valuation, risks and an evidence ledger.","research.html","research workspace company analysis thesis evidence valuation risks"]],
 ];
 function search(q){
- const terms=q.toLowerCase().split(/\s+/).filter(Boolean);
+ const aliases={"cheap":["p/e","valuation"],"expensive":["p/e","valuation"],"profitability":["roce","roe"],"buy":["how to buy stocks","limit order"],"order":["settlement"],"ipo":["primary market"],"etf":["funds"],"tax":["capital gains tax"],"scam":["stock market scams & fraud"],"price":["valuation"],"chart":["candlestick charts","moving averages"],"trend":["moving averages"],"earnings":["earnings call"],"cash":["cash flow statement"],"debt":["balance sheet"]}; const low=q.toLowerCase(); const expanded=[low,...Object.keys(aliases).filter(k=>low.includes(k)).flatMap(k=>aliases[k])].join(" "); const terms=expanded.split(/\s+/).filter(Boolean);
  return index.map(x=>({x,score:terms.reduce((n,t)=>n+((x[0]+" "+x[1]+" "+x[3]).toLowerCase().includes(t)?1:0),0)})).filter(x=>x.score).sort((a,b)=>b.score-a.score).slice(0,8);
 }
 if(form&&input&&out){form.addEventListener("submit",e=>{e.preventDefault();const q=input.value.trim();if(!q)return;const m=search(q);out.hidden=false;out.innerHTML=m.length?'<strong>Best matches</strong>'+m.map(z=>'<div class="search-item"><a href="'+esc(z.x[2])+'"><b>'+esc(z.x[0])+'</b></a><br><span>'+esc(z.x[1])+'</span></div>').join(""):'<strong>No close match yet.</strong><br>Try “P/E”, “ROCE”, “India”, “how to buy stocks”, “IPO”, “dividend” or “risk”.';history.replaceState(null,"","?q="+encodeURIComponent(q));});}
@@ -90,24 +90,6 @@ const daily=[["Why can a low P/E still be expensive?","Learn how earnings qualit
     const b=document.createElement("div");b.className="pp-breadcrumb";b.innerHTML='<a href="index.html">PirePoint</a><span>›</span><span>'+document.title.split("—")[0].trim()+'</span>';
     document.querySelector("main.page").prepend(b);
   }
-})();
-/* Search quality: tolerate natural questions, synonyms and partial intent. */
-(function(){
-  const f=document.getElementById("searchForm"),i=document.getElementById("searchInput"),o=document.getElementById("searchResult");
-  if(!f||!i||!o)return;
-  const aliases={
-    "cheap":["p/e","valuation"],"expensive":["p/e","valuation"],"profitability":["roce","roe"],"return on capital":["roce"],
-    "buy":["how to buy stocks","limit order"],"order":["how to buy stocks","settlement"],"ipo":["primary market"],
-    "etf":["funds"],"fund":["funds"],"tax":["capital gains tax"],"scam":["stock market scams & fraud"],
-    "price":["valuation","technical analysis"],"chart":["candlestick charts","moving averages"],"trend":["moving averages"],
-    "earnings":["how to read an earnings call"],"cash":["cash flow statement"],"debt":["balance sheet"]
-  };
-  const original=window.search;
-  if(typeof original!=="function")return;
-  window.search=function(q){
-    const expanded=[q.toLowerCase(),...Object.keys(aliases).filter(k=>q.toLowerCase().includes(k)).flatMap(k=>aliases[k])].join(" ");
-    return original(expanded);
-  };
 })();
 /* Guide reading experience: orient the reader before asking for attention. */
 (function(){
