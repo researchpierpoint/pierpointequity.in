@@ -31,3 +31,43 @@ const nav=document.querySelector(".nav nav"); if(nav&&!document.querySelector(".
 const path=location.pathname; if(path.endsWith("index.html")||path.endsWith("/")){const last=localStorage.getItem("pirepoint:last-guide");const holder=document.getElementById("continueLearning");if(holder&&last){holder.innerHTML='<span class="tag">CONTINUE LEARNING</span><h3>Pick up where you left off</h3><p>You were exploring a guide. Continue without starting over.</p><a href="'+esc(last)+'">Continue →</a>';holder.hidden=false;}}
 })();
 const daily=[["Why can a low P/E still be expensive?","Learn how earnings quality, growth and valuation interact.","guides/pe-ratio.html"],["What does ROCE actually tell you?","Understand capital efficiency before comparing companies.","guides/roce.html"],["How does a stock order become a completed trade?","Follow the path from broker to settlement.","guides/settlement-explained.html"],["What should you check before buying a stock?","Use a repeatable company-research framework.","guides/how-to-analyse-a-stock.html"],["How do Indian and US markets differ?","Compare the rules that change across countries.","compare.html"],["How can you spot an investment scam?","Learn the red flags before money leaves your account.","guides/fraud-and-scams.html"]];const dq=document.getElementById("dailyQuestion"),dd=document.getElementById("dailyDescription"),dl=document.getElementById("dailyLink");if(dq&&dd&&dl){const d=new Date();const x=daily[Math.floor((Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000))%daily.length];dq.textContent=x[0];dd.textContent=x[1];dl.href=x[2];}
+
+/* PirePoint interaction layer — calm, useful, never manipulative */
+(function(){
+  if(document.body.dataset.ppEnhanced)return; document.body.dataset.ppEnhanced="1";
+  const qs=(s,r=document)=>r.querySelector(s);
+  const make=(tag,cls,html)=>{const e=document.createElement(tag);e.className=cls||"";if(html!==undefined)e.innerHTML=html;return e};
+
+  /* Keyboard-first search: "/" opens the existing search; Esc closes result states. */
+  addEventListener("keydown",e=>{
+    if(e.key==="/" && !/input|textarea|select/i.test(document.activeElement?.tagName||"")){
+      const i=qs("#searchInput"); if(i){e.preventDefault();i.focus();i.select();}
+    }
+    if(e.key==="Escape"){const r=qs("#searchResult");if(r)r.hidden=true;qs("#searchInput")?.blur();}
+  });
+
+  /* Reveal content as it becomes relevant — no animation when motion is reduced. */
+  if(!matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObserver" in window){
+    const els=[...document.querySelectorAll(".section,.card,.feature,.source-card,.notice,.tool-card,.country-card,.guide-card")];
+    els.forEach((el,i)=>{el.classList.add("pp-reveal");el.style.setProperty("--pp-delay",Math.min(i%6,5)*45+"ms");});
+    const io=new IntersectionObserver(entries=>{
+      entries.forEach(x=>{if(x.isIntersecting){x.target.classList.add("pp-visible");io.unobserve(x.target);}});
+    },{rootMargin:"0px 0px -8% 0px",threshold:.04});
+    els.forEach(x=>io.observe(x));
+  }
+
+  /* A quiet back-to-top control appears only after the reader has travelled. */
+  const top=make("button","pp-top","↑<span>Top</span>");
+  top.type="button";top.setAttribute("aria-label","Back to top");top.hidden=true;
+  document.body.appendChild(top);
+  addEventListener("scroll",()=>{top.hidden=scrollY<900},{passive:true});
+  top.onclick=()=>scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+
+  /* Copyable deep links for headings make research easier to share. */
+  document.querySelectorAll("main article h2[id],main .prose h2[id]").forEach(h=>{
+    if(h.querySelector(".pp-anchor"))return;
+    const b=make("button","pp-anchor","§");b.type="button";b.title="Copy link to this section";b.setAttribute("aria-label","Copy link to this section");
+    b.onclick=async()=>{try{await navigator.clipboard.writeText(location.origin+location.pathname+"#"+h.id);b.textContent="✓";setTimeout(()=>b.textContent="§",1200)}catch(e){}};
+    h.appendChild(b);
+  });
+})();
