@@ -43,7 +43,7 @@ function showState(name){
   if(qs("#researchTitle"))qs("#researchTitle").textContent=name;
   if(qs("#researchStateText"))qs("#researchStateText").textContent="Local research workspace · evidence and assumptions are kept separate.";
 }
-function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",""":"&quot;","'":"&#39;"}[c]))}
+function esc(s){return String(s??"").replace(/[&<>"']/g,function(c){return c==="&"?"&amp;":c==="<"?"&lt;":c===">"?"&gt;":c==='"'?"&quot;":"&#39;"})}
 function stateClass(s){return String(s||"").toLowerCase().replace(/[^a-z]+/g,"-")}
 function renderEvidence(list){
   const out=qs("#evidenceList");if(!out)return;
