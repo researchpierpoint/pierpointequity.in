@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Research Compare — PirePoint Equity</title>
+<meta name="description" content="Compare two PirePoint research workspaces using the same business, quality, valuation, risk and evidence framework.">
+<link rel="stylesheet" href="assets/style.css"><link rel="canonical" href="https://pierpointequity.in/research-compare.html">
+</head><body>
+<header class="site-header"><div class="wrap nav"><a class="brand" href="index.html"><span class="mark">P</span><span>PirePoint <b>Equity</b></span></a><nav><a href="guides.html">Guides</a><a href="research-hub.html">Research Hub</a><a class="active" href="research-compare.html">Compare</a><a href="tools.html">Tools</a></nav><a class="nav-search" href="research-hub.html">Research</a></div></header>
+<main class="wrap page compare-research-page">
+<div class="pp-breadcrumb"><a href="index.html">PirePoint</a><span>›</span><span>Research Compare</span></div>
+<section class="compare-research-hero">
+<span class="eyebrow">RESEARCH COMPARE</span><h1>Compare the reasoning.<br><em>Not just the numbers.</em></h1>
+<p class="lead">Put two research workspaces through the same questions. PirePoint deliberately avoids a winner score: the useful output is where the evidence, assumptions and unknowns differ.</p>
+<div class="compare-selectors">
+<label>Company / asset A<select id="compareA"><option value="">Select a workspace</option></select></label>
+<div class="versus">VS</div>
+<label>Company / asset B<select id="compareB"><option value="">Select a workspace</option></select></label>
+</div>
+<div class="compare-actions"><button class="button" id="compareRun" type="button">Build comparison →</button><a class="button secondary" href="research-hub.html">Back to Research Hub</a></div>
+<p id="compareEmpty" class="fine">Create at least two research workspaces first. Your research stays local to this browser.</p>
+</section>
+
+<section id="compareResult" class="compare-result" hidden>
+<div class="compare-summary card"><div><span class="tag">COMPARISON LENS</span><h2 id="compareTitle">—</h2><p id="compareSummaryText" class="muted">—</p></div><div class="compare-meta"><span>Evidence A <b id="countA">0</b></span><span>Evidence B <b id="countB">0</b></span><span>Verified A <b id="verifiedA">0</b></span><span>Verified B <b id="verifiedB">0</b></span></div></div>
+<div class="compare-table-wrap card"><div class="compare-table-head"><div><span class="tag">SAME QUESTIONS</span><h2>What changes between the two cases?</h2><p class="muted">Read across each row. Blank or unverified fields are information too.</p></div></div><div id="compareTable"></div></div>
+<div class="compare-insights grid three"><article class="card"><span class="tag">SHARED</span><h3>What both theses depend on</h3><div id="sharedList"></div></article><article class="card"><span class="tag">DIFFERENT</span><h3>Where the research diverges</h3><div id="differentList"></div></article><article class="card"><span class="tag">UNKNOWN</span><h3>What still needs evidence</h3><div id="unknownList"></div></article></div>
+<div class="compare-note notice"><b>Research discipline:</b> a comparison is only as strong as the evidence behind each side. Differences in data quality, date or source can matter as much as differences in the underlying business.</div>
+</section>
+</main><footer class="footer"><div class="wrap fine">PirePoint Equity · <a href="methodology.html">Methodology</a> · <a href="disclosures.html">Disclosures</a></div></footer>
+<script src="assets/research-compare.js"></script><script src="assets/app.js"></script></body></html>
