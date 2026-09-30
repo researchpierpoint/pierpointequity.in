@@ -20,6 +20,7 @@ function migrate(){
 }
 function blank(){return{company:"",fields:{},evidence:[],fin:{},scenario:{},journal:[]}}
 function read(){migrate();const a=all();return a.find(x=>x.id===workspaceId)||blank()}
+function recordLearner(topic,kind,meta){try{const key="ppSystemV2",s=JSON.parse(localStorage.getItem(key)||"{}");s.performance=s.performance||[];s.performance.push({topic,kind,timestamp:new Date().toISOString(),...meta});s.performance=s.performance.slice(-200);s.routine=s.routine||{};s.routine.performance=s.performance;s.routine.updatedAt=new Date().toISOString();localStorage.setItem(key,JSON.stringify(s));}catch(e){}}
 function write(x){
   migrate();const a=all();const i=a.findIndex(z=>z.id===workspaceId);
   const now=new Date().toISOString();
@@ -73,6 +74,7 @@ window.startResearch=function(){
 window.saveWorkspace=function(msg){
   const x=collect();x.evidence=read().evidence||[];write(x);showState(x.company);
   if(qs("#workspaceStatus"))qs("#workspaceStatus").textContent=msg||"Saved on this device.";
+  recordLearner("research","workspace",{company:x.company,evidenceCount:(x.evidence||[]).length,verified:(x.evidence||[]).filter(z=>z.state==="Verified").length});
   updateCounts();
 };
 window.clearWorkspace=function(){
