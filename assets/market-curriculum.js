@@ -29,5 +29,39 @@ function render(){
  search.addEventListener("input",filter);level.addEventListener("change",filter);
  root.querySelector("#mccReset").addEventListener("click",()=>{if(confirm("Reset your "+market+" curriculum progress?")){done.clear();save();render();}});
 }
-fetch("../data/market-catalog.json").then(r=>r.json()).then(data=>{window.__PirePointMarketCatalog=data;render();}).catch(()=>render());
+const MARKET_PROFILES={
+"United States":{regulator:"SEC",venues:"NYSE / Nasdaq",currency:"USD",terms:["10-K","10-Q","8-K","ETF","ADR","market maker"]},
+"India":{regulator:"SEBI",venues:"NSE / BSE",currency:"INR",terms:["demat","F&O","T+1","promoter","circuit limits"]},
+"China":{regulator:"CSRC",venues:"Shanghai / Shenzhen",currency:"CNY",terms:["A-shares","Northbound","STAR Market","SSE","SZSE"]},
+"Hong Kong":{regulator:"SFC",venues:"HKEX",currency:"HKD",terms:["H-shares","Stock Connect","lot size","HKEX","Hang Seng"]},
+"Japan":{regulator:"FSA / JPX",venues:"Tokyo Stock Exchange",currency:"JPY",terms:["TOPIX","Nikkei","Prime Market","kabushiki","shareholder return"]},
+"United Kingdom":{regulator:"FCA",venues:"London Stock Exchange",currency:"GBP",terms:["AIM","FTSE","UK Listing Rules","stamp duty","ISA"]},
+"Australia":{regulator:"ASIC",venues:"ASX",currency:"AUD",terms:["CHESS","ASX 200","franking credits","superannuation","CDI"]},
+"Canada":{regulator:"CSA / provincial regulators",venues:"TSX / TSXV",currency:"CAD",terms:["TSX","TSXV","REIT","resource stocks","SEDAR+"]},
+"South Korea":{regulator:"FSC / FSS",venues:"KRX",currency:"KRW",terms:["KOSPI","KOSDAQ","chaebol","KRX","foreign ownership"]},
+"Germany":{regulator:"BaFin",venues:"Frankfurt / Xetra",currency:"EUR",terms:["Xetra","DAX","BaFin","German GAAP","dual listing"]},
+"Singapore":{regulator:"MAS",venues:"SGX",currency:"SGD",terms:["SGX","REIT","CPF","CDL","S-REIT"]},
+"United Arab Emirates":{regulator:"SCA",venues:"ADX / DFM",currency:"AED",terms:["ADX","DFM","GCC","free float","regional exposure"]}
+};
+const DOMAINS=["orientation","access","structure","instruments","corporate-actions","trading","clearing","regulation","reporting","accounting","ownership","governance","tax","currency","macro","sectors","business","financials","cash","returns","capital","valuation","risk","research","sources","disclosure","information","behaviour","comparison","application"];
+const STAGES=["foundation","local rules","how it works","investor view","company impact","research method","common traps","real example","practice","mastery"];
+function fallbackNodes(market){
+ const p=MARKET_PROFILES[market]||{regulator:"local regulator",venues:"local exchanges",currency:"local currency",terms:[]};
+ return DOMAINS.flatMap((domain,di)=>STAGES.map((stage,si)=>{
+   const number=di*10+si+1;
+   const level=si<3?"beginner":si<7?"intermediate":"advanced";
+   const local=domain==="regulation"?p.regulator:domain==="trading"?p.venues:domain==="currency"?p.currency:p.terms[(di+si)%Math.max(1,p.terms.length)]||market;
+   return {id:market.toLowerCase().replace(/[^a-z0-9]+/g,"-")+"-"+number,number,domain,title:market+" "+domain.replace(/-/g," ")+" — "+stage,objective:"Understand how "+stage+" works for "+domain.replace(/-/g," ")+" in "+market+"; apply it to "+local+".",learn:"Study the local rule, mechanism and investor consequence, then explain it in your own words.",difficulty:level,proof:"Apply this to a real "+market+" company, instrument or market event.",primarySources:[]};
+ }));
+}
+const originalRender=render;
+render=function(){
+ const catalog=window.__PirePointMarketCatalog;
+ if(!catalog || !Object.keys(catalog.markets||{}).length){
+   window.__PirePointMarketCatalog={markets:{}};
+   window.__PirePointMarketCatalog.markets[market]={learningPath:{nodes:fallbackNodes(market)}};
+ }
+ return originalRender();
+};
+fetch("../data/market-catalog.json").then(r=>r.ok?r.json():{}).then(data=>{window.__PirePointMarketCatalog=data||{};render();}).catch(()=>render());
 })();
