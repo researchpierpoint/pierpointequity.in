@@ -60,7 +60,34 @@ for folder in ("guides","countries"):
     shutil.copytree(ROOT/folder,target)
     for p in target.rglob("*.html"):
         copy_html(p,p)
+# Static assets are part of the public site. Copy them into the deployment artifact
+# so HTML references such as assets/style.css and assets/app.js always resolve.
+ASSETS=ROOT/"assets"
+if ASSETS.exists():
+    shutil.copytree(ASSETS, OUT/"assets")
+else:
+    raise SystemExit("Build failed: required assets/ directory is missing")
+
 for name in ("CNAME","robots.txt","sitemap.xml"):
     p=ROOT/name
     if p.exists(): shutil.copy2(p,OUT/p.name)
 print(f"Built public site: {OUT}")
+
+# Fail the build if a published HTML page references a missing local asset.
+# This prevents a successful GitHub Pages deployment from shipping an unstyled site.
+import re
+for page in OUT.rglob("*.html"):
+    page_text=page.read_text(encoding="utf-8")
+    refs=re.findall(r'(?:href|src)=["']([^"']+)["']', page_text, flags=re.I)
+    for ref in refs:
+        ref=ref.split("#",1)[0].split("?",1)[0]
+        if not ref or ref.startswith(("#","/","http://","https://","mailto:","tel:","javascript:","data:")):
+            continue
+        target=(page.parent/ref).resolve()
+        if not target.exists():
+            raise SystemExit(f"Build failed: missing local asset {ref} referenced by {page.relative_to(OUT)}")
+
+required=OUT/"assets/style.css"
+if not required.is_file() or required.stat().st_size < 1000:
+    raise SystemExit("Build failed: assets/style.css is missing or unexpectedly small")
+print(f"Verified public assets: {required.stat().st_size} bytes CSS")
