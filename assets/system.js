@@ -94,3 +94,34 @@ const add=$("#addEvidence");add?.addEventListener("click",()=>{const claim=$("#c
 function renderEvidence(){const g=$("#evidenceTrail");if(!g)return;g.innerHTML=(s.evidence||[]).map((e,i)=>'<article><div><b>'+e.claim.replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]))+'</b><span class="evidence-status '+e.status.toLowerCase()+'">'+e.status+'</span></div><small>'+e.source+' · '+e.date+'</small></article>').join("")||'<div class="empty-review">Your evidence trail is empty. Add one material claim to begin.</div>'}
 renderEvidence();
 })();
+
+/* Unified adaptive routine bridge: routine.html is the learner-model source of truth. */
+(function(){
+"use strict";
+try{
+ const raw=localStorage.getItem("ppSystemV1");
+ const s=raw?JSON.parse(raw):{};
+ const r=s.routine;
+ const title=document.getElementById("adaptiveRouteTitle");
+ const copy=document.getElementById("adaptiveRouteCopy");
+ const steps=document.getElementById("adaptiveRouteSteps");
+ const delta=document.getElementById("adaptiveRouteDelta");
+ const actions=document.getElementById("adaptiveRouteActions");
+ if(!title)return;
+ if(!r||!r.calibrated||!Array.isArray(r.route)||!r.route.length){
+   title.textContent="Build your first adaptive routine.";
+   copy.textContent="The routine diagnostic tests applied understanding instead of trusting a self-selected level. Once complete, this page becomes the control centre around it.";
+   actions.hidden=false;
+   actions.innerHTML='<a class="button" href="routine.html">Build My Routine →</a>';
+   return;
+ }
+ const a=r.answers||{};
+ title.textContent="Continue your "+(a.goal==="research"?"research":a.goal==="market"?"market-transfer":"learning")+" route.";
+ copy.textContent="Last calibrated "+new Date(r.updatedAt).toLocaleDateString()+" · The route changes when new evidence changes your demonstrated strengths or gaps.";
+ steps.innerHTML=r.route.map((x,i)=>'<div><b>'+String(i+1).padStart(2,"0")+'</b><span><strong>'+String(x.label||"").replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]))+'</strong><small>'+String(x.why||"").replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]))+'</small></span></div>').join("");
+ if(a.target&&a.target!=="same"&&a.target!==a.market){delta.hidden=false;delta.innerHTML='<strong>MARKET TRANSFER ACTIVE</strong><p>Your routine is treating '+String(a.target)+' as a destination rather than assuming your '+String(a.market)+' knowledge transfers unchanged.</p>';}else delta.hidden=true;
+ actions.hidden=false;
+ const first=r.route[0]||{};
+ actions.innerHTML='<a class="button" href="'+(first.resource||"learn.html")+'">Continue next step →</a><a class="button secondary" href="routine.html">Recalibrate →</a>';
+}catch(e){}
+})();
