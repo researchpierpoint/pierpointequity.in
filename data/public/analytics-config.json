@@ -1,7 +1,0 @@
-{
-  "version": "1.0",
-  "provider": "GA4",
-  "measurement_id": "",
-  "enabled": false,
-  "notes": "Set measurement_id to the GA4 G-XXXXXXXXXX property ID after creating the PirePoint web data stream. Until then no visitor numbers are fabricated."
-}
