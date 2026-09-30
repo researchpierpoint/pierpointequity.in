@@ -113,10 +113,8 @@ const daily=[["Why can a low P/E still be expensive?","Learn how earnings qualit
 (function(){
   const main=document.querySelector("main.page");
   const article=main?.querySelector("article.card");
-  if(!main||!article||!document.querySelector(".guide-context")){
-    if(!main||!article)return;
-  }
-  if(main&&!main.querySelector(".guide-context")){
+  if(!main||!article)return;
+  if(!main.querySelector(".guide-context")){
     const lead=main.querySelector(".lead");
     const box=document.createElement("aside");
     box.className="guide-context";
