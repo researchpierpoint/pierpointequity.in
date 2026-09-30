@@ -233,3 +233,89 @@ const daily=[["Why can a low P/E still be expensive?","Learn how earnings qualit
     }));
   });
 })();
+
+
+/* PirePoint Experience OS — contextual continuity layer */
+(function(){
+  if(document.body.dataset.ppExperienceOs)return;
+  document.body.dataset.ppExperienceOs="1";
+  const q=(s,r=document)=>r.querySelector(s);
+  const path=location.pathname.replace(/^\//,"");
+  const home=!path||path==="index.html";
+  const routine=path==="routine.html";
+  const learn=path==="learn.html";
+  const intelligence=path==="intelligence.html";
+  const research=/research/.test(path);
+  const add=(tag,cls,html)=>{const e=document.createElement(tag);e.className=cls;if(html!=null)e.innerHTML=html;return e};
+
+  /* Header changes weight after the reader has actually moved. */
+  const header=q(".site-header");
+  if(header)addEventListener("scroll",()=>header.classList.toggle("pp-scrolled",scrollY>20),{passive:true});
+
+  /* Make the journey explicit without adding another giant navigation system. */
+  const main=q("main");
+  if(main && home && !q(".pp-journey")){
+    const hero=q(".hero-home");
+    if(hero){
+      const journey=add("nav","pp-journey",[
+        ["01","ORIENT","Tell us what you need","Choose a question, market, learning route or research task."],
+        ["02","EXPLORE","Follow the useful path","PirePoint progressively reveals the depth you need."],
+        ["03","PROVE","Test your understanding","Cases, labs and research work turn reading into evidence."],
+        ["04","CONTINUE","Never start over","Your next useful step follows what you actually did."]
+      ].map(x=>'<a href="'+(x[1]==="ORIENT"?"#start":x[1]==="EXPLORE"?"#start":x[1]==="PROVE"?"learn.html#advanced":"routine.html")+'"><span>'+x[0]+" · "+x[1]+'</span><b>'+x[2]+'</b><small>'+x[3]+'</small></a>').join(""));
+      hero.appendChild(journey);
+    }
+  }
+
+  /* A page should answer “what do I do next?” without spraying recommendations everywhere. */
+  if(main && !home && !q(".pp-focus-strip") && !/countries\//.test(path)){
+    const h=q("h1");
+    if(h){
+      const strip=add("div","pp-focus-strip",'<span><b>'+(
+        routine?"Build my route":learn?"Learning system":intelligence?"Company intelligence":research?"Research mode":"PirePoint"
+      )+'</b> · stay oriented</span><a href="index.html">Home</a><a href="routine.html">Build my routine</a><a href="intelligence.html">Research</a>');
+      const firstSection=main.querySelector("section");
+      if(firstSection)firstSection.insertBefore(strip,firstSection.firstChild);
+    }
+  }
+
+  /* Contextual “next step” is deliberately singular: one strong continuation beats a recommendation wall. */
+  if(main && !home && !routine){
+    const existing=main.querySelector(".pp-next-action");
+    if(!existing){
+      let href="routine.html",label="Build your personal route";
+      if(learn){href="case-school.html";label="Prove the framework in Case School";}
+      else if(intelligence){href="research-hub.html";label="Carry the intelligence view into a research workspace";}
+      else if(research){href="case-school.html";label="Challenge the reasoning in Case School";}
+      const anchor=main.querySelector("section:last-of-type")||main.lastElementChild;
+      if(anchor){
+        const next=add("aside","pp-next-action",'<div><span class="tag">ONE USEFUL NEXT STEP</span><h3>'+label+'</h3><p>Continue from the work you just did. You should never have to decide what to do next from a blank page.</p></div><a class="button" href="'+href+'">Continue →</a>');
+        anchor.parentNode.insertBefore(next,anchor);
+      }
+    }
+  }
+
+  /* Routine gets a calm “why” context before the diagnostic rather than another instruction block. */
+  if(routine){
+    const first=q("main section");
+    if(first&&!q(".pp-context"))first.insertBefore(add("div","pp-context","PirePoint is not trying to measure how much you remember. It is trying to discover what you can actually use."),first.firstChild);
+  }
+
+  /* Intelligence pages gain a stronger scan hierarchy: one primary question per evidence block. */
+  if(intelligence){
+    q(".intel-grid")?.querySelectorAll(".intel-card").forEach((card,i)=>{
+      card.style.setProperty("--intel-order",i+1);
+      card.setAttribute("tabindex","0");
+    });
+  }
+
+  /* Gentle keyboard shortcut hint on the search control. */
+  const search=q("#searchInput");
+  if(search&&!q(".pp-search-hint")){
+    const wrap=search.closest("form");
+    if(wrap&&!wrap.querySelector(".pp-search-hint")){
+      const hint=add("span","pp-search-hint","Press <kbd>/</kbd> to search anywhere");
+      wrap.insertAdjacentElement("afterend",hint);
+    }
+  }
+})();
