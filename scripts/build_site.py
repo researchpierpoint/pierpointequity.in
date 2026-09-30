@@ -78,7 +78,7 @@ print(f"Built public site: {OUT}")
 import re
 for page in OUT.rglob("*.html"):
     page_text=page.read_text(encoding="utf-8")
-    refs=re.findall(r'(?:href|src)=["']([^"']+)["']', page_text, flags=re.I)
+    refs=re.findall(r"(?:href|src)=['\"]([^'\"]+)['\"]", page_text, flags=re.I)
     for ref in refs:
         ref=ref.split("#",1)[0].split("?",1)[0]
         if not ref or ref.startswith(("#","/","http://","https://","mailto:","tel:","javascript:","data:")):
