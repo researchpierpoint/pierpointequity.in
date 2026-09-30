@@ -23,6 +23,7 @@
 .r-expert-note{margin-top:14px;padding:12px 14px;border-radius:11px;background:#f1f5df;color:#5a6339;font-size:11px;line-height:1.5}
 @media(max-width:850px){.r-transfer-grid{grid-template-columns:repeat(2,1fr)}.r-transfer-cell:nth-child(3n){border-right:1px solid #dbe3c3}.r-transfer-cell:nth-child(2n){border-right:0}.r-check-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.r-transfer-grid,.r-check-grid{grid-template-columns:1fr}.r-transfer-cell{border-right:0!important}}
+.r-market-picker{margin-top:20px}.r-market-search{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:12px;padding:13px 14px;font:inherit;font-size:13px;outline:none}.r-market-search:focus{border-color:var(--routine-accent);box-shadow:0 0 0 3px rgba(105,117,45,.08)}.r-market-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:12px;max-height:390px;overflow:auto;padding-right:2px}.r-market-option{border:1px solid var(--line);background:#fff;border-radius:13px;padding:13px;text-align:left;cursor:pointer}.r-market-option:hover{border-color:#9aa27e}.r-market-option.selected{border-color:var(--routine-accent);background:var(--routine-soft)}.r-market-option b{display:block;font-size:13px}.r-market-option small{display:block;color:var(--muted);font-size:10px;line-height:1.4;margin-top:3px}.r-custom-market{display:none;margin-top:12px;padding:14px;border:1px dashed #b9c29a;border-radius:13px;background:#fafbf5}.r-custom-market.show{display:block}.r-custom-market label{display:block;font-size:10px;font-weight:850;text-transform:uppercase;letter-spacing:.08em;color:var(--routine-accent)}.r-custom-market input{width:100%;box-sizing:border-box;margin-top:7px;border:1px solid var(--line);border-radius:10px;padding:11px;font:inherit}.r-market-meta{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.r-market-meta span{font-size:9px;padding:5px 7px;border-radius:999px;background:#f4f5f1;color:#5e635b}.r-syllabus{border-top:1px solid #dbe3c3;padding:18px 20px}.r-syllabus-head{display:flex;justify-content:space-between;gap:12px;align-items:end}.r-syllabus-head b{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#65732b}.r-syllabus-head span{font-size:10px;color:var(--muted)}.r-syllabus-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:11px}.r-syllabus-item{padding:10px;border:1px solid #e0e4d6;border-radius:10px;background:#fff}.r-syllabus-item b{display:block;font-size:10px}.r-syllabus-item span{display:block;color:var(--muted);font-size:9px;line-height:1.4;margin-top:3px}@media(max-width:850px){.r-market-grid,.r-syllabus-grid{grid-template-columns:1fr 1fr}}@media(max-width:560px){.r-market-grid,.r-syllabus-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -117,8 +118,9 @@ const fallbackKG={
  research:["Independent research","research.html"],
  redteam:["Red-team thinking","intelligence.html"]
 };
-let MARKET_DATA={};
+let MARKET_DATA={};let MARKET_CATALOG={markets:{},universalModules:[]};
 fetch("data/market-transfer.json").then(r=>r.ok?r.json():null).then(g=>{if(g)MARKET_DATA=g}).catch(()=>{});
+fetch("data/market-catalog.json").then(r=>r.ok?r.json():null).then(g=>{if(g)MARKET_CATALOG=g}).catch(()=>{});
 let KG=Object.fromEntries(Object.entries(fallbackKG).map(([k,v])=>[k,{label:v[0],resource:v[1]}]));
 fetch("data/knowledge-graph.json").then(r=>r.ok?r.json():null).then(g=>{if(g?.nodes)Object.entries(g.nodes).forEach(([k,v])=>{if(KG[k]){KG[k].label=v.label||KG[k].label;KG[k].resource=v.resources?.[0]||KG[k].resource}})}).catch(()=>{});
 const cases=[
@@ -176,27 +178,43 @@ const steps=[
 ["mixed","Adapt automatically","Choose the method from my performance."]
 ]]
 ];
+const marketCatalogFallback=["United States","China","Japan","Hong Kong","India","Canada","South Korea","United Kingdom","Germany","Australia","United Arab Emirates","Singapore"];
+function marketChoices(){const names=Object.keys(MARKET_CATALOG.markets||{});return (names.length?names:marketCatalogFallback).map(x=>[x,x,""])}
+function marketDisplay(kind){const raw=kind==="sourceMarket"?s.a.sourceMarket:s.a.targetMarket;if(raw==="Other")return (kind==="sourceMarket"?s.a.sourceMarketCustom:s.a.targetMarketCustom)||"Another market";return raw||"Not set"}
+function marketProfile(kind){const raw=kind==="sourceMarket"?s.a.sourceMarket:s.a.targetMarket;return (MARKET_CATALOG.markets||{})[raw]||null}
+function marketReady(kind){const raw=kind==="sourceMarket"?s.a.sourceMarket:s.a.targetMarket;return raw==="Other"?!!(kind==="sourceMarket"?s.a.sourceMarketCustom:s.a.targetMarketCustom):!!raw}
+function renderMarketStep(z){
+ const kind=z[0],current=s.a[kind]||"",search=(s.a[kind+"Search"]||"").toLowerCase();
+ const list=marketChoices().filter(x=>x[0].toLowerCase().includes(search)),custom=current==="Other";
+ q.innerHTML='<div class="r-step-label">'+z[1]+'</div><h2 class="r-question">'+z[2]+'</h2><p class="r-hint">'+(kind==="sourceMarket"?"Choose the market whose rules and research habits you already know. If it is not listed, enter it exactly as you know it.":"Choose the destination market. PirePoint will build the learning map around its institutions, rules, evidence, economics and company research.")+'</p><div class="r-market-picker"><input class="r-market-search" id="marketSearch" placeholder="Search a country or market…" value="'+esc(search)+'"><div class="r-market-grid">'+list.map(o=>'<button class="r-market-option '+(current===o[0]?"selected":"")+'" data-v="'+esc(o[0])+'"><b>'+esc(o[1])+'</b><small>Dedicated market guide + local learning map</small></button>').join("")+'<button class="r-market-option '+(custom?"selected":"")+'" data-v="Other"><b>Another market</b><small>Enter any country, exchange or market PirePoint should prepare you for</small></button></div><div class="r-custom-market '+(custom?"show":"")+'" id="customMarket"><label>Market name</label><input id="customMarketInput" placeholder="e.g. Taiwan, Brazil, Switzerland, Indonesia…" value="'+esc(kind==="sourceMarket"?s.a.sourceMarketCustom||"":s.a.targetMarketCustom||"")+'"></div></div>';
+ q.querySelector("#marketSearch").oninput=e=>{s.a[kind+"Search"]=e.target.value;render()};
+ q.querySelectorAll(".r-market-option").forEach(b=>b.onclick=()=>{s.a[kind]=b.dataset.v;render()});
+ q.querySelector("#customMarketInput")?.addEventListener("input",e=>{if(kind==="sourceMarket")s.a.sourceMarketCustom=e.target.value.trim();else s.a.targetMarketCustom=e.target.value.trim();next.disabled=!marketReady(kind);renderTransferPreview();side()});
+}
+function updateMarketState(){next.disabled=!(s.a[steps[s.i][0]]&&marketReady(steps[s.i][0]));renderTransferPreview();side()}
 let s={i:0,a:{},queue:[],ci:0,answers:{},confidence:{},selectedDomains:[]};
 const q=document.getElementById("questionView"),cal=document.getElementById("calibration"),res=document.getElementById("result"),next=document.getElementById("next"),back=document.getElementById("back"),bar=document.getElementById("progress");
 const esc=x=>String(x??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;");
 const getStep=k=>steps.find(x=>x[0]===k);
 const label=(k,v)=>getStep(k)?.[3].find(x=>x[0]===v)?.[1]||v;
-function side(){const map={goal:"sideGoal",level:"sideLevel",sourceMarket:"sideMarket",time:"sideTime"};Object.entries(map).forEach(([k,id])=>{const e=document.getElementById(id);if(e)e.textContent=s.a[k]?label(k,s.a[k]):"Not set"})}
+function side(){const map={goal:"sideGoal",level:"sideLevel",sourceMarket:"sideMarket",time:"sideTime"};Object.entries(map).forEach(([k,id])=>{const e=document.getElementById(id);if(e)e.textContent=k==="sourceMarket"?marketDisplay(k):(s.a[k]?label(k,s.a[k]):"Not set")})}
 function renderTransferPreview(){
  const box=document.getElementById("transferPreview");
  if(!box)return;
  if(!needsTransfer()){box.classList.remove("show");box.innerHTML="";return}
- const dest=MARKET_DATA.markets?.[s.a.targetMarket];
+ const dest=marketProfile("targetMarket");
  const focus=(dest?.focus||marketDimensions).slice(0,9).map(k=>MARKET_DATA.dimensions?.find(x=>x[0]===k)||[k,k,""]);
- const sourceLabel=s.a.sourceMarket||"your reference market";
- const destLabel=dest?.label||s.a.targetMarket;
+ const sourceLabel=marketDisplay("sourceMarket");
+ const destLabel=marketDisplay("targetMarket");
  const localFocus=esc(focus.slice(0,3).map(x=>x[1]).join(" · "));
  const prompt=esc(dest?.transferPrompt||"The routine will build a local evidence map before transferring rules.");
- box.innerHTML='<div class="r-transfer-head"><b>MARKET TRANSFER PREVIEW</b><h3>'+esc(sourceLabel)+' → '+esc(destLabel)+'</h3><p>You should not be taught this like a beginner. PirePoint will preserve transferable knowledge, isolate destination-specific differences, and deliberately test assumptions that could mislead you.</p></div><div class="r-transfer-grid"><div class="r-transfer-cell same"><b>Same</b><span>Business economics, financial reasoning, valuation concepts and research discipline can often transfer—after proof.</span></div><div class="r-transfer-cell different"><b>Different</b><span>'+localFocus+' and other local rules need destination-specific study.</span></div><div class="r-transfer-cell new"><b>New</b><span>Local sources, terminology, participants and institutional context are treated as new until verified.</span></div><div class="r-transfer-cell danger"><b>Potentially misleading</b><span>Familiar settlement, disclosure, ownership, tax or valuation assumptions are actively challenged.</span></div><div class="r-transfer-cell verify"><b>Verify</b><span>Primary exchange, regulator and issuer sources become checkpoints—not optional reading.</span></div><div class="r-transfer-cell route"><b>Route</b><span>'+prompt+'</span></div></div>';
+ const modules=(MARKET_CATALOG.universalModules||[]);const syllabus=modules.map((m,i)=>'<div class="r-syllabus-item"><b>'+String(i+1).padStart(2,"0")+' · '+esc(m[1])+'</b><span>'+esc(m[2])+'</span></div>').join("");const sourceKnown=!!marketProfile("sourceMarket"),targetKnown=!!dest;box.innerHTML='<div class="r-transfer-head"><b>MARKET TRANSFER PREVIEW</b><h3>'+esc(sourceLabel)+' → '+esc(destLabel)+'</h3><p>You should not be taught this like a beginner. PirePoint preserves transferable knowledge, isolates destination-specific differences, and deliberately tests assumptions that could mislead you.</p><div class="r-market-meta"><span>'+ (sourceKnown?"Source market mapped":"Source market entered manually") +'</span><span>'+ (targetKnown?"Destination guide available":"Universal destination framework active") +'</span><span>15-part learning map</span></div></div><div class="r-transfer-grid"><div class="r-transfer-cell same"><b>Same</b><span>Business economics, financial reasoning, valuation concepts and research discipline can transfer—after proof.</span></div><div class="r-transfer-cell different"><b>Different</b><span>'+localFocus+' and other local rules require destination-specific study.</span></div><div class="r-transfer-cell new"><b>New</b><span>Local sources, terminology, participants and institutional context are treated as new until verified.</span></div><div class="r-transfer-cell danger"><b>Potentially misleading</b><span>Familiar settlement, disclosure, ownership, tax or valuation assumptions are actively challenged.</span></div><div class="r-transfer-cell verify"><b>Verify</b><span>Primary exchange, regulator, issuer and filing sources become checkpoints—not optional reading.</span></div><div class="r-transfer-cell route"><b>Route</b><span>'+prompt+'</span></div></div><div class="r-syllabus"><div class="r-syllabus-head"><b>FULL MARKET LEARNING MAP</b><span>What the learner will eventually be able to navigate</span></div><div class="r-syllabus-grid">'+syllabus+'</div></div>';
  box.classList.add("show");
 }
 function render(){
- const z=steps[s.i], multi=z[0]==="knowledge";
+ const z=steps[s.i];
+ if(z[0]==="sourceMarket"||z[0]==="targetMarket"){renderMarketStep(z);next.disabled=!(s.a[z[0]]&&marketReady(z[0]));renderTransferPreview();back.disabled=!s.i;bar.style.width=s.i/steps.length*100+"%";side();return}
+ const multi=z[0]==="knowledge";
  const hint=z[0]==="knowledge"?"Select what you think you already understand. We will verify it; you can also choose to prove it.":"This shapes the route; it does not determine your ability. Calibration does that.";
  const options=z[3].map(o=>{
   const selected=multi?(s.a.knowledge||[]).includes(o[0]):s.a[z[0]]===o[0];
@@ -211,7 +229,7 @@ function render(){
  next.disabled=multi?!(Array.isArray(s.a.knowledge)&&s.a.knowledge.length):!s.a[z[0]];renderTransferPreview();
  back.disabled=!s.i;bar.style.width=s.i/steps.length*100+"%";side();
 }
-function needsTransfer(){return s.a.targetMarket&&s.a.targetMarket!=="same"&&s.a.targetMarket!==s.a.sourceMarket&&s.a.sourceMarket!=="none"}
+function needsTransfer(){const source=marketDisplay("sourceMarket"),target=marketDisplay("targetMarket");return !!target&&target!=="same"&&target!==source&&source!=="none"}
 function learnerSignals(){
  let perf=[];try{perf=JSON.parse(localStorage.getItem("ppSystemV2")||"{}").performance||[]}catch(e){}
  const now=Date.now(),out={};
@@ -245,7 +263,7 @@ function renderCase(){
 function buildBridge(){
  if(!needsTransfer())return [];
  const known=s.a.knowledge||[];
- const dest=MARKET_DATA.markets?.[s.a.targetMarket];
+ const dest=marketProfile("targetMarket");
  const focus=(dest?.focus||marketDimensions).map(k=>MARKET_DATA.dimensions?.find(x=>x[0]===k)||[k,k,""]);
  const bridge=[
   ["same","Already transferable",known.length?known.filter(k=>k!=="none").map(k=>domains[k]?.label||k).join(", ")+" should be tested for transfer rather than relearned.":"Core concepts should be separated from destination-specific rules."],
@@ -263,14 +281,14 @@ function result(){
  const ranked=Object.entries(stats).filter(x=>x[1].total).sort((a,b)=>((b[1].total-b[1].correct)+(b[1].highWrong*.75))-((a[1].total-a[1].correct)+(a[1].highWrong*.75)));
  const route=[],add=(k,why)=>{if(!route.some(x=>x.k===k)&&KG[k])route.push({k,label:KG[k].label,resource:KG[k].resource,why})};
  ranked.forEach(([k,v])=>{if(v.correct<v.total)add(k,v.highWrong?"High-confidence miss: PirePoint will change the teaching mode, not just repeat the definition.":"Applied evidence suggests this needs reinforcement.")});
- if(needsTransfer())add("global","Your route starts with a market-transfer map so familiar knowledge is not blindly carried across.");
- const base=s.a.goal==="research"?["business","financials","valuation","risk","research","evidence","redteam"]:s.a.goal==="advanced"?["risk","valuation","evidence","redteam","research"]:["market","mechanics","business","financials","valuation","risk"];
+ if(needsTransfer())add("global","Your route starts with a market-transfer map so familiar knowledge is not blindly carried across. The destination is treated as a full learning system, not a list of local rules.");
+ const base=s.a.goal==="market"?["global","market","mechanics","evidence","business","financials","valuation","risk","research","redteam"]:s.a.goal==="research"?["business","financials","valuation","risk","research","evidence","redteam"]:s.a.goal==="advanced"?["risk","valuation","evidence","redteam","research"]:["market","mechanics","business","financials","valuation","risk"];
  base.forEach(k=>add(k,"Dependency in the research-learning graph; it is included only as needed."));
  const bridge=buildBridge();
  const uniq=route.slice(0,8);
- let sys={};try{sys=JSON.parse(localStorage.getItem(STORE)||"{}")}catch(e){}sys.profile={...(sys.profile||{}),stage:s.a.level,goal:s.a.goal,sourceMarket:s.a.sourceMarket,targetMarket:s.a.targetMarket,depth:s.a.time,mode:s.a.mode,knownDomains:s.a.knowledge,updatedAt:new Date().toISOString()};sys.routine={version:4,calibrated:true,updatedAt:new Date().toISOString(),profile:sys.profile,domains:stats,route:uniq,transfer:bridge,results:s.queue.map(c=>({id:c.id,correct:s.answers[c.id]===c.correct,confidence:s.confidence[c.id],domains:c.domains}))};localStorage.setItem(STORE,JSON.stringify(sys));localStorage.setItem("pirepointRoutine",JSON.stringify(sys.routine));
+ let sys={};try{sys=JSON.parse(localStorage.getItem(STORE)||"{}")}catch(e){}sys.profile={...(sys.profile||{}),stage:s.a.level,goal:s.a.goal,sourceMarket:marketDisplay("sourceMarket"),targetMarket:marketDisplay("targetMarket"),sourceMarketKey:s.a.sourceMarket,targetMarketKey:s.a.targetMarket,sourceMarketCustom:s.a.sourceMarketCustom||null,targetMarketCustom:s.a.targetMarketCustom||null,depth:s.a.time,mode:s.a.mode,knownDomains:s.a.knowledge,updatedAt:new Date().toISOString()};sys.routine={version:4,calibrated:true,updatedAt:new Date().toISOString(),profile:sys.profile,domains:stats,route:uniq,transfer:bridge,results:s.queue.map(c=>({id:c.id,correct:s.answers[c.id]===c.correct,confidence:s.confidence[c.id],domains:c.domains}))};localStorage.setItem(STORE,JSON.stringify(sys));localStorage.setItem("pirepointRoutine",JSON.stringify(sys.routine));
  q.style.display="none";cal.classList.remove("show");res.classList.add("show");document.querySelector("#builder .r-actions").style.display="none";bar.style.width="100%";
- const first=uniq[0]||{label:"Market mental model",resource:"learn.html",why:"Build the dependency chain before adding complexity."};
+ const first=uniq[0]||{label:"Market orientation",resource:marketProfile("targetMarket")?.guide||"countries.html",why:"Build the destination-market map before adding complexity."};
  const bridgeHtml=bridge.length?'<div class="routine-hero-card" style="margin-top:14px"><span class="eyebrow">MARKET TRANSFER MAP</span><h2>Same · Different · New · Potentially misleading</h2><div class="r-route-grid">'+bridge.map(x=>'<div class="r-route"><b>'+esc(x[0].toUpperCase())+'</b><span>'+esc(x[1])+'</span></div>').join("")+'</div><p style="margin-top:14px;color:#c5c9c1">Destination focus is generated from PirePoint’s market-transfer framework. Primary-source checkpoints are kept separate from general learning so a rule can be verified before it becomes part of the learner’s model.</p></div>':'';
  const cards=Object.entries(stats).filter(x=>x[1].total).map(([k,v])=>'<div class="r-route"><b>'+esc(domains[k].label)+'</b><span>'+v.correct+'/'+v.total+' applied · '+(v.correct===v.total?"reliable in this calibration":"needs further work")+(v.highWrong?" · "+v.highWrong+" high-confidence miss":"")+'</span></div>').join("");
  res.innerHTML='<span class="r-step-label">YOUR ROUTINE IS READY</span><div class="routine-hero-card"><span class="eyebrow">NEXT BEST STEP</span><h2>'+esc(first.label)+'</h2><p>'+esc(first.why)+' The route is evidence-based and will change when later work gives PirePoint new evidence.</p><div class="r-route-grid">'+uniq.map((x,i)=>'<div class="r-route"><b>'+String(i+1).padStart(2,"0")+" · "+esc(x.label)+'</b><span>'+esc(x.why)+'</span></div>').join("")+'</div><div class="r-next"><div><small>Routine depth</small><b>'+esc(s.a.time==="5"?"5 min":s.a.time==="15"?"15 min":s.a.time==="30"?"30 min":"60+ min")+'</b></div><a class="r-btn r-link" href="'+esc(first.resource)+'">Start this step →</a></div></div>'+bridgeHtml+'<p class="muted" style="font-size:12px;margin-top:18px">This is not a permanent score. It is a working diagnosis: what appears reliable, what needs verification, and what should be tested next.</p><div class="r-route-grid">'+cards+'</div><div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap"><a class="r-btn r-link" href="system.html#route">Open learning system →</a><button class="r-btn secondary" id="again">Recalibrate</button></div>';
