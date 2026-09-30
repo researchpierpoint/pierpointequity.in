@@ -1,0 +1,24 @@
+{
+  "version":1,
+  "principle":"One concept can unlock many others; learning routes should follow prerequisites and the learner's stated gaps.",
+  "nodes":{
+    "market":{"label":"Market","prerequisites":[],"resources":["guides/stock-market-basics.html"]},
+    "mechanics":{"label":"Mechanics","prerequisites":["market"],"resources":["guides/how-to-buy-stocks.html"]},
+    "business":{"label":"Business","prerequisites":["market"],"resources":["guides/fundamental-analysis.html"]},
+    "financials":{"label":"Financials","prerequisites":["business"],"resources":["guides/balance-sheet.html","guides/cash-flow-statement.html"]},
+    "valuation":{"label":"Valuation","prerequisites":["financials"],"resources":["guides/pe-ratio.html","guides/dcf.html"]},
+    "risk":{"label":"Risk","prerequisites":["business","financials","valuation"],"resources":["intelligence.html","methodology.html"]},
+    "global":{"label":"Global markets","prerequisites":["market","mechanics"],"resources":["countries.html"]},
+    "research":{"label":"Research","prerequisites":["business","financials","valuation","risk"],"resources":["intelligence.html","research-hub.html"]},
+    "evidence":{"label":"Evidence","prerequisites":["research"],"resources":["methodology.html"]},
+    "red-team":{"label":"Red team","prerequisites":["risk","evidence"],"resources":["intelligence.html"]},
+    "accounting-nuance":{"label":"Accounting nuance","prerequisites":["financials"],"resources":["guides/balance-sheet.html","guides/cash-flow-statement.html"]}
+  },
+  "edges":[
+    ["market","mechanics"],["market","business"],["business","financials"],["financials","valuation"],
+    ["business","risk"],["financials","risk"],["valuation","risk"],["market","global"],
+    ["mechanics","global"],["business","research"],["financials","research"],["valuation","research"],
+    ["risk","research"],["research","evidence"],["risk","red-team"],["evidence","red-team"],
+    ["financials","accounting-nuance"]
+  ]
+}
