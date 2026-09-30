@@ -233,3 +233,16 @@ h2:hover .pp-anchor,.pp-anchor:focus-visible{opacity:1}
 .mini-lab-fields{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
 .guide-mini-lab label{font-size:11px;font-weight:750;color:var(--muted)}
 @media(max-width:900px){.studio-grid{grid-template-columns:1fr}.memo-grid,.studio-fields,.mini-lab-fields{grid-template-columns:1fr}}
+
+/* PirePoint world-class reading system */
+.pp-reading-progress{position:fixed;z-index:9999;left:0;right:0;top:0;height:3px;background:transparent;pointer-events:none}
+.pp-reading-progress span{display:block;height:100%;width:0;background:var(--accent);transition:width .08s linear}
+.pp-focus-strip{display:flex;align-items:center;gap:16px;max-width:1160px;margin:0 auto;padding:10px 22px;border-bottom:1px solid var(--line);font-size:11px;color:var(--muted)}
+.pp-focus-strip span{margin-right:auto}
+.pp-focus-strip b{color:var(--ink)}
+.pp-focus-strip a{color:var(--ink);font-weight:700;text-decoration:none}
+.pp-next-action{display:flex;align-items:center;justify-content:space-between;gap:24px;margin:40px 0 10px;padding:24px 26px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(135deg,#fff,#f7f9ee)}
+.pp-next-action h3{margin:7px 0 4px}
+.pp-next-action p{margin:0;color:var(--muted)}
+@media(max-width:700px){.pp-focus-strip{padding:9px 16px;gap:10px;overflow:auto;white-space:nowrap}.pp-next-action{display:block}.pp-next-action .button{display:inline-block;margin-top:16px}}
+@media(prefers-reduced-motion:reduce){.pp-reading-progress span{transition:none}}
