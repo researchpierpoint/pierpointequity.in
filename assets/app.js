@@ -175,4 +175,4 @@ const daily=[["Why can a low P/E still be expensive?","Learn how earnings qualit
 })();
 
 /* Global Research navigation */
-(function(){const nav=document.querySelector(".site-header nav");if(!nav||nav.querySelector('a[href="research.html"]'))return;const a=document.createElement("a");a.href="research.html";a.textContent="Research";const tools=nav.querySelector('a[href="tools.html"]');tools?nav.insertBefore(a,tools):nav.appendChild(a)})();
+(function(){const nav=document.querySelector(".site-header nav");if(!nav||nav.querySelector('a[href="research.html"]'))return;const a=document.createElement("a");a.href="research-hub.html";a.textContent="Research";const tools=nav.querySelector('a[href="tools.html"]');tools?nav.insertBefore(a,tools):nav.appendChild(a)})();
