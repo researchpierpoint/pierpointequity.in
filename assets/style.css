@@ -447,3 +447,12 @@ button,.button,.text-button,.quick-search button{min-height:40px}
 .research-home-card .button{background:#fff;color:var(--dark)}
 .research-home-card .button:hover{background:#edf1e2;color:var(--dark)}
 .research-home-card .text-button{color:#f5f6ee}
+
+
+/* Learning command card — isolated contrast contract */
+.command-grid-premium .learning-command-card,
+.command-grid-premium .learning-command-card:hover{background:var(--dark);color:#fff;border-color:var(--dark)}
+.command-grid-premium .learning-command-card strong{color:#fff}
+.command-grid-premium .learning-command-card p{color:#d4d8d0}
+.command-grid-premium .learning-command-card .command-kicker{color:#c6d87a}
+.command-grid-premium .learning-command-card .command-arrow{color:#fff}
