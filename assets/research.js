@@ -63,7 +63,7 @@ function restore(){
   Object.entries(x.scenario||{}).forEach(([k,v])=>{const e=qs('[data-scenario="'+CSS.escape(k)+'"]');if(e)e.value=v});
   if(qs("#scenarioPrice"))qs("#scenarioPrice").value=x.price||"";
   if(qs("#scenarioEps"))qs("#scenarioEps").value=x.eps||"";
-  renderEvidence(x.evidence||[]);updateCounts();
+  renderEvidence(x.evidence||[]);updateCounts();refreshExecutive();
 }
 window.startResearch=function(){
   const n=company?.value.trim();if(!n){company?.focus();return}
@@ -101,6 +101,23 @@ window.runScenario=function(){
     return '<div><strong>'+label+'</strong><span>Growth '+(g*100).toFixed(1)+'% · Margin '+(m*100).toFixed(1)+'% · P/E '+pe.toFixed(1)+'×</span><b>'+(future?'Illustrative year-3 value: ₹'+future.toFixed(2):"Enter EPS to calculate illustrative value")+'</b>'+(price>0&&future?'<small>Scenario value vs entered price: '+((future/price-1)*100).toFixed(1)+'%</small>':"")+'</div>';
   }).join("");
 };
+
+function refreshExecutive(){
+  const x=collect(),f=x.fields||{},e=x.evidence||[];
+  const set=(id,v)=>{const el=qs(id);if(el)el.textContent=v||"Not entered"};
+  set("#execCompany",x.company||"Your company");
+  set("#execThesis",f.thesis||"The thesis is not written yet. Build the evidence before the conclusion.");
+  set("#execBusiness",f.business?"Business model entered":"Business model open");
+  set("#execQuality",(f.roce||f.roe||f.margin)?"Quality metrics entered":"Quality evidence open");
+  set("#execFinancials",Object.values(x.fin||{}).some(Boolean)?"Financial history entered":"Financial history open");
+  set("#execValuation",f["risk-valuation"]||x.scenario&&Object.values(x.scenario).some(Boolean)?"Expectations entered":"Valuation expectations open");
+  set("#execRisk",(f["risk-business"]||f["risk-governance"])?"Risk case entered":"Red-team case open");
+  set("#execEvidence",e.filter(z=>z.state==="Verified").length+" verified · "+e.length+" total");
+  const next=qs("#execNext");
+  const checks=[[!f.business,"Explain what the business sells and who pays."],[!f["revenue-driver"],"Identify the true revenue driver."],[!f.roce,"Verify return on capital."],[!e.some(z=>z.state==="Verified"),"Add primary-source evidence."],[!f["risk-valuation"],"Ask what today's price already assumes."],[!f.thesis,"Write the thesis only after testing it."]];
+  if(next){const n=checks.find(z=>z[0]);next.textContent=n?n[1]:"Challenge the thesis with contradictory evidence."}
+  const state=qs("#execState");if(state){const verified=e.filter(z=>z.state==="Verified").length;state.textContent=verified?"EVIDENCE ACTIVE":"RESEARCHING"} 
+}
 function refreshCockpit(){
   const x=collect(),vals=Object.values(x.fields||{}),fin=Object.values(x.fin||{}),ev=x.evidence||[];
   const total=16,done=vals.filter(Boolean).length+fin.filter(Boolean).length+ev.filter(z=>z.state==="Verified").length;
