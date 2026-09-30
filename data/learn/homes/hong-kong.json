@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "type": "home-country",
+  "slug": "hong-kong",
+  "name": "Hong Kong",
+  "overlayCount": 60,
+  "domains": 6,
+  "stages": 10,
+  "context": "Hong Kong residents investing abroad need to understand HK broker/custody, currency, tax and destination-market access considerations, with the exact treatment depending on the investor and instrument.",
+  "note": "This file supplies home-country overlay lessons. The shared engine expands it into 60 lessons and combines them with 240 target-market lessons."
+}
