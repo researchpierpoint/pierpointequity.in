@@ -91,3 +91,21 @@ const daily=[["Why can a low P/E still be expensive?","Learn how earnings qualit
     document.querySelector("main.page").prepend(b);
   }
 })();
+/* Search quality: tolerate natural questions, synonyms and partial intent. */
+(function(){
+  const f=document.getElementById("searchForm"),i=document.getElementById("searchInput"),o=document.getElementById("searchResult");
+  if(!f||!i||!o)return;
+  const aliases={
+    "cheap":["p/e","valuation"],"expensive":["p/e","valuation"],"profitability":["roce","roe"],"return on capital":["roce"],
+    "buy":["how to buy stocks","limit order"],"order":["how to buy stocks","settlement"],"ipo":["primary market"],
+    "etf":["funds"],"fund":["funds"],"tax":["capital gains tax"],"scam":["stock market scams & fraud"],
+    "price":["valuation","technical analysis"],"chart":["candlestick charts","moving averages"],"trend":["moving averages"],
+    "earnings":["how to read an earnings call"],"cash":["cash flow statement"],"debt":["balance sheet"]
+  };
+  const original=window.search;
+  if(typeof original!=="function")return;
+  window.search=function(q){
+    const expanded=[q.toLowerCase(),...Object.keys(aliases).filter(k=>q.toLowerCase().includes(k)).flatMap(k=>aliases[k])].join(" ");
+    return original(expanded);
+  };
+})();
