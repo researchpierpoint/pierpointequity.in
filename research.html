@@ -65,6 +65,15 @@
 </aside>
 
 <div class="research-main">
+<section class="research-section card mission-builder" id="mission-builder">
+<div class="research-section-head"><span class="step">00</span><div><span class="tag">RESEARCH MISSION</span><h2>Turn curiosity into a finite investigation.</h2><p class="muted">Choose the question you are actually trying to answer. PirePoint will create a compact mission instead of asking you to research everything.</p></div></div>
+<div class="mission-builder-grid">
+<label>What are you trying to understand?<select id="missionGoal"><option value="business">How the business works</option><option value="quality">Whether the economics are durable</option><option value="cash">Whether profit becomes cash</option><option value="valuation">What the current price requires</option><option value="risk">What could break the thesis</option><option value="global">How this market differs from another</option></select></label>
+<label>How much time do you have?<select id="missionTime"><option value="15">15 minutes</option><option value="30">30 minutes</option><option value="60">1 hour</option><option value="deep">Deep research</option></select></label>
+<button class="button" id="buildMission" type="button">Build my mission →</button>
+</div>
+<div id="missionOutput" class="mission-output" hidden></div>
+</section>
 <section id="business" class="research-section card">
 <div class="research-section-head"><span class="step">01</span><div><span class="tag">BUSINESS</span><h2>Can you explain how this company makes money?</h2><p class="muted">If the economic engine is unclear, the numbers are harder to interpret.</p></div></div>
 <div class="research-grid">
@@ -148,4 +157,21 @@
 </main>
 <footer class="footer"><div class="wrap fine">PirePoint Equity · <a href="methodology.html">Methodology</a> · <a href="disclosures.html">Disclosures</a></div></footer>
 <script src="assets/research.js"></script><script src="assets/app.js"></script>
-</body></html>
+<script>
+(function(){
+const plans={
+business:["Understand the economic engine","Write what is sold, who pays, why they buy and what drives revenue.","Then verify the explanation against primary disclosures."],
+quality:["Test business quality","Check returns on capital, margins, cash conversion, balance-sheet strength and evidence for competitive advantage.","Look for the same pattern across multiple periods."],
+cash:["Trace profit into cash","Compare profit, operating cash flow, working capital and capital expenditure.","Investigate persistent gaps rather than explaining them away."],
+valuation:["Reverse-engineer the price","Write down the growth, margin, reinvestment and multiple assumptions embedded in the price.","Then construct bear/base/bull cases without pretending any case is certain."],
+risk:["Try to break the thesis","List the assumptions doing the most work and the evidence that could invalidate them.","Search specifically for contradictory evidence."],
+global:["Build a market bridge","Separate universal concepts from local differences in structure, regulation, currency, accounting, access and macro drivers.","Verify local rules from authoritative sources."]
+};
+document.getElementById("buildMission").addEventListener("click",()=>{
+const g=document.getElementById("missionGoal").value,t=document.getElementById("missionTime").value,p=plans[g],out=document.getElementById("missionOutput");
+const depth=t==="15"?"Scope: 3 questions.":t==="30"?"Scope: 5 questions.":t==="60"?"Scope: 8 questions.":"Scope: full evidence trail + red-team review.";
+out.hidden=false;out.innerHTML='<span class="tag">MISSION READY · '+depth+'</span><h3>'+p[0]+'</h3><ol><li>'+p[1]+'</li><li>'+p[2]+'</li><li>Record every important claim as verified, calculated, assumption or unknown.</li><li>Finish by writing: “What would change my mind?”</li></ol>';
+out.scrollIntoView({behavior:"smooth",block:"center"});
+});
+})();
+</script></body></html>
