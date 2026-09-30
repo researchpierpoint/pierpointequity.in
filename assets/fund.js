@@ -28,7 +28,7 @@ async function load(){
    if(found)historyCards.push(card(snap.as_of||"NAV",found.nav??"—","AMFI NAV"));
  }
  document.querySelector("#history").innerHTML=historyCards.join("")||emptyHistory();
- document.querySelector("#note").textContent="AMFI is the primary NAV source. Enrichment fields are shown only when a current enrichment record exists.";
+ document.querySelector("#note").innerHTML="AMFI is the primary NAV source. Fields are shown only when validated data exists. "+sourceLink("Open official AMFI NAV","https://www.amfiindia.com/net-asset-value");
 }
-function emptyHistory(){return `<article class="card"><h3>NAV history not yet available</h3><p>Current NAV is available from AMFI; historical snapshots will appear as the automated history store accumulates them.</p></article>`;}
-load().catch(e=>{document.querySelector("#name").textContent="Fund data temporarily unavailable.";document.querySelector("#meta").textContent="Please retry shortly.";console.error(e);});
+function sourceLink(label,url){return `<a class="button secondary" href="${url}" target="_blank" rel="noopener noreferrer">${label} ↗</a>`;} function emptyHistory(){return `<article class="card"><h3>NAV history not yet available</h3><p>Current NAV is available from PirePoint’s AMFI feed. Historical snapshots will appear as the automated history store accumulates them.</p>${sourceLink("Open AMFI NAV history","https://www.amfiindia.com/net-asset-value/nav-download")}</article>`;}
+load().catch(e=>{document.querySelector("#name").textContent="Fund data temporarily unavailable.";document.querySelector("#meta").innerHTML="Please retry shortly. "+sourceLink("Open official AMFI NAV","https://www.amfiindia.com/net-asset-value");console.error(e);});
