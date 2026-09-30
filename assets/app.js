@@ -200,6 +200,16 @@ const daily=[["Why can a low P/E still be expensive?","Learn how earnings qualit
  document.querySelectorAll('.nav-search').forEach(a=>a.addEventListener('click',e=>{if(!document.getElementById('searchInput')){e.preventDefault();open()}}));
 })();
 
+/* Global contact touchpoint — visible where users expect help, without adding noise to primary navigation. */
+(function(){
+ const footer=document.querySelector('.footer-grid');
+ if(!footer||footer.querySelector('.pp-footer-contact'))return;
+ const block=document.createElement('div');
+ block.className='pp-footer-contact';
+ block.innerHTML='<span class="footer-label">Contact</span><a href="mailto:research.pirepoint@gmail.com">research.pirepoint@gmail.com</a><small>Questions, corrections, source issues or suggestions.</small>';
+ footer.appendChild(block);
+})();
+
 /* Small accessibility and reading-comfort upgrades. */
 (function(){
  if(!document.querySelector('.pp-skip-link')){const a=document.createElement('a');a.className='pp-skip-link';a.href='#main-content';a.textContent='Skip to content';document.body.prepend(a);const m=document.querySelector('main');if(m){m.id='main-content'}}
