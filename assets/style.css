@@ -287,3 +287,6 @@ h2:hover .pp-anchor,.pp-anchor:focus-visible{opacity:1}
  .compare-table{min-width:920px}
  .compare-row{min-width:920px;grid-template-columns:190px 1fr 1fr 110px}
 }
+
+.hub-toolbar-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+@media(max-width:700px){.hub-toolbar-actions{margin-top:16px}.hub-toolbar-actions .button{width:100%}}
