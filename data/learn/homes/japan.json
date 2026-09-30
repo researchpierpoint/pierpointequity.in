@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "type": "home-country",
+  "slug": "japan",
+  "name": "Japan",
+  "overlayCount": 60,
+  "domains": 6,
+  "stages": 10,
+  "context": "Japan-based investors should understand FX conversion, overseas securities taxation, broker/custody arrangements and any reporting or withholding that can arise when investing abroad.",
+  "note": "This file supplies home-country overlay lessons. The shared engine expands it into 60 lessons and combines them with 240 target-market lessons."
+}
