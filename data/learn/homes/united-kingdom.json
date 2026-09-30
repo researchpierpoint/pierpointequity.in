@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "type": "home-country",
+  "slug": "united-kingdom",
+  "name": "United Kingdom",
+  "overlayCount": 60,
+  "domains": 6,
+  "stages": 10,
+  "context": "UK residents investing overseas should understand currency, broker/custody, tax reporting, dividend withholding and destination-market access, with treatment depending on account and investor circumstances.",
+  "note": "This file supplies home-country overlay lessons. The shared engine expands it into 60 lessons and combines them with 240 target-market lessons."
+}
