@@ -29,7 +29,7 @@ addEventListener("scroll",scroll,{passive:true});scroll();
     ["How to Read an Earnings Call","earnings-call.html"],
     ["Balance Sheet","balance-sheet.html"],
     ["Cash Flow Statement","cash-flow-statement.html"],
-    ["Valuation","valuation.html"],
+    ["DCF Valuation","dcf-valuation.html"],
     ["Investor Behaviour & Biases","behavioural-biases.html"]
   ];
   const here=location.pathname.split("/").pop();
