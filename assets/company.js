@@ -1,27 +1,90 @@
+const esc=s=>String(s??"").replace(/[<>&"]/g,c=>({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[c]));
+const card=(t,v,m="")=>`<article class="card"><span class="eyebrow">${esc(t)}</span><h3>${esc(v)}</h3><p class="fine">${esc(m)}</p></article>`;
+const empty=(t,p)=>`<article class="card"><h3>${esc(t)}</h3><p>${esc(p)}</p></article>`;
+async function getJSON(path,fallback=null){
+ const r=await fetch(path,{cache:"no-store"});
+ if(!r.ok)throw new Error(path+" "+r.status);
+ return await r.json();
+}
 async function loadCompany(){
  const symbol=(new URLSearchParams(location.search).get("symbol")||"POLYCAB").toUpperCase();
- const card=(t,v,m="")=>`<article class="card"><span class="eyebrow">${t}</span><h3>${v}</h3><p class="fine">${m}</p></article>`;
- const empty=(t,p)=>`<article class="card"><h3>${t}</h3><p>${p}</p></article>`;
+ const main=document.querySelector("main");
  try{
-  const u=await (await fetch("data/generated/nse-equity-universe.json",{cache:"no-store"})).json();
-  const row=(u.companies||[]).find(x=>x.nse_symbol===symbol); if(!row)throw Error("company not found");
-  document.querySelector("#company-name").textContent=row.legal_name;
-  const sub=document.querySelector("#company-subtitle"); if(sub)sub.textContent=`${row.nse_symbol} · ${row.isin} · NSE listed equity`;
-  const d=(await (await fetch("data/generated/company-intelligence.json",{cache:"no-store"})).json()).records?.[symbol]; if(!d)throw Error("record unavailable");
-  const s=d.sections||{};\n  const business=document.querySelector("#business"); if(business) business.innerHTML=s.business?`<span class="eyebrow">BUSINESS</span><h2>Business profile</h2><p>${s.business}</p>`:"<h2>Business profile</h2><p>Business profile not available in the current generated record.</p>";
-  document.querySelector("#company-snapshot").innerHTML=[card("AS OF",d.snapshot.as_of||"—","Automated evidence snapshot"),card("STATUS",(d.snapshot.status||"review").toUpperCase(),"Coverage status"),card("SOURCE","NSE / PirePoint pipeline","Source-controlled record")].join("");
-  const md=await (await fetch("data/generated/nse-market-snapshot.json",{cache:"no-store"})).json(),m=md.records?.[symbol];
-  document.querySelector("#market").innerHTML=m?[card("CLOSE","₹"+Number(m.close).toLocaleString("en-IN"),"NSE · "+md.as_of),card("DAY RANGE","₹"+Number(m.low).toLocaleString("en-IN")+" – ₹"+Number(m.high).toLocaleString("en-IN"),"Official end-of-day range"),card("VOLUME",Number(m.volume).toLocaleString("en-IN"),"Shares traded"),card("TURNOVER","₹"+Number(m.turnover_lakh).toLocaleString("en-IN")+" lakh","NSE reported turnover")].join(""):empty("Market snapshot unavailable","No validated NSE record is available.");
-  document.querySelector("#results").innerHTML=s.financials?.length?s.financials.map(x=>card(x.metric,x.value??x.status??"—",x.period||"NSE results")).join(""):empty("No current result returned","The latest source query returned no usable financial-result row for this symbol.");
-  document.querySelector("#financials")?.remove();
-  document.querySelector("#filings").innerHTML=s.filing_history?.length?s.filing_history.map(x=>card(x.metric,x.value??x.status??"—",x.period||"NSE Integrated Filing")).join(""):empty("No verified filing record","The latest generated source set contains no usable integrated filing for this symbol.");
-  document.querySelector("#valuation").innerHTML=s.valuation?.length?s.valuation.map(x=>card(x.metric,x.value??x.status??"—",x.period||"")).join(""):empty("Valuation not computable from current filings","Required trailing earnings or share-count facts are not jointly available.");
-  document.querySelector("#ownership").innerHTML=s.ownership?.length?s.ownership.map(x=>card(x.metric,x.value??x.status??"—")).join(""):empty("No current ownership record returned","The latest shareholding source query returned no usable filing.");
-  document.querySelector("#risks").innerHTML=s.risks?.length?s.risks.map(x=>card("MONITOR",x.risk,x.status||"")).join(""):empty("No material risk event found","No matching risk keyword was found in the current announcement set.");
-  let alertRoot=document.querySelector("#alerts");if(!alertRoot){const h=document.createElement("h2");h.textContent="Monitoring alerts";alertRoot=document.createElement("div");alertRoot.id="alerts";document.querySelector("#risks").after(h,alertRoot)}alertRoot.innerHTML=s.alerts?.length?s.alerts.map(x=>card((x.type||"ALERT").toUpperCase(),x.message,"Automated monitoring")).join(""):empty("No active monitoring alert","No alert condition was detected in the current source set.");
-  document.querySelector("#timeline").innerHTML=s.timeline?.length?s.timeline.map(x=>`<article class="card"><span class="eyebrow">${x.date||"—"}</span><h3>${x.title||x.event||"Update"}</h3><p class="fine">${x.type||"evidence"} · ${(x.source_ids||[]).join(", ")}</p></article>`).join(""):empty("No material event in current feed","No validated announcement was returned for this symbol.");
-  let orderRoot=document.querySelector("#order-evidence");if(!orderRoot){const h=document.createElement("h2");h.textContent="Recent order / contract evidence";orderRoot=document.createElement("div");orderRoot.id="order-evidence";document.querySelector("#alerts").after(h,orderRoot)}orderRoot.innerHTML=s.order_book_events?.length?s.order_book_events.map(x=>card("ORDER / CONTRACT",x.value?x.value+" · "+x.event:x.event,x.date||"NSE announcement")).join(""):empty("No recent order evidence","No order, contract, award or bagging announcement was returned in the current source window.");
-  document.querySelector("#evidence").innerHTML=s.evidence?.length?s.evidence.map(x=>card(x.source_id,"Tier "+x.tier,x.status||"")).join(""):empty("No additional evidence record","Only the verified source records shown above are available.");\n  document.querySelector("#coverage").innerHTML=Object.entries(s.coverage||{}).map(([k,v])=>card(k.replace(/_/g," ").toUpperCase(),v?"VERIFIED":"NOT AVAILABLE",v?"Required source evidence is present.":"Required source evidence is not currently available.")).join("")||empty("Coverage not available","No coverage audit record was generated.");
- }catch(e){document.querySelector("main").insertAdjacentHTML("beforeend",'<p class="fine">Company record temporarily unavailable. The automated pipeline will retry.</p>');}
+  const u=await getJSON("data/generated/nse-equity-universe.json",{companies:[]});
+  const row=(u.companies||[]).find(x=>x.nse_symbol===symbol);
+  if(!row)throw new Error("Company not found: "+symbol);
+  document.querySelector("#company-name").textContent=row.legal_name||symbol;
+  const sub=document.querySelector("#company-subtitle");
+  if(sub)sub.textContent=`${symbol} · ${row.isin||"ISIN unavailable"} · NSE listed equity`;
+
+  let d=null;
+  try{d=(await getJSON("data/generated/company-intelligence.json",{records:{}})).records?.[symbol]||null;}catch{}
+  const s=d?.sections||{};
+  const snap=d?.snapshot||{};
+  const business=document.querySelector("#business");
+  if(business)business.innerHTML=s.business
+    ?`<span class="eyebrow">BUSINESS</span><h2>Business profile</h2><p>${esc(s.business)}</p>`
+    :`<h2>Business profile</h2><p>Identity is verified. Detailed PirePoint research coverage is not yet available for this company.</p>`;
+
+  document.querySelector("#company-snapshot").innerHTML=[
+    card("AS OF",snap.as_of||u.as_of||"—","Generated evidence snapshot"),
+    card("STATUS",snap.status||"identity-only","Coverage status"),
+    card("SOURCE","NSE / PirePoint pipeline","Source-controlled record")
+  ].join("");
+
+  let md={records:{},as_of:"—"};
+  try{md=await getJSON("data/generated/nse-market-snapshot.json",md);}catch{}
+  const m=md.records?.[symbol];
+  document.querySelector("#market").innerHTML=m
+    ? [card("CLOSE","₹"+Number(m.close).toLocaleString("en-IN"),"NSE · "+md.as_of),
+       card("DAY RANGE","₹"+Number(m.low).toLocaleString("en-IN")+" – ₹"+Number(m.high).toLocaleString("en-IN"),"Official end-of-day range"),
+       card("VOLUME",Number(m.volume||0).toLocaleString("en-IN"),"Shares traded"),
+       card("TURNOVER","₹"+Number(m.turnover_lakh||0).toLocaleString("en-IN")+" lakh","NSE reported turnover")].join("")
+    : empty("Market snapshot unavailable","No validated NSE market record is currently available.");
+
+  document.querySelector("#results").innerHTML=s.financials?.length
+    ? s.financials.map(x=>card(x.metric,x.value??x.status??"—",x.period||"NSE / XBRL")).join("")
+    : empty("Financial results not yet available","The current verified source set does not contain a usable result row for this company.");
+
+  document.querySelector("#filings").innerHTML=s.filing_history?.length
+    ? s.filing_history.map(x=>card(x.metric,x.value??x.status??"—",x.period||"NSE integrated filing")).join("")
+    : empty("No verified filing record","No usable integrated filing is currently available.");
+
+  document.querySelector("#valuation").innerHTML=s.valuation?.length
+    ? s.valuation.map(x=>card(x.metric,x.value??x.status??"—",x.period||"")).join("")
+    : empty("Valuation not computable","Required validated earnings/share-count evidence is not currently available.");
+
+  document.querySelector("#ownership").innerHTML=s.ownership?.length
+    ? s.ownership.map(x=>card(x.metric,x.value??x.status??"—",x.period||"NSE shareholding")).join("")
+    : empty("Ownership not currently available","No usable current shareholding filing is available.");
+
+  document.querySelector("#risks").innerHTML=s.risks?.length
+    ? s.risks.map(x=>card("MONITOR",x.risk,x.status||"")).join("")
+    : empty("No risk event returned","No matching risk-monitoring announcement was returned in the current source window.");
+
+  const alertRoot=document.querySelector("#alerts")||(()=>{const h=document.createElement("h2");h.textContent="Monitoring alerts";const x=document.createElement("div");x.id="alerts";document.querySelector("#risks").after(h,x);return x;})();
+  alertRoot.innerHTML=s.alerts?.length
+    ? s.alerts.map(x=>card((x.type||"ALERT").toUpperCase(),x.message,"Automated monitoring")).join("")
+    : empty("No active monitoring alert","No alert condition was detected in the current source set.");
+
+  document.querySelector("#timeline").innerHTML=s.timeline?.length
+    ? s.timeline.map(x=>`<article class="card"><span class="eyebrow">${esc(x.date||"—")}</span><h3>${esc(x.title||x.event||"Update")}</h3><p class="fine">${esc(x.type||"evidence")} · ${esc((x.source_ids||[]).join(", "))}</p></article>`).join("")
+    : empty("No material event in current feed","No validated event was returned for this symbol.");
+
+  const orderRoot=document.querySelector("#order-evidence")||(()=>{const h=document.createElement("h2");h.textContent="Recent order / contract evidence";const x=document.createElement("div");x.id="order-evidence";document.querySelector("#alerts").after(h,x);return x;})();
+  orderRoot.innerHTML=s.order_book_events?.length
+    ? s.order_book_events.map(x=>card("ORDER / CONTRACT",x.value?x.value+" · "+x.event:x.event,x.date||"NSE announcement")).join("")
+    : empty("No recent order evidence","No order, contract, award or bagging announcement was returned in the current source window.");
+
+  document.querySelector("#evidence").innerHTML=s.evidence?.length
+    ? s.evidence.map(x=>card(x.source_id,"Tier "+x.tier,x.status||"")).join("")
+    : empty("No additional evidence record","Only the verified source records shown above are available.");
+
+  document.querySelector("#coverage").innerHTML=Object.entries(s.coverage||{}).map(([k,v])=>card(k.replace(/_/g," ").toUpperCase(),v?"VERIFIED":"NOT AVAILABLE",v?"Required source evidence is present.":"Required source evidence is not currently available.")).join("")
+    ||empty("Coverage not available","No coverage audit record was generated.");
+ }catch(e){
+  if(main)main.insertAdjacentHTML("beforeend",`<div class="notice"><b>Company data is temporarily unavailable.</b><br>The site could not load the required public dataset. The automated pipeline will retry.</div>`);
+  console.error(e);
+ }
 }
 loadCompany();
