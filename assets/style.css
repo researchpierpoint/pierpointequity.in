@@ -366,3 +366,11 @@ h2:hover .pp-anchor,.pp-anchor:focus-visible{opacity:1}
 .exec-next strong{font-size:14px}
 @media(max-width:900px){.exec-grid{grid-template-columns:repeat(3,1fr)}.exec-grid>div:nth-child(3){border-right:0}.exec-grid>div:nth-child(-n+3){border-bottom:1px solid var(--line)}}
 @media(max-width:560px){.executive-top{display:block}.exec-state{display:inline-block;margin-top:14px}.exec-grid{grid-template-columns:repeat(2,1fr)}.exec-grid>div{border-right:0;border-bottom:1px solid var(--line)}}
+
+/* Homepage final journey — give the scroll a deliberate conclusion */
+.homepage-finish{padding-top:10px;padding-bottom:88px}
+.finish-card{border:1px solid var(--line);background:linear-gradient(135deg,#f7f8f2,#fff);padding:34px;display:flex;align-items:center;justify-content:space-between;gap:30px}
+.finish-card h2{margin:6px 0 8px;font-size:clamp(26px,3.2vw,42px);letter-spacing:-.04em}
+.finish-card p{max-width:650px;margin:0;color:var(--muted);line-height:1.7}
+.finish-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap;min-width:260px}
+@media(max-width:760px){.finish-card{display:block;padding:26px}.finish-actions{justify-content:flex-start;margin-top:20px}}
