@@ -7,7 +7,7 @@ ROOT=Path(__file__).resolve().parents[2]
 OUT=ROOT/"data/generated/nse-etf-snapshot.json"
 URL="https://www.nseindia.com/api/etf"
 PAGE="https://www.nseindia.com/market-data/exchange-traded-funds-etf"
-HEAD={"User-Agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/134 Safari/537.36","Accept":"application/json, text/plain, */*","Referer":PAGE}
+HEAD={"User-Agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/134 Safari/537.36","Accept":"application/json, text/plain, */*","Accept-Encoding":"identity","Referer":PAGE}
 def pick(x,*keys):
     for k in keys:
         if k in x and x[k] not in (None,"","-"):return x[k]
