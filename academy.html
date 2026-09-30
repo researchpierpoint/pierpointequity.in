@@ -71,7 +71,34 @@
 <div class="academy-card" data-retrieval-question><span class="tag">QUESTION 02</span><h3>Why should profit be checked against cash flow?</h3><p>Choose the best reason.</p><div class="depth-dial"><button type="button" data-answer="correct">Accounting profit and cash generation can diverge.</button><button type="button" data-answer="wrong">Cash flow always equals profit.</button><button type="button" data-answer="wrong">Profit is irrelevant.</button></div><p data-feedback hidden></p></div>
 <div class="academy-card" data-retrieval-question><span class="tag">QUESTION 03</span><h3>What is the purpose of a red-team review?</h3><p>Choose the best description.</p><div class="depth-dial"><button type="button" data-answer="wrong">To make the thesis sound more confident.</button><button type="button" data-answer="correct">To actively search for evidence and assumptions that could invalidate the conclusion.</button><button type="button" data-answer="wrong">To predict the exact future price.</button></div><p data-feedback hidden></p></div>
 </div>
-</section><section class="wrap section" id="knowledge-map">
+</section><section class="wrap section" id="mastery">
+<div class="section-head"><div><span class="eyebrow">MASTERY ENGINE</span><h2>Don't just get the answer. Prove you understand it.</h2><p class="muted">Four short modes turn reading into usable knowledge: diagnose a misconception, retrieve the idea, apply it to a new situation, then explain it in your own words.</p></div></div>
+<div class="mastery-grid">
+<div class="mastery-card"><span class="tag">01 · DIAGNOSE</span><h3>Catch the trap</h3><p>“Low P/E means cheap.” “Profit means cash.” “More debt always means more return.” Identify the hidden assumption before it becomes a research mistake.</p><button class="button mastery-start" data-mode="diagnose" type="button">Try a misconception →</button></div>
+<div class="mastery-card"><span class="tag">02 · RETRIEVE</span><h3>Recall without looking</h3><p>Come back later and answer from memory. The system can increase or reduce difficulty based on your previous attempt.</p><button class="button mastery-start" data-mode="retrieve" type="button">Start recall →</button></div>
+<div class="mastery-card"><span class="tag">03 · APPLY</span><h3>Transfer the idea</h3><p>A concept you understand in one example can fail in another. Apply the same reasoning to a changed fictional situation.</p><button class="button mastery-start" data-mode="apply" type="button">Test transfer →</button></div>
+<div class="mastery-card"><span class="tag">04 · TEACH BACK</span><h3>Explain it simply</h3><p>If you cannot explain the concept without jargon, you probably do not own the mental model yet.</p><button class="button mastery-start" data-mode="teach" type="button">Teach it back →</button></div>
+</div>
+<div class="mastery-console" id="masteryConsole" hidden>
+<span class="eyebrow" id="masteryEyebrow">PRACTICE</span><h3 id="masteryQuestion"></h3><div id="masteryChoices"></div><p id="masteryFeedback" class="mastery-feedback"></p><button class="button" id="masteryNext" type="button" hidden>Continue →</button>
+</div>
+</section>
+
+<section class="wrap section">
+<div class="section-head"><div><span class="eyebrow">SOURCE LITERACY</span><h2>Learn to separate a number from the evidence behind it.</h2><p class="muted">A research system is only as strong as its evidence trail. Practise identifying what is verified, calculated, assumed and still unknown.</p></div></div>
+<div class="evidence-grid">
+<div class="evidence-card"><b>VERIFIED</b><span>Directly supported by an identified primary or authoritative source.</span></div>
+<div class="evidence-card"><b>CALCULATED</b><span>Derived transparently from verified inputs using a reproducible calculation.</span></div>
+<div class="evidence-card"><b>ASSUMPTION</b><span>A chosen estimate, scenario or interpretation that must remain visible.</span></div>
+<div class="evidence-card"><b>UNKNOWN</b><span>Important information that has not yet been verified. Never silently fill the gap.</span></div>
+</div>
+</section>
+
+<section class="wrap section">
+<div class="section-head"><div><span class="eyebrow">PROTECT YOURSELF</span><h2>Financial knowledge includes knowing when information is trying to manipulate you.</h2><p class="muted">Learn the mechanics of fraud, pressure tactics, misleading claims and information asymmetry before encountering them in the real world.</p></div></div>
+<div class="scam-lab"><div><span class="eyebrow">FICTIONAL MESSAGE</span><h3>“Guaranteed 30% return. Limited places. Act today.”</h3><div class="scam-checks"><button type="button" data-scam="return">Guaranteed/high return claim</button><button type="button" data-scam="pressure">Pressure to act immediately</button><button type="button" data-scam="evidence">Ask for independently verifiable evidence</button></div><p id="scamFeedback">Select the red flags you would investigate.</p></div><div><span class="eyebrow">THE HABIT</span><ol><li>Pause.</li><li>Verify independently.</li><li>Understand the product.</li><li>Check who is offering it.</li><li>Never treat urgency as evidence.</li></ol></div></div>
+</section>
+<section class="wrap section" id="knowledge-map">
 <div class="section-head"><div><span class="eyebrow">THE KNOWLEDGE MAP</span><h2>Tell PirePoint what you already understand.</h2><p class="muted">No leaderboard. No public score. Your browser keeps a small local learning state so the next recommendation can reflect your gaps.</p></div></div>
 <div class="knowledge-map-grid" id="knowledgeMap">
 <button class="knowledge-node" data-node="market"><b>Market</b><small>What a market is</small><em>Need this</em></button>
@@ -130,5 +157,13 @@ const id=order.find(x=>state[x]!=="know")||"research";const r=routes[id];
 next.querySelector("h3").textContent=r[0];next.querySelector("p").textContent=r[1];next.querySelector("a").href=r[2];
 }
 nodes.forEach(n=>n.addEventListener("click",()=>{state[n.dataset.node]=state[n.dataset.node]==="know"?"need":"know";localStorage.setItem(key,JSON.stringify(state));render()}));render();
+})();
+</script><script>
+(function(){
+const q={diagnose:{label:"DIAGNOSE",question:"A business has a very low P/E. What is the safest first interpretation?",choices:["It is automatically cheap.","The market price is low relative to reported earnings; now investigate why.","It will outperform."],answer:1,why:"A ratio describes a relationship. It does not by itself explain quality, sustainability, accounting or expectations."},retrieve:{label:"RETRIEVE",question:"What is the difference between profit and free cash flow?",choices:["They are always identical.","Profit is an accounting measure; cash flow tracks cash movement after relevant cash uses.","Cash flow is irrelevant to valuation."],answer:1,why:"Accounting earnings and cash generation can diverge because of working capital, non-cash items and investment."},apply:{label:"TRANSFER",question:"Profit rises 20%, but receivables and capital expenditure rise sharply. What should you investigate next?",choices:["Only the profit number.","Cash conversion and why capital is being absorbed.","Nothing; growth settles the question."],answer:1,why:"The changed context tests whether reported growth is converting into cash and what investment it requires."},teach:{label:"TEACH BACK",question:"Complete this sentence in your own words: “A valuation multiple is useful because…”",choices:["“…it predicts the future exactly.”","“…it connects a market price with a financial measure, while leaving important assumptions to investigate.”","“…it proves whether a company is good.”"],answer:1,why:"A useful mental model explains what a measure connects—and where its limits begin."}};
+const consoleEl=document.getElementById("masteryConsole"), qEl=document.getElementById("masteryQuestion"), choices=document.getElementById("masteryChoices"), fb=document.getElementById("masteryFeedback"), next=document.getElementById("masteryNext"), eye=document.getElementById("masteryEyebrow");let current=null;
+document.querySelectorAll(".mastery-start").forEach(b=>b.addEventListener("click",()=>{current=q[b.dataset.mode];eye.textContent=current.label; qEl.textContent=current.question;choices.innerHTML="";fb.textContent="";next.hidden=true;current.choices.forEach((x,i)=>{const c=document.createElement("button");c.className="mastery-choice";c.type="button";c.textContent=x;c.onclick=()=>{document.querySelectorAll(".mastery-choice").forEach(z=>z.disabled=true);const ok=i===current.answer;fb.textContent=(ok?"Correct. ":"Not quite. ")+current.why;fb.className="mastery-feedback "+(ok?"is-correct":"");next.hidden=false;localStorage.setItem("ppLastPractice",JSON.stringify({mode:b.dataset.mode,correct:ok,at:Date.now()}))};choices.appendChild(c)});consoleEl.hidden=false;consoleEl.scrollIntoView({behavior:"smooth",block:"center"})}));
+next.addEventListener("click",()=>{consoleEl.hidden=true});
+const selected=new Set();document.querySelectorAll("[data-scam]").forEach(b=>b.addEventListener("click",()=>{b.classList.toggle("selected");selected.has(b.dataset.scam)?selected.delete(b.dataset.scam):selected.add(b.dataset.scam);document.getElementById("scamFeedback").textContent=selected.size?"Good. Now ask what evidence could independently verify the claim—and why urgency itself proves nothing.":"Select the red flags you would investigate."}));
 })();
 </script></body></html>
