@@ -29,7 +29,9 @@ def main():
         offset=0
         while True:
             z=ses.get(BASE+"/schemes",params={"limit":1000,"offset":offset},timeout=30)
-            if z.status_code!=200:\n                print(f"mfdata scheme master unavailable HTTP {z.status_code}; continuing with AMFI-only coverage")\n                break
+            if z.status_code!=200:
+                print(f"mfdata scheme master unavailable HTTP {z.status_code}; continuing with AMFI-only coverage")
+                break
             data=z.json().get("data",[])
             if not data:break
             all_rows.extend(data)
@@ -43,7 +45,8 @@ def main():
                 schemes[code].update({"scheme_code":x.get("scheme_code"),"scheme_name":x.get("scheme_name") or x.get("name"),
                                       "amc":x.get("amc"),"category":x.get("category"),"nav":x.get("nav"),
                                       "aum_cr":x.get("aum_cr"),"master_source":"mfdata.in","master_updated_at":today.isoformat()})
-        if not schemes:\n        for f in nav.get("funds",[]):\n            code=str(f.get("scheme_code") or "")\n            if code:\n                schemes[code]={"scheme_code":code,"scheme_name":f.get("scheme_name"),"nav":f.get("nav"),"nav_date":f.get("date"),"master_source":"AMFI","master_updated_at":today.isoformat()}\n    old["scheme_master_updated_at"]=today.isoformat()
+        if not schemes:
+        for f in nav.get("funds",[]):\n            code=str(f.get("scheme_code") or "")\n            if code:\n                schemes[code]={"scheme_code":code,"scheme_name":f.get("scheme_name"),"nav":f.get("nav"),"nav_date":f.get("date"),"master_source":"AMFI","master_updated_at":today.isoformat()}\n    old["scheme_master_updated_at"]=today.isoformat()
     # Keep the detailed enrichment bounded; rotate the stalest schemes.
     targets=[]
     for f in nav.get("funds",[]):
