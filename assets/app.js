@@ -319,3 +319,14 @@ const daily=[["Why can a low P/E still be expensive?","Learn how earnings qualit
     }
   }
 })();
+
+/* Learn Before You Invest: surface the 300-lesson route on every market page. */
+(function(){
+ const m=location.pathname.match(/countries\\/([^/]+)\\.html$/); if(!m)return;
+ const slug=m[1]; const labels={"united-states":"United States",china:"China",india:"India",japan:"Japan",hong-kong:"Hong Kong",united-kingdom:"United Kingdom",australia:"Australia",canada:"Canada",south-korea:"South Korea",germany:"Germany",singapore:"Singapore",uae:"United Arab Emirates"};
+ if(!labels[slug]||document.querySelector(".pp-learn-market"))return;
+ const main=document.querySelector("main"); if(!main)return;
+ const box=document.createElement("section"); box.className="pp-learn-market card"; box.style.cssText="margin:22px auto;max-width:1100px;padding:24px;border:1px solid var(--line);border-radius:18px;background:#f7f9ef;display:flex;justify-content:space-between;gap:18px;align-items:center";
+ box.innerHTML='<div><span class="tag">LEARN BEFORE YOU INVEST</span><h2 style="margin:6px 0">300 things to know before investing in '+labels[slug]+'</h2><p style="margin:0;color:var(--muted);line-height:1.55">240 destination-market lessons + 60 lessons for the investor\'s home-country context. Learn, prove, verify and track progress.</p></div><a class="button" href="../learn-before-invest.html?target='+encodeURIComponent(labels[slug])+'">Open the 300-lesson route →</a>';
+ const first=main.firstElementChild; main.insertBefore(box,first||null);
+})();
