@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "type": "target-market",
+  "slug": "hong-kong",
+  "name": "Hong Kong",
+  "system": "HKEX · SFC",
+  "sources": [
+    "https://www.hkex.com.hk/",
+    "https://www.sfc.hk/"
+  ],
+  "core": {
+    "nodeCount": 240,
+    "domains": 24,
+    "stages": 10
+  },
+  "note": "This market file supplies local context. The shared learning engine expands it into 240 destination-market lessons; it is never combined by hand with a home country."
+}
