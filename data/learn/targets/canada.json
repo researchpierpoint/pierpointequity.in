@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "type": "target-market",
+  "slug": "canada",
+  "name": "Canada",
+  "system": "TSX · CIRO · CSA",
+  "sources": [
+    "https://www.tsx.com/",
+    "https://www.ciro.ca/",
+    "https://www.securities-administrators.ca/"
+  ],
+  "core": {
+    "nodeCount": 240,
+    "domains": 24,
+    "stages": 10
+  },
+  "note": "This market file supplies local context. The shared learning engine expands it into 240 destination-market lessons; it is never combined by hand with a home country."
+}
