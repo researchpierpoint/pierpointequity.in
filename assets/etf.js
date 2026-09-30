@@ -18,7 +18,7 @@ async function load(){
  document.querySelector("#meta").textContent=symbol+" · "+row.isin+" · NSE ETF";
  const card=(t,v,p="")=>'<article class="card"><span class="eyebrow">'+t+'</span><h3>'+v+'</h3><p class="fine">'+p+'</p></article>';
  if(!m){
-  document.querySelector("#facts").innerHTML='<article class="card"><h3>ETF data not yet available</h3><p>PirePoint does not currently have a validated ETF snapshot for this symbol.</p>'+sourceLink("Open official NSE ETF information","https://www.nseindia.com/static/products-services/etfs-launched-on-nse")+'</article>';
+  document.querySelector("#facts").innerHTML='<article class="card"><h3>Official ETF record</h3><p>PirePoint has not yet indexed a validated snapshot for this symbol. The official NSE ETF record remains directly accessible.</p>'+sourceLink("Open official NSE ETF information","https://www.nseindia.com/static/products-services/etfs-launched-on-nse")+'</article>';
   return;
  }
  const facts=[
@@ -35,6 +35,6 @@ async function load(){
  document.querySelector("#note").innerHTML="i-NAV and NAV are distinct measures. Premium/discount is a point-in-time trading measure, not a return forecast. "+sourceLink("Open official NSE ETF information","https://www.nseindia.com/static/products-services/etfs-launched-on-nse");
 }
 load().catch(()=>{
- document.querySelector("#name").textContent="ETF data unavailable.";
+ document.querySelector("#name").textContent="ETF record";
  document.querySelector("#meta").innerHTML=sourceLink("Open official NSE ETF information","https://www.nseindia.com/static/products-services/etfs-launched-on-nse");
 });
