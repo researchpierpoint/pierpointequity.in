@@ -24,6 +24,24 @@ const domains=[
 ["orientation","Market orientation"],["access","Investor access"],["structure","Market structure"],["instruments","Instruments"],["corporate-actions","Corporate actions"],["trading","Trading mechanics"],["clearing","Clearing and settlement"],["regulation","Regulation"],["reporting","Reporting"],["accounting","Accounting"],["ownership","Ownership"],["governance","Governance"],["tax","Market taxation"],["currency","Currency"],["macro","Macro economics"],["sectors","Sectors"],["business","Business models"],["financials","Financial statements"],["cash","Cash flow"],["returns","Returns and quality"],["capital","Capital allocation"],["valuation","Valuation"],["risk","Risk"],["research","Company research"],["sources","Primary sources"],["disclosure","Disclosure"],["information","Information quality"],["behaviour","Investor behaviour"],["comparison","Market comparison"],["application","Real-world application"]
 ];
 const stages=["Foundation","Local rules","How it works","Investor view","Company impact","Research method","Common traps","Real example","Practice","Mastery"];
+function lessonAnswer(domain,market,term){
+ const a={
+  orientation:"A market is a system of issuers, investors, venues, intermediaries, rules, information and settlement—not just a list of stocks.",
+  access:"Access can depend on investor type, residence, account structure, security, venue and current rules. Explain the mechanism here; verify current eligibility with the official source or licensed intermediary.",
+  regulation:"Regulation covers disclosure, conduct, listings, market integrity and investor protection. This is general education, not legal advice or a determination of what a person may legally do.",
+  tax:"Tax treatment can depend on residence, investor status, instrument, transaction route, holding period and current rules. This lesson explains concepts and sources; it does not calculate or prescribe personal tax treatment.",
+  trading:"Trading mechanics explain how an instruction becomes a transaction. Price, quantity, order type, liquidity, session and venue can affect execution; this is education, not a trading recommendation.",
+  clearing:"Clearing and settlement turn an executed trade into the final exchange of cash and securities. Exact cycles and procedures should be checked against current official rules.",
+  accounting:"Accounting turns business activity into financial statements. Learn what the numbers mean, what they omit and how to test them against the underlying disclosures.",
+  valuation:"Valuation connects price with expectations about future cash flows, growth, margins, risk and returns. A multiple is shorthand for assumptions, not a verdict.",
+  risk:"Risk can include business deterioration, leverage, liquidity, regulation, currency, valuation, governance and unknowns. Learn how to identify and test risks rather than predict outcomes.",
+  research:"Research is question → evidence → interpretation → assumptions → conclusion → attempted falsification. The goal is a reproducible process, not a PirePoint verdict.",
+  sources:"Strong research uses authoritative, relevant and sufficiently current evidence, preferably from the source closest to the underlying fact.",
+  comparison:"Cross-market learning separates universal concepts from local implementation. Familiar terms and practices must be checked before being transferred.",
+  application:"Independent research combines market mechanics, company analysis, evidence, valuation and risk into a repeatable process."
+ };
+ return (a[domain]||"Learn the concept, connect it to an investor question, and verify market-specific details from the relevant primary source.")+" In "+market+", pay particular attention to "+term+".";
+}
 function fallbackNodes(){
  const p=PROFILES[market]||{regulator:"the local regulator",venues:"the local exchanges",currency:"the local currency",terms:[market]};
  const stageInfo=[
@@ -39,7 +57,7 @@ function fallbackNodes(){
   ["Mastery","Demonstrate that you can transfer the idea to a new situation.","Why this matters: true mastery survives different companies, market conditions and wording.","Teach the concept to another investor and then apply it to a new case.","Trap: confusing familiarity with mastery."]
  ];
  const titles={
- orientation:["What is the market and what can an investor actually own?","Who are the people and institutions moving this market?","Where does a listed security live before, during and after a trade?","What makes this market structurally different from other markets?","How does an individual investor participate?","What information should a first-time investor be able to find?","Which common assumptions fail in this market?","Follow one real security through the market","Build your one-page market map","Explain this market without looking at notes"],
+ orientation:["What is the market and what can an investor actually own?","Who are the people and institutions moving this market?","Where does a listed security live before, during and after a trade?","What makes this market structurally different from other markets?","How does an individual investor participate?","What information should a first-time investor be able to find?","Which assumptions should an investor test in this market?","Follow one real security through the market","Build your one-page market map","Explain this market without looking at notes"],
  access:["How can an investor open the right account?","What eligibility rules apply to investors?","How does a foreign investor access this market?","What do the broker, custodian and depository each do?","What fees and frictions exist before a trade is profitable?","Where can you verify current access requirements?","Which access assumption could stop a trade?","Trace a real investor's route from cash to security","Map the exact access route you would use","Verify the current access rules yourself"],
  structure:["What are the major exchanges and venues?","What does the market regulator actually do?","How do primary and secondary markets connect?","What are the major listing segments?","How does market structure affect listed companies?","Where can you research the structure from primary sources?","Which venue or listing assumption can mislead investors?","Trace one company across its listing and trading venues","Compare two venues using evidence","Draw the market architecture from memory"],
  instruments:["What types of equity securities exist here?","How do share classes change investor rights?","How do ETFs and funds fit into the market?","What does an index actually represent?","Which depositary or cross-listed instruments exist?","Where can you verify the terms of an instrument?","When can two securities with similar names behave differently?","Compare two real securities with the same underlying exposure","Choose an instrument for a defined investor objective","Explain the risks of the instrument you selected"],
@@ -75,7 +93,7 @@ function fallbackNodes(){
    const title=(titles[domain]||[])[si]||stage;
    const term=domain==="regulation"?p.regulator:domain==="trading"||domain==="structure"?p.venues:domain==="currency"?p.currency:p.terms[(di+si)%p.terms.length];
    const objective=title+" — "+market+".";
-   return {id:slug(market)+"-"+(di*10+si+1),number:di*10+si+1,domain,title,stage:phase,objective,explanation:reason+" In "+market+", pay particular attention to "+term+".",whyItMatters:why,action:action,trap,learn:"Learn the mechanism, then explain it in your own words before moving on.",difficulty:si<3?"beginner":si<7?"intermediate":"advanced",proof:action,primarySources:[]};
+   return {id:slug(market)+"-"+(di*10+si+1),number:di*10+si+1,domain,title,stage:phase,objective,explanation:lessonAnswer(domain,market,term),whyItMatters:why,action:action,trap,answer:lessonAnswer(domain,market,term),verification:"For current rules, rates, eligibility, tax treatment, filing requirements or legal obligations, verify the current official source. PirePoint provides general education, not individualized legal, tax or investment advice.",learn:"Learn the mechanism, then explain it in your own words before moving on.",difficulty:si<3?"beginner":si<7?"intermediate":"advanced",proof:action,primarySources:[]};
  }));
 }
 function save(){localStorage.setItem(key,JSON.stringify({done:[...done],updatedAt:new Date().toISOString()}));}
