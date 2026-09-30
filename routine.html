@@ -84,6 +84,8 @@ const fallbackKG={
  research:["Independent research","research.html"],
  redteam:["Red-team thinking","intelligence.html"]
 };
+let MARKET_DATA={};
+fetch("data/market-transfer.json").then(r=>r.ok?r.json():null).then(g=>{if(g)MARKET_DATA=g}).catch(()=>{});
 let KG=Object.fromEntries(Object.entries(fallbackKG).map(([k,v])=>[k,{label:v[0],resource:v[1]}]));
 fetch("data/knowledge-graph.json").then(r=>r.ok?r.json():null).then(g=>{if(g?.nodes)Object.entries(g.nodes).forEach(([k,v])=>{if(KG[k]){KG[k].label=v.label||KG[k].label;KG[k].resource=v.resources?.[0]||KG[k].resource}})}).catch(()=>{});
 const cases=[
@@ -147,12 +149,15 @@ function renderCase(){
 function buildBridge(){
  if(!needsTransfer())return [];
  const known=s.a.knowledge||[];
+ const dest=MARKET_DATA.markets?.[s.a.targetMarket];
+ const focus=(dest?.focus||marketDimensions).map(k=>MARKET_DATA.dimensions?.find(x=>x[0]===k)||[k,k,""]);
  const bridge=[
-  ["same","Already transferable",known.length?known.map(k=>domains[k]?.label||k).join(", ")+" should be tested for transfer rather than relearned.":"Core market concepts should be separated from destination-specific rules."],
-  ["different","Different in the destination","Structure, regulation, access, instruments, settlement, reporting, governance, disclosure, tax and market conventions need explicit verification."],
-  ["new","New knowledge to build","Local primary sources, market infrastructure, participants, dominant sectors, currency/rates transmission and destination-specific research practice."],
-  ["danger","Potentially misleading","Terms that look identical, familiar valuation shortcuts, copied accounting assumptions, home-market governance assumptions and unverified source habits."],
-  ["verify","Must verify","For every important difference, identify the local primary source before treating the rule as true."]
+  ["same","Already transferable",known.length?known.filter(k=>k!=="none").map(k=>domains[k]?.label||k).join(", ")+" should be tested for transfer rather than relearned.":"Core concepts should be separated from destination-specific rules."],
+  ["different","Destination-specific study",focus.slice(0,8).map(x=>x[1]).join(" · ")+" need explicit destination-market study."],
+  ["new","New knowledge to build",focus.slice(8,16).map(x=>x[1]).join(" · ")+" should be treated as new until verified."],
+  ["danger","Potentially misleading",focus.slice(16).map(x=>x[1]).join(" · ")+" are areas where familiar assumptions can fail."],
+  ["verify","Primary-source checkpoint",dest?.primarySources?.map(x=>x[0]).join(" · ")||"Local exchange, regulator and issuer sources"],
+  ["route","Why this market",dest?.transferPrompt||"Build a local evidence map before transferring rules from the reference market."]
  ];
  return bridge
 }
@@ -170,7 +175,7 @@ function result(){
  let sys={};try{sys=JSON.parse(localStorage.getItem(STORE)||"{}")}catch(e){}sys.profile={...(sys.profile||{}),stage:s.a.level,goal:s.a.goal,sourceMarket:s.a.sourceMarket,targetMarket:s.a.targetMarket,depth:s.a.time,mode:s.a.mode,knownDomains:s.a.knowledge,updatedAt:new Date().toISOString()};sys.routine={version:4,calibrated:true,updatedAt:new Date().toISOString(),profile:sys.profile,domains:stats,route:uniq,transfer:bridge,results:s.queue.map(c=>({id:c.id,correct:s.answers[c.id]===c.correct,confidence:s.confidence[c.id],domains:c.domains}))};localStorage.setItem(STORE,JSON.stringify(sys));localStorage.setItem("pirepointRoutine",JSON.stringify(sys.routine));
  q.style.display="none";cal.classList.remove("show");res.classList.add("show");document.querySelector("#builder .r-actions").style.display="none";bar.style.width="100%";
  const first=uniq[0]||{label:"Market mental model",resource:"learn.html",why:"Build the dependency chain before adding complexity."};
- const bridgeHtml=bridge.length?'<div class="routine-hero-card" style="margin-top:14px"><span class="eyebrow">MARKET TRANSFER MAP</span><h2>Same · Different · New · Potentially misleading</h2><div class="r-route-grid">'+bridge.map(x=>'<div class="r-route"><b>'+esc(x[0].toUpperCase())+'</b><span>'+esc(x[1])+'</span></div>').join("")+'</div><p style="margin-top:14px;color:#c5c9c1">Before calling a rule “the same”, PirePoint will route you through the destination market's local evidence and conventions.</p></div>':'';
+ const bridgeHtml=bridge.length?'<div class="routine-hero-card" style="margin-top:14px"><span class="eyebrow">MARKET TRANSFER MAP</span><h2>Same · Different · New · Potentially misleading</h2><div class="r-route-grid">'+bridge.map(x=>'<div class="r-route"><b>'+esc(x[0].toUpperCase())+'</b><span>'+esc(x[1])+'</span></div>').join("")+'</div><p style="margin-top:14px;color:#c5c9c1">Destination focus is generated from PirePoint’s market-transfer framework. Primary-source checkpoints are kept separate from general learning so a rule can be verified before it becomes part of the learner’s model.</p></div>':'';
  const cards=Object.entries(stats).filter(x=>x[1].total).map(([k,v])=>'<div class="r-route"><b>'+esc(domains[k].label)+'</b><span>'+v.correct+'/'+v.total+' applied · '+(v.correct===v.total?"reliable in this calibration":"needs further work")+(v.highWrong?" · "+v.highWrong+" high-confidence miss":"")+'</span></div>').join("");
  res.innerHTML='<span class="r-step-label">YOUR ROUTINE IS READY</span><div class="routine-hero-card"><span class="eyebrow">NEXT BEST STEP</span><h2>'+esc(first.label)+'</h2><p>'+esc(first.why)+' The route is evidence-based and will change when later work gives PirePoint new evidence.</p><div class="r-route-grid">'+uniq.map((x,i)=>'<div class="r-route"><b>'+String(i+1).padStart(2,"0")+" · "+esc(x.label)+'</b><span>'+esc(x.why)+'</span></div>').join("")+'</div><div class="r-next"><div><small>Routine depth</small><b>'+esc(s.a.time==="5"?"5 min":s.a.time==="15"?"15 min":s.a.time==="30"?"30 min":"60+ min")+'</b></div><a class="r-btn r-link" href="'+esc(first.resource)+'">Start this step →</a></div></div>'+bridgeHtml+'<p class="muted" style="font-size:12px;margin-top:18px">This is not a permanent score. It is a working diagnosis: what appears reliable, what needs verification, and what should be tested next.</p><div class="r-route-grid">'+cards+'</div><div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap"><a class="r-btn r-link" href="system.html#route">Open learning system →</a><button class="r-btn secondary" id="again">Recalibrate</button></div>';
  document.getElementById("again").onclick=()=>location.reload()
