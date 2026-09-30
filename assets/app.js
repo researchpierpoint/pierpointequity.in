@@ -205,3 +205,29 @@ const daily=[["Why can a low P/E still be expensive?","Learn how earnings qualit
  if(!document.querySelector('.pp-skip-link')){const a=document.createElement('a');a.className='pp-skip-link';a.href='#main-content';a.textContent='Skip to content';document.body.prepend(a);const m=document.querySelector('main');if(m){m.id='main-content'}}
  document.querySelectorAll('a,button,input,select,textarea').forEach(el=>{if(!el.hasAttribute('aria-label')&&el.textContent.trim()===''&&el.tagName==='BUTTON')el.setAttribute('aria-label','Action')});
 })();
+
+// PirePoint Academy interaction layer
+(function(){
+  const dial=document.querySelectorAll(".depth-dial button");
+  if(dial.length){
+    dial.forEach(b=>b.addEventListener("click",()=>{
+      dial.forEach(x=>x.classList.remove("active")); b.classList.add("active");
+      const mode=b.textContent.trim();
+      const note=document.querySelector(".academy-command>div:last-child p");
+      if(note) note.textContent = mode==="5 MIN" ? "Get the mental model and one practical example." :
+        mode==="30 MIN" ? "Understand the mechanics, limitations and a worked example." :
+        mode==="2 HOURS" ? "Connect the concept to financials, valuation, risk and research." :
+        "Follow the full concept chain, practise it and challenge the assumptions.";
+    }));
+  }
+  const quiz=[...document.querySelectorAll("[data-retrieval-question]")];
+  quiz.forEach(q=>{
+    const buttons=q.querySelectorAll("button[data-answer]");
+    const feedback=q.querySelector("[data-feedback]");
+    buttons.forEach(b=>b.addEventListener("click",()=>{
+      buttons.forEach(x=>x.disabled=true);
+      const correct=b.dataset.answer==="correct";
+      if(feedback){feedback.hidden=false;feedback.textContent=correct?"Correct. Now explain why in your own words.":"Not quite. Read the explanation, then try to state the rule without looking.";feedback.classList.toggle("is-correct",correct);}
+    }));
+  });
+})();
