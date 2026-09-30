@@ -20,7 +20,8 @@ const index=[
 ["Glossary","Plain-English definitions of stock-market language.","glossary.html","glossary terms definition"],
 ["Compare Markets","Compare exchanges, regulators, currencies and market structures.","compare.html","compare markets countries"],
 ["Research Workspace","Build a company thesis with business, financials, valuation, risks and an evidence ledger.","research.html","research workspace company analysis thesis evidence valuation risks"],
-["Research Compare","Compare two research workspaces using the same evidence-first framework.","research-compare.html","research compare companies thesis evidence quality valuation"]
+["Research Compare","Compare two research workspaces using the same evidence-first framework.","research-compare.html","research compare companies thesis evidence quality valuation"],
+["Company Intelligence","A source-first company research surface for business quality valuation risk and evidence.","intelligence.html","company intelligence research business valuation risk evidence"]
 ];
 function search(q){
  const aliases={"cheap":["p/e","valuation"],"expensive":["p/e","valuation"],"profitability":["roce","roe"],"buy":["how to buy stocks","limit order"],"order":["settlement"],"ipo":["primary market"],"etf":["funds"],"tax":["capital gains tax"],"scam":["stock market scams & fraud"],"price":["valuation"],"chart":["candlestick charts","moving averages"],"trend":["moving averages"],"earnings":["earnings call"],"cash":["cash flow statement"],"debt":["balance sheet"]}; const low=q.toLowerCase(); const expanded=[low,...Object.keys(aliases).filter(k=>low.includes(k)).flatMap(k=>aliases[k])].join(" "); const terms=expanded.split(/\s+/).filter(Boolean);
