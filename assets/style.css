@@ -343,3 +343,10 @@ h2:hover .pp-anchor,.pp-anchor:focus-visible{opacity:1}
  .executive-strip{grid-template-columns:1fr}.executive-strip div{border-right:0}
  .workflow-line{grid-template-columns:1fr}.workflow-line div{border-right:0}
 }
+
+/* Company intelligence — executive orientation */
+.intel-resume{margin-top:18px;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:18px 20px}
+.intel-resume h3{margin:5px 0 3px;font-size:18px;letter-spacing:-.02em}
+.intel-resume p{margin:0;font-size:12px}
+.intel-resume .button{white-space:nowrap}
+@media(max-width:620px){.intel-resume{display:block}.intel-resume .button{display:block;margin-top:14px;text-align:center}}
