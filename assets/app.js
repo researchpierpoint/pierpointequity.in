@@ -19,7 +19,7 @@ const index=[
 ["United Kingdom","LSE, FCA and UK market structure.","countries/united-kingdom.html","uk britain london fca"],
 ["Glossary","Plain-English definitions of stock-market language.","glossary.html","glossary terms definition"],
 ["Compare Markets","Compare exchanges, regulators, currencies and market structures.","compare.html","compare markets countries"],
-["Research Workspace","Build a company thesis with business, financials, valuation, risks and an evidence ledger.","research.html","research workspace company analysis thesis evidence valuation risks"]],
+["Research Workspace","Build a company thesis with business, financials, valuation, risks and an evidence ledger.","research.html","research workspace company analysis thesis evidence valuation risks"]
 ];
 function search(q){
  const aliases={"cheap":["p/e","valuation"],"expensive":["p/e","valuation"],"profitability":["roce","roe"],"buy":["how to buy stocks","limit order"],"order":["settlement"],"ipo":["primary market"],"etf":["funds"],"tax":["capital gains tax"],"scam":["stock market scams & fraud"],"price":["valuation"],"chart":["candlestick charts","moving averages"],"trend":["moving averages"],"earnings":["earnings call"],"cash":["cash flow statement"],"debt":["balance sheet"]}; const low=q.toLowerCase(); const expanded=[low,...Object.keys(aliases).filter(k=>low.includes(k)).flatMap(k=>aliases[k])].join(" "); const terms=expanded.split(/\s+/).filter(Boolean);
