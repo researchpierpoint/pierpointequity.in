@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PirePoint Learning & Research OS — Learn, Practise, Research</title>
+<meta name="description" content="A connected learning and research operating system: build market knowledge, practise analysis, test understanding, review weak areas and develop independent thinking.">
+<link rel="stylesheet" href="assets/style.css">
+</head><body>
+<header class="site-header"><div class="wrap nav">
+<a class="brand" href="index.html" aria-label="PirePoint Equity home"><span class="mark">P</span><span>PirePoint <b>Equity</b></span></a>
+<nav aria-label="Primary navigation"><a href="learn.html">Learn</a><a href="countries.html">Markets</a><a href="intelligence.html">Intelligence</a><a href="research-hub.html">Research</a><a href="tools.html">Tools</a><a class="active" href="system.html">System</a></nav>
+<a class="nav-search" href="index.html#searchInput">Search</a></div></header>
+<main>
+<section class="hero wrap system-hero">
+<span class="eyebrow">THE PIREPOINT LEARNING & RESEARCH OS</span>
+<h1>Learn it.<br><em>Prove you understand it.</em></h1>
+<p class="hero-copy">The missing layer between reading a guide and becoming an independent thinker. PirePoint connects knowledge, practice, evidence, research and review into one continuous loop.</p>
+<div class="system-actions"><a class="button" href="#route">Build my route →</a><a class="button secondary" href="#cases">Enter Case School</a></div>
+<div class="system-loop" aria-label="PirePoint learning loop"><span>LEARN</span><i>→</i><span>RETRIEVE</span><i>→</i><span>APPLY</span><i>→</i><span>ATTACK</span><i>→</i><span>TEACH</span><i>→</i><span>REVIEW</span></div>
+</section>
+
+<section class="wrap section" id="route">
+<div class="section-head"><div><span class="eyebrow">01 · PERSONAL ROUTE</span><h2>Build the path around what you actually know.</h2><p class="muted">Your choices stay in this browser. No account is required.</p></div><button class="text-button" id="resetProfile" type="button">Reset route</button></div>
+<div class="os-grid">
+<div class="os-panel">
+<label>Where are you starting?</label>
+<div class="os-options" data-profile="level"><button data-v="new">New to markets</button><button data-v="one">Know one market</button><button data-v="many">Know several markets</button><button data-v="advanced">Experienced researcher</button></div>
+<label>What are you trying to become better at?</label>
+<div class="os-options" data-profile="goal"><button data-v="foundation">Foundation</button><button data-v="research">Research</button><button data-v="global">Global markets</button><button data-v="judgement">Independent thinking</button></div>
+<label>Which markets do you already understand?</label>
+<div class="os-options" data-profile="markets"><button data-v="India">India</button><button data-v="US">United States</button><button data-v="China">China</button><button data-v="Europe">Europe</button><button data-v="Japan">Japan</button><button data-v="Australia">Australia</button><button data-v="none">None yet</button></div>
+</div>
+<div class="os-panel route-output"><span class="tag">YOUR SYSTEM</span><h3 id="osRouteTitle">Choose your starting point.</h3><p id="osRouteCopy">PirePoint will assemble a finite sequence rather than asking you to browse endlessly.</p><div id="osRouteSteps" class="route-steps"></div></div>
+</div>
+</section>
+
+<section class="dark-section" id="mastery"><div class="wrap section">
+<div class="section-head"><div><span class="eyebrow">02 · MASTERY MAP</span><h2>Reading is not mastery.</h2><p class="lead">Mark a skill only when you can explain it, use it and identify where it can fail.</p></div><span class="mastery-score" id="masteryScore">0 / 10</span></div>
+<div class="mastery-grid" id="masteryGrid"></div>
+</div></section>
+
+<section class="wrap section" id="cases">
+<div class="section-head"><div><span class="eyebrow">03 · CASE SCHOOL</span><h2>Facts change. Your reasoning must survive.</h2><p class="muted">Fictional cases deliberately remove the comfort of company names and tips. You make the research moves yourself.</p></div></div>
+<div class="case-grid">
+<article class="case-card" data-case="economics"><span class="tag">CASE 01 · BUSINESS</span><h3>The company that grows fast</h3><p>Revenue growth is accelerating, but working capital absorbs more cash every year and returns on capital are falling.</p><button class="button case-open" type="button">Open case →</button></article>
+<article class="case-card" data-case="valuation"><span class="tag">CASE 02 · VALUATION</span><h3>The stock that looks cheap</h3><p>A multiple is far below its history. Before calling it cheap, identify the earnings, cycle and expectations hidden inside the number.</p><button class="button case-open" type="button">Open case →</button></article>
+<article class="case-card" data-case="evidence"><span class="tag">CASE 03 · EVIDENCE</span><h3>The perfect narrative</h3><p>A polished story cites several impressive claims. Your job is to separate verified facts, calculations, assumptions and unknowns.</p><button class="button case-open" type="button">Open case →</button></article>
+</div>
+<div id="caseRoom" class="case-room" hidden></div>
+</section>
+
+<section class="wrap section" id="explain">
+<div class="section-head"><div><span class="eyebrow">04 · EXPLAIN IT FIVE WAYS</span><h2>If you cannot change the explanation, you may not own the idea.</h2><p class="muted">Pick a concept. Then explain it for a beginner, analyst, executive, visual learner and exam setting.</p></div></div>
+<div class="explain-picker"><button class="active" data-concept="pe">P/E</button><button data-concept="cash">Profit vs cash</button><button data-concept="roce">ROCE</button><button data-concept="diversification">Diversification</button></div>
+<div class="five-explain" id="fiveExplain"></div>
+</section>
+
+<section class="wrap section" id="anatomy">
+<div class="section-head"><div><span class="eyebrow">05 · MARKET ANATOMY</span><h2>See the machine behind the price.</h2><p class="muted">A market is more than a chart. Trace the chain from issuer to exchange, clearing, custody, investor and information.</p></div><a class="button secondary" href="countries.html">Open market atlas →</a></div>
+<div class="anatomy-flow">
+<div><b>01</b><strong>Issuer</strong><span>Creates securities and reports information.</span></div><i>→</i><div><b>02</b><strong>Market</strong><span>Exchange, venue, order matching and price formation.</span></div><i>→</i><div><b>03</b><strong>Clearing</strong><span>Obligations are calculated and managed.</span></div><i>→</i><div><b>04</b><strong>Custody</strong><span>Ownership records and settlement.</span></div><i>→</i><div><b>05</b><strong>Investor</strong><span>Research, risk, behaviour and decisions.</span></div>
+</div>
+<div class="anatomy-deltas"><span>Then ask what changes by market:</span><b>regulator</b><b>exchange</b><b>currency</b><b>access</b><b>tax</b><b>reporting</b><b>settlement</b><b>investor base</b></div>
+</section>
+
+<section class="wrap section" id="evidence">
+<div class="section-head"><div><span class="eyebrow">06 · EVIDENCE GRAPH</span><h2>Every important conclusion should have a trail.</h2><p class="muted">Create a claim → source → calculation → assumption → conclusion chain. Unknown is a valid state; invented certainty is not.</p></div></div>
+<div class="evidence-builder os-panel">
+<div class="evidence-row"><label for="claim">Claim</label><input id="claim" placeholder="What are you trying to establish?"></div>
+<div class="evidence-row"><label for="source">Source</label><input id="source" placeholder="Primary filing, exchange, regulator, annual report, dataset…"></div>
+<div class="evidence-row"><label for="status">Evidence status</label><select id="status"><option>Verified</option><option>Calculated</option><option>Assumption</option><option>Unknown</option></select></div>
+<button class="button" id="addEvidence" type="button">Add to evidence trail →</button>
+<div id="evidenceTrail" class="evidence-trail"></div>
+</div>
+</section>
+
+<section class="wrap section" id="review">
+<div class="section-head"><div><span class="eyebrow">07 · REVIEW ENGINE</span><h2>Return before you forget.</h2><p class="muted">Concepts you mark as weak become review prompts. This is deliberately local and lightweight.</p></div><button class="text-button" id="clearReviews" type="button">Clear review state</button></div>
+<div class="review-grid" id="reviewGrid"></div>
+</section>
+
+<section class="wrap section" id="mission">
+<div class="finish-card">
+<div><span class="eyebrow">08 · THE RESEARCH LOOP</span><h2>Question → Evidence → Model → Attack → Write → Review.</h2><p>When you finish learning, the system should not send you back to another article. It should move you into a finite research mission, then bring the result back into your learning.</p></div>
+<div class="finish-actions"><a class="button" href="research.html#mission-builder">Start a research mission →</a><a class="button secondary" href="academy.html">Return to Academy →</a></div>
+</div>
+</section>
+</main>
+<footer class="footer"><div class="wrap footer-grid"><div><div class="brand"><span class="mark">P</span><span>PirePoint <b>Equity</b></span></div><p>The Stock Market Guide.</p></div><div><a href="learn.html">Learn</a><a href="countries.html">Markets</a><a href="intelligence.html">Intelligence</a><a href="research-hub.html">Research</a><a href="tools.html">Tools</a><a href="academy.html">Academy</a><a href="system.html">System</a><a href="methodology.html">Methodology</a><a href="disclosures.html">Disclosures</a></div></div><div class="wrap fine">© 2026 PirePoint Equity · Educational information, not personalised investment advice.</div></footer>
+<script src="assets/app.js"></script><script src="assets/system.js"></script><script src="assets/analytics.js"></script>
+</body></html>
