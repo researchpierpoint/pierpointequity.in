@@ -71,7 +71,21 @@
 <div class="academy-card" data-retrieval-question><span class="tag">QUESTION 02</span><h3>Why should profit be checked against cash flow?</h3><p>Choose the best reason.</p><div class="depth-dial"><button type="button" data-answer="correct">Accounting profit and cash generation can diverge.</button><button type="button" data-answer="wrong">Cash flow always equals profit.</button><button type="button" data-answer="wrong">Profit is irrelevant.</button></div><p data-feedback hidden></p></div>
 <div class="academy-card" data-retrieval-question><span class="tag">QUESTION 03</span><h3>What is the purpose of a red-team review?</h3><p>Choose the best description.</p><div class="depth-dial"><button type="button" data-answer="wrong">To make the thesis sound more confident.</button><button type="button" data-answer="correct">To actively search for evidence and assumptions that could invalidate the conclusion.</button><button type="button" data-answer="wrong">To predict the exact future price.</button></div><p data-feedback hidden></p></div>
 </div>
-</section><section class="wrap section">
+</section><section class="wrap section" id="knowledge-map">
+<div class="section-head"><div><span class="eyebrow">THE KNOWLEDGE MAP</span><h2>Tell PirePoint what you already understand.</h2><p class="muted">No leaderboard. No public score. Your browser keeps a small local learning state so the next recommendation can reflect your gaps.</p></div></div>
+<div class="knowledge-map-grid" id="knowledgeMap">
+<button class="knowledge-node" data-node="market"><b>Market</b><small>What a market is</small><em>Need this</em></button>
+<button class="knowledge-node" data-node="mechanics"><b>Mechanics</b><small>Orders & settlement</small><em>Need this</em></button>
+<button class="knowledge-node" data-node="business"><b>Business</b><small>How value is created</small><em>Need this</em></button>
+<button class="knowledge-node" data-node="financials"><b>Financials</b><small>Profit, balance sheet & cash</small><em>Need this</em></button>
+<button class="knowledge-node" data-node="valuation"><b>Valuation</b><small>Price & expectations</small><em>Need this</em></button>
+<button class="knowledge-node" data-node="risk"><b>Risk</b><small>Failure & uncertainty</small><em>Need this</em></button>
+<button class="knowledge-node" data-node="global"><b>Global</b><small>Market differences</small><em>Need this</em></button>
+<button class="knowledge-node" data-node="research"><b>Research</b><small>Evidence & red team</small><em>Need this</em></button>
+</div>
+<div class="next-concept" id="nextConcept"><span class="eyebrow">YOUR NEXT CONCEPT</span><h3>Start with Market</h3><p>Build the foundation before moving deeper.</p><a class="button" href="guides/stock-market-basics.html">Learn this →</a></div>
+</section>
+<section class="wrap section">
 <div class="section-head"><div><span class="eyebrow">SKILL MAP</span><h2>Understand your gaps, not just your page count.</h2><p class="muted">This is a learning diagnostic—not a score or competition. The eventual system will use your completed lessons and practice to suggest the most useful next concept.</p></div></div>
 <div class="skill-map">
 <div class="skill"><b>Market structure</b><small>Foundations</small><div class="skill-meter"><i style="--level:45%"></i></div></div>
@@ -94,4 +108,27 @@
 </main>
 <footer class="footer"><div class="wrap footer-grid"><div><div class="brand"><span class="mark">P</span><span>PirePoint <b>Equity</b></span></div><p>The Stock Market Guide.</p></div><div><a href="learn.html">Learn</a><a href="countries.html">Markets</a><a href="intelligence.html">Intelligence</a><a href="research-hub.html">Research</a><a href="tools.html">Tools</a><a href="academy.html">Academy</a><a href="questions.html">Questions</a><a href="methodology.html">Methodology</a></div></div><div class="wrap fine">© 2026 PirePoint Equity · Educational information, not personalised investment advice.</div></footer>
 <script src="assets/app.js"></script><script src="assets/analytics.js"></script>
-</body></html>
+<script>
+(function(){
+const routes={
+market:["Market","Build the mental model of ownership, exchanges, prices and participants.","guides/stock-market-basics.html"],
+mechanics:["Mechanics","Understand orders, brokers, execution and settlement.","guides/how-to-buy-stocks.html"],
+business:["Business","Learn how revenue, economics, competition and quality connect.","guides/fundamental-analysis.html"],
+financials:["Financials","Connect profit, balance sheet, working capital and cash.","guides/balance-sheet.html"],
+valuation:["Valuation","Understand multiples, cash flows and the expectations embedded in price.","guides/pe-ratio.html"],
+risk:["Risk","Learn how assumptions fail and how to identify downside mechanisms.","intelligence.html"],
+global:["Global markets","Transfer your framework across countries while isolating local differences.","countries.html"],
+research:["Research","Build an evidence trail and attack your own thesis.","intelligence.html"]
+};
+const key="ppKnowledgeMapV1",state=JSON.parse(localStorage.getItem(key)||"{}");
+const nodes=[...document.querySelectorAll(".knowledge-node")];
+const next=document.getElementById("nextConcept");
+function render(){
+nodes.forEach(n=>{const s=state[n.dataset.node]||"need";n.classList.toggle("known",s==="know");n.classList.toggle("need",s!=="know");n.querySelector("em").textContent=s==="know"?"I know this":"I need this"});
+const order=["market","mechanics","business","financials","valuation","risk","global","research"];
+const id=order.find(x=>state[x]!=="know")||"research";const r=routes[id];
+next.querySelector("h3").textContent=r[0];next.querySelector("p").textContent=r[1];next.querySelector("a").href=r[2];
+}
+nodes.forEach(n=>n.addEventListener("click",()=>{state[n.dataset.node]=state[n.dataset.node]==="know"?"need":"know";localStorage.setItem(key,JSON.stringify(state));render()}));render();
+})();
+</script></body></html>
