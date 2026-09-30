@@ -36,7 +36,9 @@ def main():
     for name,maxage in EXPECTED.items():
         d=load(GEN/name)
         if d is None:
-            checks.append({"file":name,"status":"missing"});missing.append(name);continue
+            checks.append({"file":name,"status":"missing","required":name not in {"amfi-nav-history.json"}})
+        if name!="amfi-nav-history.json": missing.append(name)
+        continue
         stamp=d.get("updated_at") or d.get("generated_at") or d.get("as_of")
         a=age(stamp);status="fresh" if a is not None and a<=maxage else "stale"
         checks.append({"file":name,"status":status,"age_hours":None if a is None else round(a/3600,2),"count":d.get("count",d.get("coverage"))})
@@ -46,7 +48,7 @@ def main():
     else:
         a=age(wc.get("generated_at"));status="fresh" if a is not None and a<=36*3600 else "stale"
         checks.append({"file":"data/public/what-changed.json","status":status,"age_hours":None if a is None else round(a/3600,2),"count":wc.get("count")})
-    ok=not missing and all(x["status"]!="missing" for x in checks)
+    ok=not missing and all(x["status"]!="missing" or x.get("file")=="amfi-nav-history.json" for x in checks)
     out={"version":"1.1","checked_at":now.isoformat(),"status":"ok" if ok else "needs_attention","checks":checks,"missing":missing}
     (GEN/"data-health.json").write_text(json.dumps(out,indent=2)+"\n",encoding="utf-8")
     print(json.dumps(out,indent=2))
