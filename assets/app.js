@@ -23,6 +23,7 @@ const index=[
 ["Research Compare","Compare two research workspaces using the same evidence-first framework.","research-compare.html","research compare companies thesis evidence quality valuation"],
 ["Company Intelligence","A source-first company research surface for business quality valuation risk and evidence.","intelligence.html","company intelligence research business valuation risk evidence"],
 ["Question Library","Find answers by the question in your head—not the financial term you already know.","questions.html","question how do i start what should i check risk scam etf global market valuation"],["PirePoint Academy","Connected learning: foundations, practice, global markets, research missions and independent thinking.","academy.html","academy learning course curriculum practice case school research mission skill map"],
+  ["Learning Labs","Interactive fictional cases for valuation, cash conversion and leverage.","labs.html","learning labs valuation cash flow profit debt leverage practice simulator"],
 ["ETF Guide","Understand ETF structure, NAV, premiums, discounts, costs, liquidity and risks.","guides/etf.html","etf exchange traded fund nav premium discount liquidity"],
 ["Position Sizing","Learn how exposure, concentration and uncertainty interact.","guides/position-sizing.html","position sizing concentration risk portfolio"],
 ["Fraud & Scams","Learn verification habits and common investment-fraud warning signs.","guides/fraud-and-scams.html","fraud scam fake tip guarantee return fomo safety"],
