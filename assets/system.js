@@ -1,5 +1,5 @@
 (()=>{"use strict";
-const K="ppSystemV1";const load=()=>{try{return JSON.parse(localStorage.getItem(K)||"{}")}catch{return{}}};let s=load();const save=()=>localStorage.setItem(K,JSON.stringify(s));
+const K="ppSystemV2";const load=()=>{try{return JSON.parse(localStorage.getItem(K)||"{}")}catch{return{}}};let s=load();const save=()=>localStorage.setItem(K,JSON.stringify(s));
 const $=(q,r=document)=>r.querySelector(q), $$=(q,r=document)=>[...r.querySelectorAll(q)];
 const mastery=[["market","Market structure","Explain ownership, exchanges and price formation.","guides/stock-market-basics.html"],["mechanics","Mechanics","Explain orders, settlement, custody and access.","guides/how-to-buy-stocks.html"],["business","Business","Map how a business creates and captures value.","guides/fundamental-analysis.html"],["financials","Financials","Read profit, balance sheet and cash together.","guides/balance-sheet.html"],["valuation","Valuation","Explain what a price requires, not just a multiple.","guides/pe-ratio.html"],["risk","Risk","Identify what can permanently impair an idea.","guides/risk-reward.html"],["global","Global markets","Transfer a framework across borders and identify deltas.","countries.html"],["evidence","Evidence","Separate verified facts, calculations, assumptions and unknowns.","methodology.html"],["research","Research","Run a finite research process from question to thesis.","research.html"],["redteam","Independent thinking","Generate the strongest case against your own conclusion.","intelligence.html"]];
 const profileDefaults={stage:null,goal:null,target:null,depth:null,markets:[],skills:[]};
@@ -99,7 +99,7 @@ renderEvidence();
 (function(){
 "use strict";
 try{
- const raw=localStorage.getItem("ppSystemV1");
+ const raw=localStorage.getItem("ppSystemV2");
  const s=raw?JSON.parse(raw):{};
  const r=s.routine;
  const title=document.getElementById("adaptiveRouteTitle");
@@ -115,11 +115,11 @@ try{
    actions.innerHTML='<a class="button" href="routine.html">Build My Routine →</a>';
    return;
  }
- const a=r.answers||{};
- title.textContent="Continue your "+(a.goal==="research"?"research":a.goal==="market"?"market-transfer":"learning")+" route.";
+ const a=r.profile||{};
+ title.textContent="Continue your "+(a.goal==="research"?"research":a.goal==="market"?"market-transfer":a.goal==="advanced"?"challenge":"learning")+" route.";
  copy.textContent="Last calibrated "+new Date(r.updatedAt).toLocaleDateString()+" · The route changes when new evidence changes your demonstrated strengths or gaps.";
  steps.innerHTML=r.route.map((x,i)=>'<div><b>'+String(i+1).padStart(2,"0")+'</b><span><strong>'+String(x.label||"").replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]))+'</strong><small>'+String(x.why||"").replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]))+'</small></span></div>').join("");
- if(a.target&&a.target!=="same"&&a.target!==a.market){delta.hidden=false;delta.innerHTML='<strong>MARKET TRANSFER ACTIVE</strong><p>Your routine is treating '+String(a.target)+' as a destination rather than assuming your '+String(a.market)+' knowledge transfers unchanged.</p>';}else delta.hidden=true;
+ if(a.targetMarket&&a.targetMarket!=="same"&&a.targetMarket!==a.sourceMarket){delta.hidden=false;delta.innerHTML='<strong>MARKET TRANSFER ACTIVE</strong><p>Your routine is treating '+String(a.targetMarket)+' as a destination. It will preserve transferable knowledge and explicitly study what changes, what is new and what can mislead.</p>';}else if(Array.isArray(r.transfer)&&r.transfer.length){delta.hidden=false;delta.innerHTML='<strong>MARKET TRANSFER MAP</strong><p>'+String(r.transfer.map(x=>x[1]).join(" · ")).replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]))+'</p>';}else delta.hidden=true;
  actions.hidden=false;
  const first=r.route[0]||{};
  actions.innerHTML='<a class="button" href="'+(first.resource||"learn.html")+'">Continue next step →</a><a class="button secondary" href="routine.html">Recalibrate →</a>';
