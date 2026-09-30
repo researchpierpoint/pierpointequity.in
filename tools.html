@@ -1,1 +1,182 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Research Tools — PirePoint Equity</title><meta name="description" content="Free investment research calculators for CAGR, drawdown and valuation scenarios."><link rel="stylesheet" href="assets/style.css"><link rel="canonical" href="https://pierpointequity.in/tools.html"></head><body><header class="site-header"><div class="wrap nav"><a class="brand" href="index.html"><span class="mark">P</span><span>PirePoint <b>Equity</b></span></a><nav><a href="traffic.html">Traffic</a><a href="stocks.html">Stocks</a><a href="funds.html">Funds</a><a href="etfs.html">ETFs</a><a href="research.html">Research</a><a class="active" href="tools.html">Tools</a></nav></div></header><main class="wrap page"><span class="eyebrow">RESEARCH TOOLS</span><h1>Tools</h1><p class="lead">Simple, transparent calculators. They perform calculations only; they do not provide personalised investment advice.</p><div class="grid three cards-list"><article class="card"><h3>CAGR calculator</h3><label>Initial value<input id="c0" type="number" value="100000"></label><label>Final value<input id="c1" type="number" value="150000"></label><label>Years<input id="cy" type="number" value="3" step="0.1"></label><button onclick="cagr()">Calculate</button><p id="cagrOut" class="result"></p></article><article class="card"><h3>Drawdown calculator</h3><label>Peak<input id="peak" type="number" value="100"></label><label>Trough<input id="trough" type="number" value="70"></label><button onclick="drawdown()">Calculate</button><p id="ddOut" class="result"></p></article><article class="card"><h3>Scenario value</h3><label>Current EPS<input id="eps" type="number" value="20" step="0.01"></label><label>Scenario P/E<input id="pe" type="number" value="20" step="0.1"></label><button onclick="scenario()">Calculate</button><p id="scOut" class="result"></p></article></div><section class="section"><h2>Method</h2><p>CAGR = (final / initial)^(1 / years) − 1. Drawdown = (trough / peak) − 1. Scenario value = EPS × scenario P/E. These are mathematical outputs, not forecasts.</p></section></main><footer class="footer"><div class="wrap fine">PirePoint Equity · <a href="disclosures.html">Disclosures</a></div></footer><script>function n(id){return Number(document.getElementById(id).value)}function cagr(){const x=(n("c1")/n("c0"))**(1/n("cy"))-1;document.getElementById("cagrOut").textContent=(x*100).toFixed(2)+"% CAGR"}function drawdown(){const x=n("trough")/n("peak")-1;document.getElementById("ddOut").textContent=(x*100).toFixed(2)+"% drawdown"}function scenario(){document.getElementById("scOut").textContent="₹"+(n("eps")*n("pe")).toFixed(2)+" scenario value"}</script><script src="assets/analytics.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Investment Calculators & Tools — PirePoint Equity</title>
+<meta name="description" content="Free PirePoint Equity calculators for stock averaging, CAGR, SIP, lumpsum returns and compound growth.">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="canonical" href="https://pierpointequity.in/tools.html">
+<style>
+.tool-hero{margin:18px 0 28px;padding:28px;border:1px solid rgba(127,127,127,.18);border-radius:22px;background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,.02))}
+.tool-grid{align-items:stretch}
+.tool-card{display:flex;flex-direction:column;min-height:100%}
+.tool-card .tool-form{display:grid;gap:12px}
+.tool-card label{font-size:.9rem}
+.tool-card input,.tool-card select{width:100%;box-sizing:border-box;margin-top:6px;padding:11px 12px;border:1px solid rgba(127,127,127,.28);border-radius:10px;background:transparent;color:inherit}
+.tool-card button{margin-top:4px}
+.tool-result{margin-top:14px;padding:13px;border-radius:12px;border:1px solid rgba(127,127,127,.2);font-weight:700;min-height:22px}
+.tool-note{font-size:.82rem;opacity:.72;margin-top:auto;padding-top:12px}
+.tool-switch{display:flex;gap:8px;margin:0 0 14px;flex-wrap:wrap}
+.tool-switch button{margin:0}
+.tool-switch button.active{font-weight:700}
+.tool-featured{grid-column:span 2}
+@media(max-width:800px){.tool-featured{grid-column:span 1}}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="wrap nav">
+<a class="brand" href="index.html"><span class="mark">P</span><span>PirePoint <b>Equity</b></span></a>
+<nav><a href="traffic.html">Traffic</a><a href="stocks.html">Stocks</a><a href="funds.html">Funds</a><a href="etfs.html">ETFs</a><a href="research.html">Research</a><a class="active" href="tools.html">Tools</a></nav>
+</div></header>
+
+<main class="wrap page">
+<span class="eyebrow">INVESTMENT TOOLS</span>
+<div class="tool-hero">
+<h1>Useful tools. Nothing unnecessary.</h1>
+<p class="lead">Five high-use calculators for everyday investing. Fast, transparent and built around Indian investors.</p>
+</div>
+
+<div class="grid three cards-list tool-grid">
+
+<article class="card tool-card">
+<h3>Stock Average Price</h3>
+<p>Find your new average price after adding more shares.</p>
+<div class="tool-form">
+<label>Existing quantity<input id="avgQty" type="number" min="0" step="1" value="100"></label>
+<label>Existing average price (₹)<input id="avgPrice" type="number" min="0" step="0.01" value="1000"></label>
+<label>New quantity<input id="newQty" type="number" min="0" step="1" value="50"></label>
+<label>New buy price (₹)<input id="newPrice" type="number" min="0" step="0.01" value="800"></label>
+<button type="button" onclick="averagePrice()">Calculate average</button>
+</div>
+<p id="avgOut" class="tool-result" aria-live="polite"></p>
+<p class="tool-note">Weighted average of the existing and new purchase cost.</p>
+</article>
+
+<article class="card tool-card">
+<h3>Compound Interest</h3>
+<p>See how money grows when returns compound over time.</p>
+<div class="tool-form">
+<label>Initial amount (₹)<input id="ciPrincipal" type="number" min="0" step="1000" value="100000"></label>
+<label>Annual return (%)<input id="ciRate" type="number" step="0.1" value="12"></label>
+<label>Years<input id="ciYears" type="number" min="0" step="0.1" value="10"></label>
+<label>Compounding
+<select id="ciFreq"><option value="1">Annually</option><option value="4">Quarterly</option><option value="12" selected>Monthly</option></select>
+</label>
+<button type="button" onclick="compoundInterest()">Calculate growth</button>
+</div>
+<p id="ciOut" class="tool-result" aria-live="polite"></p>
+<p class="tool-note">Mathematical illustration only; the return rate is an input, not a forecast.</p>
+</article>
+
+<article class="card tool-card tool-featured">
+<h3>CAGR Calculator</h3>
+<p>Measure annualised growth for an investment or an insurance policy.</p>
+<div class="tool-switch">
+<button id="cagrInvestmentBtn" type="button" class="active" onclick="setCagrMode('investment')">Investment CAGR</button>
+<button id="cagrInsuranceBtn" type="button" onclick="setCagrMode('insurance')">Insurance Policy CAGR</button>
+</div>
+<div id="investmentCagr" class="tool-form">
+<label>Initial value (₹)<input id="c0" type="number" min="0" step="1000" value="100000"></label>
+<label>Final value (₹)<input id="c1" type="number" min="0" step="1000" value="150000"></label>
+<label>Years<input id="cy" type="number" min="0.01" step="0.1" value="3"></label>
+<button type="button" onclick="investmentCagr()">Calculate CAGR</button>
+</div>
+<div id="insuranceCagr" class="tool-form" hidden>
+<label>Total premiums paid (₹)<input id="insPremium" type="number" min="0" step="1000" value="500000"></label>
+<label>Maturity / final value (₹)<input id="insMaturity" type="number" min="0" step="1000" value="750000"></label>
+<label>Policy term (years)<input id="insYears" type="number" min="0.01" step="1" value="10"></label>
+<button type="button" onclick="insuranceCagr()">Calculate policy CAGR</button>
+</div>
+<p id="cagrOut" class="tool-result" aria-live="polite"></p>
+<p class="tool-note">Insurance Policy CAGR compares total premiums paid with maturity value. Because premiums are paid over time, XIRR is more precise when payment dates are available.</p>
+</article>
+
+<article class="card tool-card">
+<h3>SIP Calculator</h3>
+<p>Estimate the future value of regular monthly investing.</p>
+<div class="tool-form">
+<label>Monthly investment (₹)<input id="sipAmount" type="number" min="0" step="500" value="10000"></label>
+<label>Expected annual return (%)<input id="sipRate" type="number" step="0.1" value="12"></label>
+<label>Investment period (years)<input id="sipYears" type="number" min="0.1" step="0.5" value="10"></label>
+<button type="button" onclick="sip()">Calculate SIP</button>
+</div>
+<p id="sipOut" class="tool-result" aria-live="polite"></p>
+<p class="tool-note">Illustrative future value using monthly compounding; actual returns vary.</p>
+</article>
+
+<article class="card tool-card">
+<h3>Lumpsum Calculator</h3>
+<p>Estimate how a one-time investment could grow over time.</p>
+<div class="tool-form">
+<label>Investment amount (₹)<input id="lsAmount" type="number" min="0" step="1000" value="100000"></label>
+<label>Expected annual return (%)<input id="lsRate" type="number" step="0.1" value="12"></label>
+<label>Investment period (years)<input id="lsYears" type="number" min="0.1" step="0.5" value="10"></label>
+<button type="button" onclick="lumpsum()">Calculate lumpsum</button>
+</div>
+<p id="lsOut" class="tool-result" aria-live="polite"></p>
+<p class="tool-note">Illustrative future value only; the return rate is an assumption.</p>
+</article>
+
+</div>
+
+<section class="section">
+<h2>How these tools work</h2>
+<p><b>Stock average</b> uses weighted purchase cost. <b>CAGR</b> = (final value ÷ initial value)^(1 ÷ years) − 1. <b>Compound interest</b> applies the selected compounding frequency. <b>SIP</b> models equal monthly contributions. <b>Lumpsum</b> applies annual compounding to a single investment.</p>
+<p class="fine">These calculators provide mathematical outputs, not personalised investment advice, forecasts or guarantees.</p>
+</section>
+</main>
+
+<footer class="footer"><div class="wrap fine">PirePoint Equity · <a href="disclosures.html">Disclosures</a></div></footer>
+
+<script>
+const money=x=>'₹'+Number(x).toLocaleString('en-IN',{maximumFractionDigits:2});
+const val=id=>Number(document.getElementById(id).value);
+function setOut(id,text){document.getElementById(id).textContent=text}
+function averagePrice(){
+ const q=val('avgQty'), p=val('avgPrice'), nq=val('newQty'), np=val('newPrice');
+ if(q<0||nq<0||p<0||np<0||q+nq<=0){return setOut('avgOut','Enter valid values.')}
+ const total=q*p+nq*np, avg=total/(q+nq);
+ setOut('avgOut','New average: '+money(avg)+' · Total quantity: '+(q+nq).toLocaleString('en-IN'));
+}
+function compoundInterest(){
+ const p=val('ciPrincipal'), r=val('ciRate')/100, y=val('ciYears'), f=val('ciFreq');
+ if(p<0||y<0||f<=0){return setOut('ciOut','Enter valid values.')}
+ const fv=p*Math.pow(1+r/f,f*y), gain=fv-p;
+ setOut('ciOut','Future value: '+money(fv)+' · Growth: '+money(gain));
+}
+function setCagrMode(mode){
+ document.getElementById('investmentCagr').hidden=mode!=='investment';
+ document.getElementById('insuranceCagr').hidden=mode!=='insurance';
+ document.getElementById('cagrInvestmentBtn').classList.toggle('active',mode==='investment');
+ document.getElementById('cagrInsuranceBtn').classList.toggle('active',mode==='insurance');
+ document.getElementById('cagrOut').textContent='';
+}
+function investmentCagr(){
+ const a=val('c0'), b=val('c1'), y=val('cy');
+ if(a<=0||b<0||y<=0){return setOut('cagrOut','Enter valid values.')}
+ setOut('cagrOut',((Math.pow(b/a,1/y)-1)*100).toFixed(2)+'% CAGR');
+}
+function insuranceCagr(){
+ const p=val('insPremium'), m=val('insMaturity'), y=val('insYears');
+ if(p<=0||m<0||y<=0){return setOut('cagrOut','Enter valid values.')}
+ setOut('cagrOut',((Math.pow(m/p,1/y)-1)*100).toFixed(2)+'% policy CAGR');
+}
+function sip(){
+ const a=val('sipAmount'), annual=val('sipRate')/100, y=val('sipYears'), n=Math.round(y*12), r=annual/12;
+ if(a<0||y<=0){return setOut('sipOut','Enter valid values.')}
+ const fv=r===0?a*n:a*((Math.pow(1+r,n)-1)/r)*(1+r);
+ const invested=a*n;
+ setOut('sipOut','Future value: '+money(fv)+' · Invested: '+money(invested)+' · Growth: '+money(fv-invested));
+}
+function lumpsum(){
+ const p=val('lsAmount'), r=val('lsRate')/100, y=val('lsYears');
+ if(p<0||y<=0){return setOut('lsOut','Enter valid values.')}
+ const fv=p*Math.pow(1+r,y);
+ setOut('lsOut','Future value: '+money(fv)+' · Growth: '+money(fv-p));
+}
+averagePrice(); compoundInterest(); investmentCagr(); sip(); lumpsum();
+</script>
+<script src="assets/analytics.js"></script>
+</body>
+</html>
