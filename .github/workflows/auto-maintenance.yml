@@ -1,8 +1,5 @@
 name: PirePoint Auto Maintenance
 on:
-  push:
-    branches: ["main"]
-    paths-ignore: ["data/generated/**"]
   workflow_dispatch:
   schedule:
     - cron: "*/30 * * * *"
