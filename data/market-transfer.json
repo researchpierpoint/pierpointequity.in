@@ -1,0 +1,304 @@
+{
+  "version": 1,
+  "principle": "A market transfer should preserve transferable knowledge while explicitly teaching destination-specific differences, new systems, and assumptions that can mislead.",
+  "dimensions": [
+    [
+      "structure",
+      "Market structure",
+      "Exchanges, venues, segments and listing structure"
+    ],
+    [
+      "regulation",
+      "Regulation",
+      "Regulators, investor protection and rulemaking"
+    ],
+    [
+      "access",
+      "Investor access",
+      "Brokerage, eligibility, foreign access and practical friction"
+    ],
+    [
+      "instruments",
+      "Instruments",
+      "Shares, classes, funds, derivatives and market-specific products"
+    ],
+    [
+      "trading",
+      "Trading mechanics",
+      "Sessions, auctions, order rules, price formation and liquidity"
+    ],
+    [
+      "settlement",
+      "Clearing & settlement",
+      "Settlement cycle, clearing, custody and delivery mechanics"
+    ],
+    [
+      "ownership",
+      "Ownership",
+      "Founders, promoters, state, institutions, free float and voting"
+    ],
+    [
+      "participants",
+      "Participants",
+      "Retail, institutions, foreign investors, market makers and other key actors"
+    ],
+    [
+      "reporting",
+      "Reporting",
+      "Filing cadence, annual/quarterly reporting and disclosure conventions"
+    ],
+    [
+      "accounting",
+      "Accounting presentation",
+      "Accounting standards, presentation differences and comparability traps"
+    ],
+    [
+      "tax",
+      "Tax",
+      "Investor and transaction tax concepts that can affect market mechanics"
+    ],
+    [
+      "currency",
+      "Currency",
+      "FX exposure, translation and how currency enters company economics"
+    ],
+    [
+      "rates",
+      "Rates",
+      "Local monetary system and transmission into companies/valuation"
+    ],
+    [
+      "macro",
+      "Macro transmission",
+      "How local macro variables actually reach sectors and earnings"
+    ],
+    [
+      "sectors",
+      "Sector structure",
+      "Dominant industries and market-specific business models"
+    ],
+    [
+      "governance",
+      "Governance",
+      "Ownership rights, related parties, boards and enforcement"
+    ],
+    [
+      "disclosure",
+      "Disclosure quality",
+      "What is required, where it is published and what remains unknown"
+    ],
+    [
+      "valuation",
+      "Valuation context",
+      "Sector mix, accounting, rates, capital structure and market conventions"
+    ],
+    [
+      "liquidity",
+      "Liquidity",
+      "Free float, market depth, trading concentration and exit mechanics"
+    ],
+    [
+      "information",
+      "Information hierarchy",
+      "Primary sources vs secondary, promotional and derivative sources"
+    ],
+    [
+      "research_sources",
+      "Primary research sources",
+      "Exchange, regulator, issuer, filings and local databases"
+    ],
+    [
+      "behaviour",
+      "Investor behaviour",
+      "Narratives, incentives, crowding and recurring decision traps"
+    ],
+    [
+      "language",
+      "Language & terminology",
+      "Local terms whose familiar English equivalents can hide different rules"
+    ],
+    [
+      "calendar",
+      "Market calendar",
+      "Trading holidays, reporting cycles, fiscal year and event cadence"
+    ]
+  ],
+  "markets": {
+    "India": {
+      "label": "India",
+      "primarySources": [
+        [
+          "NSE India",
+          "https://www.nseindia.com/"
+        ],
+        [
+          "SEBI",
+          "https://www.sebi.gov.in/"
+        ]
+      ],
+      "focus": [
+        "structure",
+        "regulation",
+        "access",
+        "trading",
+        "settlement",
+        "ownership",
+        "reporting",
+        "governance",
+        "disclosure",
+        "research_sources",
+        "tax",
+        "calendar"
+      ],
+      "transferPrompt": "If India is your reference market, do not assume its exchange structure, settlement mechanics, ownership language, disclosure habits or investor access rules transfer unchanged elsewhere."
+    },
+    "United States": {
+      "label": "United States",
+      "primarySources": [
+        [
+          "SEC EDGAR",
+          "https://www.sec.gov/edgar/search/"
+        ],
+        [
+          "SEC",
+          "https://www.sec.gov/"
+        ]
+      ],
+      "focus": [
+        "structure",
+        "regulation",
+        "access",
+        "instruments",
+        "trading",
+        "ownership",
+        "reporting",
+        "accounting",
+        "governance",
+        "disclosure",
+        "valuation",
+        "research_sources",
+        "language",
+        "calendar"
+      ],
+      "transferPrompt": "A researcher coming from another market should explicitly learn the US filing/evidence hierarchy, security types, ownership disclosures, reporting conventions and market structure before treating familiar metrics as directly comparable."
+    },
+    "United Kingdom": {
+      "label": "United Kingdom",
+      "primarySources": [
+        [
+          "FCA",
+          "https://www.fca.org.uk/"
+        ],
+        [
+          "London Stock Exchange",
+          "https://www.londonstockexchange.com/"
+        ]
+      ],
+      "focus": [
+        "structure",
+        "regulation",
+        "access",
+        "trading",
+        "settlement",
+        "ownership",
+        "reporting",
+        "governance",
+        "disclosure",
+        "tax",
+        "research_sources",
+        "language",
+        "calendar"
+      ],
+      "transferPrompt": "The UK route should make the current listing and disclosure framework explicit rather than assuming another market's admission, reporting or shareholder-disclosure rules apply."
+    },
+    "Japan": {
+      "label": "Japan",
+      "primarySources": [
+        [
+          "Japan Exchange Group",
+          "https://www.jpx.co.jp/english/"
+        ],
+        [
+          "Financial Services Agency Japan",
+          "https://www.fsa.go.jp/en/"
+        ]
+      ],
+      "focus": [
+        "structure",
+        "regulation",
+        "access",
+        "trading",
+        "settlement",
+        "ownership",
+        "reporting",
+        "governance",
+        "disclosure",
+        "valuation",
+        "research_sources",
+        "language",
+        "calendar"
+      ],
+      "transferPrompt": "A Japan route should explicitly map the local market structure, listing segments, governance and disclosure conventions, and identify where translated terminology can hide different institutional context."
+    },
+    "China / Hong Kong": {
+      "label": "China / Hong Kong",
+      "primarySources": [
+        [
+          "Hong Kong Exchanges and Clearing",
+          "https://www.hkex.com.hk/"
+        ],
+        [
+          "Securities and Futures Commission Hong Kong",
+          "https://www.sfc.hk/"
+        ]
+      ],
+      "focus": [
+        "structure",
+        "regulation",
+        "access",
+        "instruments",
+        "trading",
+        "settlement",
+        "ownership",
+        "participants",
+        "reporting",
+        "governance",
+        "disclosure",
+        "currency",
+        "research_sources",
+        "language",
+        "calendar"
+      ],
+      "transferPrompt": "A China/Hong Kong route should distinguish the market being studied, its access channel, listing venue, investor base, ownership structure and disclosure regime instead of treating 'China' as one interchangeable market."
+    },
+    "Australia": {
+      "label": "Australia",
+      "primarySources": [
+        [
+          "ASX",
+          "https://www.asx.com.au/"
+        ],
+        [
+          "ASIC",
+          "https://asic.gov.au/"
+        ]
+      ],
+      "focus": [
+        "structure",
+        "regulation",
+        "access",
+        "trading",
+        "settlement",
+        "ownership",
+        "reporting",
+        "governance",
+        "disclosure",
+        "sectors",
+        "research_sources",
+        "currency",
+        "calendar"
+      ],
+      "transferPrompt": "An Australia route should identify the local exchange/regulatory structure, disclosure conventions, sector composition, ownership and currency context before importing assumptions from another market."
+    }
+  }
+}
