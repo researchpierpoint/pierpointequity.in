@@ -19,3 +19,29 @@ try{localStorage.setItem("pirepoint:last-guide",location.pathname)}catch(e){}
 function scroll(){const d=document.documentElement,max=d.scrollHeight-innerHeight,pct=max>0?(scrollY/max)*100:0;bar.firstElementChild.style.width=pct+"%";let cur="";article.querySelectorAll("h2").forEach(h=>{if(h.getBoundingClientRect().top<180)cur=h.id});toc?.querySelectorAll("a").forEach(a=>a.classList.toggle("current",a.getAttribute("href")==="#"+cur));}
 addEventListener("scroll",scroll,{passive:true});scroll();
 })();
+/* Guide depth layer */
+(function(){
+  const article=document.querySelector("main article"); if(!article)return;
+  const links=[
+    ["How to Analyse a Stock","how-to-analyse-a-stock.html"],
+    ["P/E Ratio Explained","pe-ratio.html"],
+    ["ROCE Explained","roce.html"],
+    ["How to Read an Earnings Call","earnings-call.html"],
+    ["Balance Sheet","balance-sheet.html"],
+    ["Cash Flow Statement","cash-flow-statement.html"],
+    ["Valuation","valuation.html"],
+    ["Investor Behaviour & Biases","behavioural-biases.html"]
+  ];
+  const here=location.pathname.split("/").pop();
+  const next=links.find(x=>x[1]!==here);
+  if(next){
+    const existing=article.querySelector(".guide-complete");
+    if(existing){
+      existing.innerHTML='<span>One idea deeper</span><a href="'+next[1]+'">'+next[0]+' →</a>';
+    }
+  }
+  const share=document.createElement("button");
+  share.type="button";share.className="guide-share";share.textContent="Copy guide link";
+  share.onclick=async()=>{try{await navigator.clipboard.writeText(location.href);share.textContent="Link copied ✓";setTimeout(()=>share.textContent="Copy guide link",1600)}catch(e){share.textContent="Copy unavailable"}};
+  const complete=article.querySelector(".guide-complete"); if(complete)complete.appendChild(share);
+})();
