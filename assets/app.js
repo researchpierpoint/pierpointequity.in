@@ -149,3 +149,45 @@ const daily=[["Why can a low P/E still be expensive?","Learn how earnings qualit
     article.insertAdjacentElement("afterend",trust);
   }
 })();
+
+/* PirePoint attention architecture: help the visitor orient, not manipulate. */
+(function(){
+  const path=location.pathname;
+  const isGuide=/\/guides\//.test(path);
+  const main=document.querySelector("main");
+  if(!main)return;
+
+  // Reading progress: gives orientation on long research pages without creating urgency.
+  if(isGuide && !document.querySelector(".pp-reading-progress")){
+    const bar=document.createElement("div");bar.className="pp-reading-progress";bar.innerHTML='<span></span>';document.body.prepend(bar);
+    const fill=bar.firstElementChild;
+    const update=()=>{const max=document.documentElement.scrollHeight-innerHeight;fill.style.width=(max>0?Math.min(100,Math.max(0,scrollY/max*100)):0)+"%"};
+    addEventListener("scroll",update,{passive:true});addEventListener("resize",update);update();
+  }
+
+  // Persistent orientation strip: tells the reader what the page is for and where to go next.
+  if(isGuide && !document.querySelector(".pp-focus-strip")){
+    const article=main.querySelector("article");
+    if(article){
+      const title=(article.querySelector("h1")||document.querySelector("h1"))?.textContent?.trim();
+      const strip=document.createElement("div");strip.className="pp-focus-strip";
+      strip.innerHTML='<span><b>Research mode</b> · '+(title||"Deep guide")+'</span><a href="../guides.html">All guides</a><a href="../tools.html#research-studio">Research Studio</a>';
+      main.prepend(strip);
+    }
+  }
+
+  // End-of-page continuation: one useful next action, not a wall of recommendations.
+  if(isGuide && !document.querySelector(".pp-next-action")){
+    const complete=main.querySelector(".guide-complete")||main.querySelector("article");
+    if(complete){
+      const next=document.createElement("aside");next.className="pp-next-action";
+      const text=(document.title+" "+location.pathname).toLowerCase();
+      let href="../guides/fundamental-analysis.html",label="Go deeper: Fundamental Analysis";
+      if(/dcf|valuation|pe-ratio|peg|historical-pe/.test(text)){href="../guides/how-to-analyse-a-stock.html";label="Next: Put valuation into a full stock analysis";}
+      else if(/balance|cash-flow|income|eps|revenue|profit|roe|roce|ebitda|margin|debt/.test(text)){href="../guides/how-to-analyse-a-stock.html";label="Next: Connect the numbers into a company thesis";}
+      else if(/technical|moving|rsi|macd|candlestick|support|volume/.test(text)){href="../guides/risk-reward.html";label="Next: Turn a chart view into a risk framework";}
+      next.innerHTML='<div><span class="tag">NEXT USEFUL STEP</span><h3>'+label+'</h3><p>Keep the context. Continue from what you just learned rather than starting over.</p></div><a class="button" href="'+href+'">Continue →</a>';
+      complete.parentNode.insertBefore(next,complete.nextSibling);
+    }
+  }
+})();
