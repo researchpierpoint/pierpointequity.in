@@ -156,3 +156,19 @@ body{background:var(--bg);font-size:15px;letter-spacing:-.005em}
 @media(prefers-reduced-motion:reduce){
  *,*:before,*:after{scroll-behavior:auto!important;transition:none!important}
 }
+
+/* =========================================================
+   PIREPOINT — SECOND-LAYER PRODUCT POLISH
+   ========================================================= */
+.pp-reveal{opacity:0;transform:translateY(14px);transition:opacity .55s ease var(--pp-delay),transform .55s ease var(--pp-delay)}
+.pp-reveal.pp-visible{opacity:1;transform:none}
+.pp-top{position:fixed;right:22px;bottom:22px;z-index:50;border:1px solid var(--line);background:rgba(255,255,255,.94);backdrop-filter:blur(12px);box-shadow:var(--shadow-sm);border-radius:999px;min-width:44px;height:44px;padding:0 13px;font-weight:850;color:var(--ink);cursor:pointer}
+.pp-top span{font-size:10px;margin-left:5px;opacity:.65}
+.pp-top:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.pp-anchor{opacity:0;border:0;background:transparent;color:var(--muted);font-size:13px;margin-left:8px;padding:4px;cursor:pointer;transition:opacity .16s}
+h2:hover .pp-anchor,.pp-anchor:focus-visible{opacity:1}
+.guide-complete{flex-wrap:wrap}
+.guide-share{border:1px solid var(--line);background:#fff;border-radius:9px;padding:9px 12px;font-size:11px;font-weight:800;cursor:pointer;color:var(--ink)}
+.guide-share:hover{border-color:#cbd3b5;background:#f7f9ed}
+@media(max-width:700px){.pp-top{right:14px;bottom:14px}.pp-top span{display:none}.pp-anchor{opacity:1}}
+@media(prefers-reduced-motion:reduce){.pp-reveal{opacity:1;transform:none;transition:none}.pp-top:hover{transform:none}}
