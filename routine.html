@@ -275,7 +275,34 @@ function buildBridge(){
  ];
  return bridge
 }
-function result(){
+
+function buildLearningHtml(){
+ const modules=(MARKET_CATALOG.universalModules||[]);
+ const teach={
+ orientation:"Draw the market map: venues, regulators, participants, securities and primary evidence.",
+ access:"Learn how a real investor reaches the market: accounts, custody, eligibility, foreign access and practical friction.",
+ structure:"Understand venues, listing segments, participants, ownership forms and price formation.",
+ instruments:"Learn shares, classes, funds, derivatives and corporate actions before interpreting their prices.",
+ mechanics:"Trace an order through execution, clearing, custody and settlement; do not assume home-market mechanics transfer.",
+ regulation:"Identify the regulator, rulebook, disclosure duties, enforcement structure and investor protections.",
+ reporting:"Learn fiscal calendars, filing cadence, accounting standards, segments and comparability traps.",
+ ownership:"Study voting rights, insiders, institutions, state ownership, boards and related-party incentives.",
+ macro:"Connect currency, rates, inflation and policy to sectors, earnings and valuation.",
+ sectors:"Map important local industries and understand how local customers, regulation and competition shape them.",
+ research:"Build a source hierarchy from regulator and exchange to issuer filings, primary data and secondary interpretation.",
+ valuation:"Learn what local prices imply about growth, margins, returns, cash flows, rates and duration.",
+ risk:"Build a local risk map covering liquidity, FX, governance, regulation, concentration, accounting and operations.",
+ application:"Research a real destination company from business model through financials, cash, capital allocation, valuation, evidence and failure modes.",
+ transfer:"Prove what transferred from the source market, what did not, and which familiar assumptions were dangerous."
+ };
+ const guide=marketProfile("targetMarket")?.guide||"countries.html";
+ const cards=modules.map((m,i)=>'<article class="r-learning-card"><b>'+String(i+1).padStart(2,"0")+' · '+esc(m[1])+'</b><p>'+esc(m[2])+'</p><div class="teach"><strong>What you will actually learn:</strong> '+esc(teach[m[0]]||m[2])+'</div><a href="'+esc(guide)+'">Open destination context →</a></article>').join("");
+ const sources=(marketProfile("targetMarket")?.primarySources||[]).map(x=>'<a href="'+esc(x[1])+'" target="_blank" rel="noopener">'+esc(x[0])+' ↗</a>').join("");
+ const dims=MARKET_DATA.dimensions||[];
+ const deep=dims.map((x,i)=>'<div class="r-deep-map-item"><b>'+String(i+1).padStart(3,"0")+' · '+esc(x[1])+'</b><span>'+esc(x[2]||"Observed, tested or verified as the learner progresses.")+'</span></div>').join("");
+ return '<section class="r-learning"><div class="r-learning-head"><span class="eyebrow">TEACH ME THE MARKET</span><h2>'+esc(marketDisplay("targetMarket"))+' is a system, not a list of rules.</h2><p>Now the teaching begins. PirePoint covers the destination from orientation through real-company research. It compresses what your evidence proves, teaches what is genuinely new, and deliberately tests assumptions that may have transferred incorrectly.</p></div><div class="r-learning-grid">'+cards+'</div>'+(sources?'<div class="r-local-sources"><h3>Primary-source checkpoints</h3><div class="r-source-list">'+sources+'</div></div>':'')+'</section><details class="r-deep-map"><summary>See the deeper intelligence map — '+(dims.length||106)+' dimensions</summary><div class="r-deep-map-body"><p class="muted" style="font-size:11px;line-height:1.6">These are not extra homework questions. They are dimensions PirePoint can observe, test, verify, revisit or connect to later research.</p><div class="r-deep-map-grid">'+deep+'</div></div></details>';
+}
+\nfunction result(){
  const previous=(JSON.parse(localStorage.getItem("ppSystemV2")||"{}").routine||{}).domains||{};const stats={};Object.keys(domains).forEach(k=>{const p=previous[k]||{};stats[k]={total:p.total||0,correct:p.correct||0,highWrong:p.highWrong||0,lastSeen:p.lastSeen||null}});
  s.queue.forEach(c=>c.domains.forEach(k=>{stats[k].total++;if(s.answers[c.id]===c.correct)stats[k].correct++;if(s.answers[c.id]!==c.correct&&s.confidence[c.id]==="high")stats[k].highWrong++}));
  const ranked=Object.entries(stats).filter(x=>x[1].total).sort((a,b)=>((b[1].total-b[1].correct)+(b[1].highWrong*.75))-((a[1].total-a[1].correct)+(a[1].highWrong*.75)));
@@ -290,8 +317,8 @@ function result(){
  q.style.display="none";cal.classList.remove("show");res.classList.add("show");document.querySelector("#builder .r-actions").style.display="none";bar.style.width="100%";
  const first=uniq[0]||{label:"Market orientation",resource:marketProfile("targetMarket")?.guide||"countries.html",why:"Build the destination-market map before adding complexity."};
  const bridgeHtml=bridge.length?'<div class="routine-hero-card" style="margin-top:14px"><span class="eyebrow">MARKET TRANSFER MAP</span><h2>Same · Different · New · Potentially misleading</h2><div class="r-route-grid">'+bridge.map(x=>'<div class="r-route"><b>'+esc(x[0].toUpperCase())+'</b><span>'+esc(x[1])+'</span></div>').join("")+'</div><p style="margin-top:14px;color:#c5c9c1">Destination focus is generated from PirePoint’s market-transfer framework. Primary-source checkpoints are kept separate from general learning so a rule can be verified before it becomes part of the learner’s model.</p></div>':'';
- const cards=Object.entries(stats).filter(x=>x[1].total).map(([k,v])=>'<div class="r-route"><b>'+esc(domains[k].label)+'</b><span>'+v.correct+'/'+v.total+' applied · '+(v.correct===v.total?"reliable in this calibration":"needs further work")+(v.highWrong?" · "+v.highWrong+" high-confidence miss":"")+'</span></div>').join("");
- res.innerHTML='<span class="r-step-label">YOUR ROUTINE IS READY</span><div class="routine-hero-card"><span class="eyebrow">NEXT BEST STEP</span><h2>'+esc(first.label)+'</h2><p>'+esc(first.why)+' The route is evidence-based and will change when later work gives PirePoint new evidence.</p><div class="r-route-grid">'+uniq.map((x,i)=>'<div class="r-route"><b>'+String(i+1).padStart(2,"0")+" · "+esc(x.label)+'</b><span>'+esc(x.why)+'</span></div>').join("")+'</div><div class="r-next"><div><small>Routine depth</small><b>'+esc(s.a.time==="5"?"5 min":s.a.time==="15"?"15 min":s.a.time==="30"?"30 min":"60+ min")+'</b></div><a class="r-btn r-link" href="'+esc(first.resource)+'">Start this step →</a></div></div>'+bridgeHtml+'<p class="muted" style="font-size:12px;margin-top:18px">This is not a permanent score. It is a working diagnosis: what appears reliable, what needs verification, and what should be tested next.</p><div class="r-route-grid">'+cards+'</div><div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap"><a class="r-btn r-link" href="system.html#route">Open learning system →</a><button class="r-btn secondary" id="again">Recalibrate</button></div>';
+ const learningHtml=buildLearningHtml();\n const cards=Object.entries(stats).filter(x=>x[1].total).map(([k,v])=>'<div class="r-route"><b>'+esc(domains[k].label)+'</b><span>'+v.correct+'/'+v.total+' applied · '+(v.correct===v.total?"reliable in this calibration":"needs further work")+(v.highWrong?" · "+v.highWrong+" high-confidence miss":"")+'</span></div>').join("");
+ res.innerHTML='<span class="r-step-label">YOUR ROUTINE IS READY</span><div class="routine-hero-card"><span class="eyebrow">NEXT BEST STEP</span><h2>'+esc(first.label)+'</h2><p>'+esc(first.why)+' The route is evidence-based and will change when later work gives PirePoint new evidence.</p><div class="r-route-grid">'+uniq.map((x,i)=>'<div class="r-route"><b>'+String(i+1).padStart(2,"0")+" · "+esc(x.label)+'</b><span>'+esc(x.why)+'</span></div>').join("")+'</div><div class="r-next"><div><small>Routine depth</small><b>'+esc(s.a.time==="5"?"5 min":s.a.time==="15"?"15 min":s.a.time==="30"?"30 min":"60+ min")+'</b></div><a class="r-btn r-link" href="'+esc(first.resource)+'">Start this step →</a></div></div>'+bridgeHtml+learningHtml+'<p class="muted" style="font-size:12px;margin-top:18px">This is not a permanent score. It is a working diagnosis: what appears reliable, what needs verification, and what should be tested next.</p><div class="r-route-grid">'+cards+'</div><div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap"><a class="r-btn r-link" href="system.html#route">Open learning system →</a><button class="r-btn secondary" id="again">Recalibrate</button></div>';
  document.getElementById("again").onclick=()=>location.reload()
 }
 next.onclick=()=>s.i<steps.length-1?(s.i++,render()):(s.queue=buildQueue(),s.ci=0,q.style.display="none",document.querySelector("#builder .r-actions").style.display="none",cal.classList.add("show"),renderCase());
