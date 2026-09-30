@@ -120,6 +120,16 @@
 
 </div>
 
+<section id="research-studio" class="section research-studio">
+<div class="section-head"><div><span class="eyebrow">RESEARCH STUDIO</span><h2>Think like an analyst.</h2><p class="muted">These are not prediction machines. They make assumptions visible so you can challenge them.</p></div></div>
+<div class="studio-grid">
+<article class="card studio-card"><span class="tag">VALUATION LAB</span><h3>Intrinsic value sensitivity</h3><p>See how a simple perpetual-growth DCF changes when cash flow, growth or discount rate changes.</p><div class="studio-fields"><label>FCF today (₹ crore)<input id="labFcf" type="number" value="100" min="0"></label><label>Growth (%)<input id="labGrowth" type="number" value="8" step="0.1"></label><label>Discount rate (%)<input id="labWacc" type="number" value="12" step="0.1"></label><label>Shares (crore)<input id="labShares" type="number" value="10" min="0.01" step="0.01"></label></div><div class="studio-result" id="labDcfOut" aria-live="polite"></div><button class="button studio-run" type="button" onclick="runResearchDCF()">Recalculate</button><p class="tool-note">Illustrative model: TV = FCF₁ ÷ (discount rate − growth). Real DCFs require a full operating model.</p></article>
+<article class="card studio-card"><span class="tag">EARNINGS LAB</span><h3>Price under different earnings</h3><p>Separate the two moving parts of a P/E valuation: earnings and the multiple investors are willing to pay.</p><div class="studio-fields"><label>EPS today (₹)<input id="labEps" type="number" value="50" min="0" step="0.01"></label><label>EPS growth (%)<input id="labEpsGrowth" type="number" value="15" step="0.1"></label><label>Future P/E (×)<input id="labPe" type="number" value="18" min="0.1" step="0.1"></label><label>Years<input id="labPeYears" type="number" value="3" min="1" step="1"></label></div><div class="studio-result" id="labPeOut" aria-live="polite"></div><button class="button studio-run" type="button" onclick="runResearchPE()">Recalculate</button><p class="tool-note">Illustrative scenario, not a target price or forecast.</p></article>
+<article class="card studio-card"><span class="tag">RISK LAB</span><h3>Position size from risk</h3><p>Start with the amount you are prepared to lose if your invalidation level is reached—not with the number of shares you feel like buying.</p><div class="studio-fields"><label>Portfolio value (₹)<input id="labPortfolio" type="number" value="1000000" min="0"></label><label>Risk per idea (%)<input id="labRisk" type="number" value="1" min="0" step="0.1"></label><label>Entry price (₹)<input id="labEntry" type="number" value="1000" min="0" step="0.01"></label><label>Invalidation price (₹)<input id="labStop" type="number" value="900" min="0" step="0.01"></label></div><div class="studio-result" id="labPositionOut" aria-live="polite"></div><button class="button studio-run" type="button" onclick="runResearchPosition()">Recalculate</button><p class="tool-note">Risk-sizing illustration. Slippage, gaps and liquidity can make actual losses differ.</p></article>
+</div>
+<div class="research-memo card"><div><span class="tag">RESEARCH NOTE · SAVED LOCALLY</span><h3>Write the idea before the market writes the story for you.</h3><p class="muted">Your note stays in this browser. No account is required.</p></div><div class="memo-grid"><label>Company / asset<input id="memoName" placeholder="e.g. Company or ETF"></label><label>My thesis<textarea id="memoThesis" rows="4" placeholder="What do I believe, and why?"></textarea></label><label>What must go right<textarea id="memoBull" rows="3" placeholder="Key operating drivers"></textarea></label><label>What could break it<textarea id="memoBear" rows="3" placeholder="Risks, failure modes, valuation traps"></textarea></label><label>Valuation / price logic<textarea id="memoValue" rows="3" placeholder="What assumptions am I paying for?"></textarea></label><label>What would change my mind<textarea id="memoMind" rows="3" placeholder="Define the evidence that would invalidate the thesis"></textarea></label></div><div class="memo-actions"><button class="button" type="button" onclick="saveResearchMemo()">Save on this device</button><button class="button secondary" type="button" onclick="clearResearchMemo()">Clear</button><span id="memoStatus" class="section-note" aria-live="polite"></span></div></div>
+</section>
+
 <section class="section">
 <h2>How these tools work</h2>
 <p><b>Stock average</b> uses weighted purchase cost. <b>CAGR</b> = (final value ÷ initial value)^(1 ÷ years) − 1. <b>Compound interest</b> applies the selected compounding frequency. <b>SIP</b> models equal monthly contributions. <b>Lumpsum</b> applies annual compounding to a single investment.</p>
@@ -169,13 +179,19 @@ function sip(){
  const invested=a*n;
  setOut('sipOut','Future value: '+money(fv)+' · Invested: '+money(invested)+' · Growth: '+money(fv-invested));
 }
+function runResearchDCF(){const f=val('labFcf'),g=val('labGrowth')/100,w=val('labWacc')/100,s=val('labShares');if(f<=0||g<0||w<=g||s<=0)return setOut('labDcfOut','Use valid inputs; discount rate must be greater than growth.');const f1=f*(1+g),tv=f1/(w-g),pv=tv/(1+w),v=pv/s;setOut('labDcfOut','Illustrative terminal value: '+money(tv)+' cr · One-year discounted value: '+money(pv)+' cr · '+money(v)+' per share')}
+function runResearchPE(){const e=val('labEps'),g=val('labEpsGrowth')/100,pe=val('labPe'),y=val('labPeYears');if(e<0||pe<=0||y<=0)return setOut('labPeOut','Enter valid values.');const fe=e*Math.pow(1+g,y),p=fe*pe;setOut('labPeOut','Illustrative EPS in year '+y+': '+money(fe)+' · At '+pe.toFixed(1)+'× P/E: '+money(p))}
+function runResearchPosition(){const p=val('labPortfolio'),r=val('labRisk')/100,e=val('labEntry'),st=val('labStop');if(p<=0||r<0||e<=st||st<0)return setOut('labPositionOut','Entry must be above the invalidation price.');const budget=p*r,rps=e-st,q=Math.floor(budget/rps),capital=q*e;setOut('labPositionOut','Risk budget: '+money(budget)+' · Shares: '+q.toLocaleString('en-IN')+' · Capital: '+money(capital))}
+function saveResearchMemo(){const ids=['memoName','memoThesis','memoBull','memoBear','memoValue','memoMind'],d={};ids.forEach(id=>d[id]=document.getElementById(id)?.value||'');try{localStorage.setItem('pirepoint:research-memo',JSON.stringify(d));document.getElementById('memoStatus').textContent='Saved locally ✓'}catch(e){document.getElementById('memoStatus').textContent='Could not save in this browser.'}}
+function clearResearchMemo(){['memoName','memoThesis','memoBull','memoBear','memoValue','memoMind'].forEach(id=>{const e=document.getElementById(id);if(e)e.value=''});try{localStorage.removeItem('pirepoint:research-memo')}catch(e){}document.getElementById('memoStatus').textContent='Cleared'}
+function loadResearchMemo(){try{const d=JSON.parse(localStorage.getItem('pirepoint:research-memo')||'null');if(d)Object.entries(d).forEach(([id,v])=>{const e=document.getElementById(id);if(e)e.value=v})}catch(e){}}
 function lumpsum(){
  const p=val('lsAmount'), r=val('lsRate')/100, y=val('lsYears');
  if(p<0||y<=0){return setOut('lsOut','Enter valid values.')}
  const fv=p*Math.pow(1+r,y);
  setOut('lsOut','Future value: '+money(fv)+' · Growth: '+money(fv-p));
 }
-averagePrice(); compoundInterest(); investmentCagr(); sip(); lumpsum();
+averagePrice(); compoundInterest(); investmentCagr(); sip(); lumpsum(); runResearchDCF(); runResearchPE(); runResearchPosition(); loadResearchMemo();
 </script>
 <script src="assets/analytics.js"></script>
 <script src="assets/app.js"></script></body>
