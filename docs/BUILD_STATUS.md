@@ -76,3 +76,5 @@ No credential is committed to GitHub. No unverified market number is presented a
 
 
 - 2026-09-30: maintenance pipeline hardened for NSE session/encoding failures and serialized execution.
+
+- 2026-09-30: final AMFI enrichment syntax cleanup applied; rerunning end-to-end health validation.
