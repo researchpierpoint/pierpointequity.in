@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "type": "home-country",
+  "slug": "australia",
+  "name": "Australia",
+  "overlayCount": 60,
+  "domains": 6,
+  "stages": 10,
+  "context": "Australian investors should understand FX, overseas broker/custody, tax residency, foreign income and asset reporting, plus destination-market access.",
+  "note": "This file supplies home-country overlay lessons. The shared engine expands it into 60 lessons and combines them with 240 target-market lessons."
+}
