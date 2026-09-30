@@ -72,6 +72,20 @@
 
 <script>(()=>{"use strict";
 const STORE="ppSystemV2";
+const domains={
+ market:{label:"Market mental model",desc:"What exists, who participates, and how the market works."},
+ mechanics:{label:"Market mechanics",desc:"Trading, settlement, access and infrastructure."},
+ business:{label:"Business economics",desc:"How companies create value, compete, price and earn returns."},
+ financials:{label:"Financial statements",desc:"Profit, cash, balance sheet, working capital and accounting quality."},
+ valuation:{label:"Valuation & expectations",desc:"What price implies about growth, margins, returns, risk and duration."},
+ risk:{label:"Risk & failure modes",desc:"What can break the business, numbers or thesis."},
+ global:{label:"Market transfer",desc:"What is similar, different, new and potentially misleading across markets."},
+ evidence:{label:"Evidence quality",desc:"Primary sources, calculations, assumptions, unknowns and contradictions."},
+ research:{label:"Independent research",desc:"Turning a question into a structured, testable investigation."},
+ redteam:{label:"Red-team thinking",desc:"Searching for evidence that could invalidate a conclusion."},
+ accounting:{label:"Accounting nuance",desc:"Where reported presentation can differ from underlying economics."},
+ behaviour:{label:"Investor behaviour",desc:"Narratives, incentives, crowding and decision traps."}
+};
 const fallbackKG={
  market:["Market mental model","guides/stock-market-basics.html"],
  mechanics:["Market mechanics","guides/how-to-buy-stocks.html"],
@@ -151,9 +165,19 @@ const label=(k,v)=>getStep(k)?.[3].find(x=>x[0]===v)?.[1]||v;
 function side(){const map={goal:"sideGoal",level:"sideLevel",sourceMarket:"sideMarket",time:"sideTime"};Object.entries(map).forEach(([k,id])=>{const e=document.getElementById(id);if(e)e.textContent=s.a[k]?label(k,s.a[k]):"Not set"})}
 function render(){
  const z=steps[s.i], multi=z[0]==="knowledge";
- q.innerHTML='<div class="r-step-label">'+z[1]+'</div><h2 class="r-question">'+z[2]+'</h2><p class="r-hint">'+(z[0]==="knowledge"?"Select what you think you already understand. We will verify it; you can also choose to prove rather than self-rate.":"This shapes the route; it does not determine your ability. The calibration cases do that.")+'</p><div class="r-options">'+z[3].map(o=>'<button class="r-option '+((multi?(s.a.knowledge||[]).includes(o[0]):s.a[z[0]]===o[0]))?"selected":"")+'" data-v="'+esc(o[0])+'"><b>'+esc(o[1])+'</b>'+(o[2]?'<small>'+esc(o[2])+'</small>':"")+'</button>').join("")+'</div>';
- q.querySelectorAll(".r-option").forEach(b=>b.onclick=()=>{if(multi){let a=s.a.knowledge||[];if(b.dataset.v==="none")a=["none"];else{a=a.filter(x=>x!=="none");a=a.includes(b.dataset.v)?a.filter(x=>x!==b.dataset.v):[...a,b.dataset.v]}s.a.knowledge=a}else s.a[z[0]]=b.dataset.v;render()});
- next.disabled=multi?!Array.isArray(s.a.knowledge)||!s.a.knowledge.length:!s.a[z[0]];back.disabled=!s.i;bar.style.width=s.i/steps.length*100+"%";side()
+ const hint=z[0]==="knowledge"?"Select what you think you already understand. We will verify it; you can also choose to prove it.":"This shapes the route; it does not determine your ability. Calibration does that.";
+ const options=z[3].map(o=>{
+  const selected=multi?(s.a.knowledge||[]).includes(o[0]):s.a[z[0]]===o[0];
+  return '<button class="r-option '+(selected?"selected":"")+'" data-v="'+esc(o[0])+'"><b>'+esc(o[1])+'</b>'+(o[2]?'<small>'+esc(o[2])+'</small>':"")+'</button>';
+ }).join("");
+ q.innerHTML='<div class="r-step-label">'+z[1]+'</div><h2 class="r-question">'+z[2]+'</h2><p class="r-hint">'+hint+'</p><div class="r-options">'+options+'</div>';
+ q.querySelectorAll(".r-option").forEach(b=>b.onclick=()=>{
+  if(multi){let a=s.a.knowledge||[];if(b.dataset.v==="none")a=["none"];else{a=a.filter(x=>x!=="none");a=a.includes(b.dataset.v)?a.filter(x=>x!==b.dataset.v):a.concat(b.dataset.v)}s.a.knowledge=a}
+  else s.a[z[0]]=b.dataset.v;
+  render();
+ });
+ next.disabled=multi?!(Array.isArray(s.a.knowledge)&&s.a.knowledge.length):!s.a[z[0]];
+ back.disabled=!s.i;bar.style.width=s.i/steps.length*100+"%";side();
 }
 function needsTransfer(){return s.a.targetMarket&&s.a.targetMarket!=="same"&&s.a.targetMarket!==s.a.sourceMarket&&s.a.sourceMarket!=="none"}
 function buildQueue(){
