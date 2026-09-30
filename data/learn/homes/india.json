@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "type": "home-country",
+  "slug": "india",
+  "name": "India",
+  "overlayCount": 60,
+  "domains": 6,
+  "stages": 10,
+  "context": "Cross-border investing from India can involve foreign-exchange conversion, outward-remittance rules, Indian tax treatment of overseas assets/income, broker/custody arrangements and reporting obligations. Verify current rules before acting.",
+  "note": "This file supplies home-country overlay lessons. The shared engine expands it into 60 lessons and combines them with 240 target-market lessons."
+}
