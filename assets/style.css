@@ -435,3 +435,15 @@ button,a{touch-action:manipulation}
 button,.button,.text-button,.quick-search button{min-height:40px}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 @media(max-width:760px){.wrap{width:min(100% - 32px,1180px)}.section{padding-top:48px;padding-bottom:48px}.section-head{gap:14px}.section-head h2{font-size:30px}.command-grid,.command-grid-premium{grid-template-columns:1fr}.market-preview{min-height:105px}.knowledge-strip a{min-height:105px}.finish-actions .button,.research-home-actions .button{width:100%;box-sizing:border-box;text-align:center}}
+
+
+/* Contrast corrections — final homepage audit */
+.command-grid-premium .command-card:first-child{background:var(--dark);color:#fff;border-color:var(--dark)}
+.command-grid-premium .command-card:first-child p{color:#d4d8d0}
+.command-grid-premium .command-card:first-child .command-kicker{color:#c6d87a}
+.command-grid-premium .command-card:first-child .command-arrow{color:#fff}
+.dark-section .button.secondary{color:#fff;border-color:#737b6a}
+.dark-section .button.secondary:hover{background:#fff;color:var(--dark)}
+.research-home-card .button{background:#fff;color:var(--dark)}
+.research-home-card .button:hover{background:#edf1e2;color:var(--dark)}
+.research-home-card .text-button{color:#f5f6ee}
