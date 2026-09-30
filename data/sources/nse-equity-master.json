@@ -1,8 +1,0 @@
-{
-  "id": "nse-equity-master",
-  "tier": 1,
-  "publisher": "NSE",
-  "url": "https://archives.nseindia.com/content/equities/EQUITY_L.csv",
-  "use": ["listed-equity-universe"],
-  "notes": "Published exchange equity master; treated as identity/universe input, not as independent verification of company disclosures."
-}
