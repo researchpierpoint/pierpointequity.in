@@ -714,3 +714,12 @@ body.pp-command-open{overflow:hidden}
 @media(prefers-reduced-motion:reduce){
   .pp-reveal,.pp-next-action,.route-result,.command-card,.question-feature,.market-preview,.knowledge-strip>a,.knowledge-branches>a,.intel-card{transition:none!important;animation:none!important}
 }
+
+.pp-search-hint{display:block;margin:8px 2px 0;color:var(--pp-muted);font-size:10px}
+.pp-search-hint kbd{display:inline-block;padding:2px 5px;border:1px solid var(--pp-line);border-radius:4px;background:#fff;font-size:9px}
+.pp-context strong{color:var(--pp-ink)}
+button,a,input{touch-action:manipulation}
+@media(max-width:700px){
+  .pp-search-hint{font-size:9px}
+  .pp-context{font-size:11px}
+}
