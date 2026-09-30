@@ -183,12 +183,16 @@ const getStep=k=>steps.find(x=>x[0]===k);
 const label=(k,v)=>getStep(k)?.[3].find(x=>x[0]===v)?.[1]||v;
 function side(){const map={goal:"sideGoal",level:"sideLevel",sourceMarket:"sideMarket",time:"sideTime"};Object.entries(map).forEach(([k,id])=>{const e=document.getElementById(id);if(e)e.textContent=s.a[k]?label(k,s.a[k]):"Not set"})}
 function renderTransferPreview(){
- const box=document.getElementById("transferPreview");if(!box)return;
- const active=needsTransfer();if(!active){box.classList.remove("show");box.innerHTML="";return}
- const dest=MARKET_DATA.markets?.[s.a.targetMarket],source=s.a.sourceMarket;
+ const box=document.getElementById("transferPreview");
+ if(!box)return;
+ if(!needsTransfer()){box.classList.remove("show");box.innerHTML="";return}
+ const dest=MARKET_DATA.markets?.[s.a.targetMarket];
  const focus=(dest?.focus||marketDimensions).slice(0,9).map(k=>MARKET_DATA.dimensions?.find(x=>x[0]===k)||[k,k,""]);
- const sourceLabel=source||"your reference market",destLabel=dest?.label||s.a.targetMarket;
- box.innerHTML='<div class="r-transfer-head"><b>MARKET TRANSFER PREVIEW</b><h3>'+esc(sourceLabel)+' → '+esc(destLabel)+'</h3><p>You should not be taught this like a beginner. PirePoint will preserve transferable knowledge, isolate destination-specific differences, and deliberately test assumptions that could mislead you.</p></div><div class="r-transfer-grid"><div class="r-transfer-cell same"><b>Same</b><span>Business economics, financial reasoning, valuation concepts and research discipline can often transfer—after proof.</span></div><div class="r-transfer-cell different"><b>Different</b><span>'+esc(focus.slice(0,3).map(x=>x[1]).join(" · "))+' and other local rules need destination-specific study.</span></div><div class="r-transfer-cell new"><b>New</b><span>Local sources, terminology, participants and institutional context are treated as new until verified.</span></div><div class="r-transfer-cell danger"><b>Potentially misleading</b><span>Familiar settlement, disclosure, ownership, tax or valuation assumptions are actively challenged.</span></div><div class="r-transfer-cell verify"><b>Verify</b><span>Primary exchange, regulator and issuer sources become checkpoints—not optional reading.</span></div><div class="r-transfer-cell route"><b>Route</b><span>'+(esc(dest?.transferPrompt||"The routine will build a local evidence map before transferring rules.")+'</span></div></div>';
+ const sourceLabel=s.a.sourceMarket||"your reference market";
+ const destLabel=dest?.label||s.a.targetMarket;
+ const localFocus=esc(focus.slice(0,3).map(x=>x[1]).join(" · "));
+ const prompt=esc(dest?.transferPrompt||"The routine will build a local evidence map before transferring rules.");
+ box.innerHTML='<div class="r-transfer-head"><b>MARKET TRANSFER PREVIEW</b><h3>'+esc(sourceLabel)+' → '+esc(destLabel)+'</h3><p>You should not be taught this like a beginner. PirePoint will preserve transferable knowledge, isolate destination-specific differences, and deliberately test assumptions that could mislead you.</p></div><div class="r-transfer-grid"><div class="r-transfer-cell same"><b>Same</b><span>Business economics, financial reasoning, valuation concepts and research discipline can often transfer—after proof.</span></div><div class="r-transfer-cell different"><b>Different</b><span>'+localFocus+' and other local rules need destination-specific study.</span></div><div class="r-transfer-cell new"><b>New</b><span>Local sources, terminology, participants and institutional context are treated as new until verified.</span></div><div class="r-transfer-cell danger"><b>Potentially misleading</b><span>Familiar settlement, disclosure, ownership, tax or valuation assumptions are actively challenged.</span></div><div class="r-transfer-cell verify"><b>Verify</b><span>Primary exchange, regulator and issuer sources become checkpoints—not optional reading.</span></div><div class="r-transfer-cell route"><b>Route</b><span>'+prompt+'</span></div></div>';
  box.classList.add("show");
 }
 function render(){
