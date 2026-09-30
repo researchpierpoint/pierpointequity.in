@@ -21,3 +21,6 @@
  .detail-page section{margin-top:34px}
  .source-card{min-height:0}
 }
+
+/* Stock Market Guide UI */
+.country-card,.guide-card{position:relative;overflow:hidden;transition:transform .18s,box-shadow .18s,border-color .18s}.country-card:hover,.guide-card:hover{transform:translateY(-4px);box-shadow:0 16px 38px rgba(20,25,10,.09);border-color:#cdd4b5}.country-flag{display:block;font-size:34px;margin-bottom:16px}.country-card h2,.guide-card h2{font-size:23px;letter-spacing:-.035em;margin:10px 0}.country-card>span:last-child,.guide-card>a{font-weight:800;font-size:12px}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}.button.secondary{background:transparent;color:var(--ink);border:1px solid var(--line)}.stack{display:grid;gap:10px}.stack .source-link{justify-content:space-between}.search-item{padding:12px 0;border-top:1px solid var(--line)}.search-item a{color:var(--ink)}.search-item span{font-size:12px;color:var(--muted)}.glossary-card h3{margin-top:0}.glossary-card p{margin-bottom:0}.country-card .tag{display:block}.country-card{min-height:190px}@media(max-width:800px){.country-card{min-height:0}.hero-actions .button{width:100%;text-align:center;box-sizing:border-box}}
