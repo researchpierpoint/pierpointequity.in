@@ -71,3 +71,23 @@ const daily=[["Why can a low P/E still be expensive?","Learn how earnings qualit
     h.appendChild(b);
   });
 })();
+/* Discovery layer: contextual, local-first and privacy-light. */
+(function(){
+  const p=location.pathname;
+  const q=document.getElementById("guideSearch");
+  if(q){
+    const cards=[...document.querySelectorAll(".guide-card")];
+    const filter=()=>{const v=q.value.trim().toLowerCase();let n=0;cards.forEach(c=>{const hit=!v||(c.dataset.text||c.textContent).toLowerCase().includes(v);c.hidden=!hit;if(hit)n++});const old=document.getElementById("guideSearchCount");if(old)old.textContent=n+" guide"+(n===1?"":"s")+" shown";};
+    const meta=document.createElement("div");meta.id="guideSearchCount";meta.className="section-note";meta.textContent=cards.length+" guides";q.insertAdjacentElement("afterend",meta);q.addEventListener("input",filter);
+  }
+  document.querySelectorAll(".guide-filters button").forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll(".guide-filters button").forEach(x=>x.classList.remove("active"));b.classList.add("active");
+    const path=b.dataset.path||"all";const cards=[...document.querySelectorAll(".guide-card")];
+    cards.forEach(c=>{const t=(c.dataset.text||"").toLowerCase();let hit=path==="all";if(path==="beginner")hit=/basic|buy|broker|market|order|settlement|dividend/.test(t);if(path==="investor")hit=/analysis|fundamental|valuation|roce|roe|eps|cash|balance|portfolio/.test(t);if(path==="trader")hit=/trading|technical|volume|candlestick|moving|macd|stop-loss|risk-reward/.test(t);if(path==="global")hit=/country|global|market/.test(t);c.hidden=!hit});
+  }));
+  /* Add a compact breadcrumb to interior pages when absent. */
+  if(!/^\/$/.test(p) && !document.querySelector(".pp-breadcrumb") && document.querySelector("main.page")){
+    const b=document.createElement("div");b.className="pp-breadcrumb";b.innerHTML='<a href="index.html">PirePoint</a><span>›</span><span>'+document.title.split("—")[0].trim()+'</span>';
+    document.querySelector("main.page").prepend(b);
+  }
+})();
