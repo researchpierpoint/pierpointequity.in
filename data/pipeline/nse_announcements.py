@@ -11,7 +11,7 @@ def main():
  except:d={"version":"1.0","records":{}}
  u=json.loads(U.read_text()); rec=d.setdefault("records",{}); today=dt.date.today()
  targets=[c["nse_symbol"] for c in u["companies"]]
- limit=int(os.getenv("ANNOUNCEMENT_LIMIT","300")); start=(today-dt.timedelta(days=30)).strftime("%d-%m-%Y"); end=today.strftime("%d-%m-%Y")
+ limit=int(os.getenv("ANNOUNCEMENT_LIMIT","0")); start=(today-dt.timedelta(days=30)).strftime("%d-%m-%Y"); end=today.strftime("%d-%m-%Y")
  ses=requests.Session();ses.headers.update(H)
  warmed=False
  for url in ["https://www.nseindia.com/","https://www.nseindia.com/market-data/live-equity-market","https://www.nseindia.com/companies-listing/corporate-filings-announcements"]:
