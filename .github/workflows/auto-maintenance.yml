@@ -1,5 +1,9 @@
 name: PirePoint Auto Maintenance
 on:
+  push:
+    branches: ["main"]
+    paths-ignore:
+      - "data/generated/**"
   workflow_dispatch:
   schedule:
     - cron: "*/30 * * * *"
@@ -38,7 +42,7 @@ jobs:
       - name: Refresh ownership and announcements
         env:
           SHAREHOLDING_LIMIT: "100"
-          ANNOUNCEMENT_LIMIT: "5"
+          ANNOUNCEMENT_LIMIT: "0"
         run: |
           python data/pipeline/nse_shareholding.py
           python data/pipeline/nse_announcements.py
