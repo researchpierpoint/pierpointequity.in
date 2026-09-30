@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "type": "home-country",
+  "slug": "canada",
+  "name": "Canada",
+  "overlayCount": 60,
+  "domains": 6,
+  "stages": 10,
+  "context": "Canadian investors should understand FX, foreign securities taxation/reporting, registered versus taxable accounts, broker/custody and destination-market rules.",
+  "note": "This file supplies home-country overlay lessons. The shared engine expands it into 60 lessons and combines them with 240 target-market lessons."
+}
