@@ -69,113 +69,90 @@
 <footer class="footer"><div class="wrap footer-grid"><div><div class="brand"><span class="mark">P</span><span>PirePoint <b>Equity</b></span></div><p>The Stock Market Guide.</p></div><div><a href="learn.html">Learn</a><a href="countries.html">Markets</a><a href="intelligence.html">Intelligence</a><a href="research-hub.html">Research</a><a href="tools.html">Tools</a><a href="methodology.html">Methodology</a></div></div><div class="wrap fine">© 2026 PirePoint Equity · Educational information, not personalised investment advice.</div></footer>
 
 <script>
-(function(){
-const steps=[
- {key:'goal',label:'01 · PURPOSE',q:'What do you want PirePoint to help you become able to do?',hint:'Pick the outcome that matters most right now. You can change it later.',opts:[
-  ['research','Research companies independently','Move from information gathering to a repeatable investigation process.'],
-  ['market','Understand a new market','Learn what is genuinely different from the market you already know.'],
-  ['foundation','Build strong market foundations','Build the dependency chain from market mechanics through financials, valuation and risk.'],
-  ['advanced','Stress-test my understanding','Spend less time on definitions and more time on exceptions, evidence and second-order thinking.']
- ]},
- {key:'level',label:'02 · STARTING POINT',q:'Which statement describes you most accurately?',hint:'This is only a starting hypothesis. The calibration cases will test it.',opts:[
-  ['new','I am genuinely new','Most market and investing concepts are unfamiliar.'],
-  ['familiar','I know the basic language','I recognise common terms and have read some market material.'],
-  ['one','I understand at least one market','I can follow companies, financials and basic valuation in a market I know.'],
-  ['experienced','I already research seriously','I can analyse businesses and want to improve depth, transfer and judgement.']
- ]},
- {key:'market',label:'03 · MARKET CONTEXT',q:'Which market should your routine be anchored to?',hint:'A market is more than a list of stocks. The routine will account for structure, regulation, reporting, currency, access and local conventions.',opts:[
-  ['India','India','Use India as the primary context.'],
-  ['United States','United States','Use the United States as the primary context.'],
-  ['United Kingdom','United Kingdom','Use the United Kingdom as the primary context.'],
-  ['Japan','Japan','Use Japan as the primary context.'],
-  ['China / Hong Kong','China / Hong Kong','Treat mainland and Hong Kong structures as related but distinct contexts.'],
-  ['Australia','Australia','Use Australia as the primary context.'],
-  ['Global','Global / cross-market','Build transfer skills across markets rather than anchoring to one.']
- ]},
- {key:'time',label:'04 · REALISTIC TIME',q:'How much time can you reliably give the routine?',hint:'Choose what you can actually sustain. More time should change depth, not force filler.',opts:[
-  ['5','About 5 minutes','One concept, one retrieval attempt, one next step.'],
-  ['15','About 15 minutes','Learn, apply and review a small skill.'],
-  ['30','About 30 minutes','Learn, practice and investigate a short case.'],
-  ['60','60+ minutes','Deep lesson, case, research exercise and review.']
- ]}
-];
-
+(()=>{"use strict";
+const STORE="ppSystemV1";
+const KG={
+ market:["Market mental model","guides/stock-market-basics.html"],
+ mechanics:["Market mechanics","guides/how-to-buy-stocks.html"],
+ business:["Business economics","guides/fundamental-analysis.html"],
+ financials:["Financial statement reasoning","guides/balance-sheet.html"],
+ valuation:["Valuation & expectations","guides/pe-ratio.html"],
+ risk:["Risk & failure modes","intelligence.html"],
+ global:["Market transfer","countries.html"],
+ evidence:["Evidence quality","methodology.html"],
+ research:["Independent research","research.html"],
+ redteam:["Red-team thinking","intelligence.html"]
+};
 const cases=[
- {k:'business',title:'A growth claim is not yet a business thesis.',body:'A fictional company reports revenue growth of 25% for several years. Profit is also growing. You are asked what you would investigate next before calling the business high quality.',opts:[
-  ['cash','Cash conversion and working capital','Check whether reported growth is translating into cash and how much capital growth consumes.'],
-  ['price','Whether the share price has risen recently','Price movement may matter to a market question, but it does not establish business quality.'],
-  ['single','Whether revenue growth is above 20%','A growth threshold alone does not explain economics or durability.']
- ]},
- {k:'valuation',title:'A low multiple does not answer “cheap”.',body:'Two fictional businesses trade at the same P/E. One is cyclical and near peak margins; the other has steadier economics but higher reinvestment needs. What should you investigate before comparing the multiple?',opts:[
-  ['earnings','What earnings the multiple is actually capitalising','Normalisation, durability, cyclicality and accounting quality can change what the multiple means.'],
-  ['nominal','Which share has the lower nominal price','Nominal share price is not a measure of valuation.'],
-  ['ratio','Whether both P/Es are exactly equal','Equal ratios do not make businesses economically identical.']
- ]},
- {k:'market',title:'A new market is not just familiar finance in another currency.',body:'You already understand one market well and enter another. Which approach best reduces the risk of carrying over a false assumption?',opts:[
-  ['delta','Map what is the same, different, new and potentially misleading','Transfer knowledge deliberately rather than relearning everything or assuming everything is identical.'],
-  ['terms','Memorise the destination market vocabulary first','Vocabulary helps, but it does not reveal structural differences by itself.'],
-  ['prices','Start by comparing current stock prices','Prices do not explain market plumbing, regulation or reporting conventions.']
- ]},
- {k:'evidence',title:'Good research needs disconfirming evidence.',body:'You have a thesis about a fictional business. Which next question best strengthens the research process?',opts:[
-  ['wrong','What evidence would make this thesis wrong?','A useful research process actively searches for information that could invalidate the thesis.'],
-  ['support','What is the strongest article supporting it?','Supporting evidence matters, but searching only for confirmation can leave contradictions undiscovered.'],
-  ['confidence','How confident should I feel right now?','Confidence is less useful than identifying what evidence would change the conclusion.']
- ]},
- {k:'transfer',title:'Can you use a concept outside its original example?',body:'You learned that profit can rise while cash generation weakens because working capital absorbs cash. What demonstrates understanding best?',opts:[
-  ['apply','Explain how the same mechanism could appear in a different business','Transfer to a new context is stronger evidence of understanding than repeating the definition.'],
-  ['repeat','Repeat the definition accurately','Useful recall, but weaker evidence of application.'],
-  ['memorise','Memorise the formula','A formula alone does not demonstrate economic understanding.']
- ]}
+["growth",["business","financials"],"Growth is not automatically good growth","Revenue grows 25% for four years, but receivables and inventory consume more cash and ROCE falls. What do you investigate first?",["Cash conversion, incremental returns and capital required","Whether 25% growth is high enough","Whether the share price has reacted"],0],
+["cheap",["valuation","financials"],"A low P/E is a clue, not a conclusion","Two companies trade at 14× earnings; one is near peak margins and the other needs heavy reinvestment. What comes first?",["What the current earnings represent and what a normalised earnings base could be","Which has the lower share price","Whether both P/Es are exactly equal"],0],
+["cash",["financials","business"],"Profit and cash can diverge","Profit grows strongly while operating cash flow weakens. What best tests the quality of reported growth?",["Trace receivables, inventory, payables, non-cash items and cash conversion","Check whether EPS also increased","Read management commentary first"],0],
+["transfer",["global","mechanics"],"A new market is not your home market in another currency","You know Indian equities and start studying Japan. What reduces the risk of carrying a familiar rule across incorrectly?",["Map what is the same, different, new and potentially misleading","Memorise local vocabulary first","Compare current stock prices"],0],
+["evidence",["evidence","research"],"A polished thesis still needs an evidence trail","You have a strong research hypothesis. What next action most improves the work?",["Trace material claims to primary sources, label calculations and record unknowns","Find more articles agreeing with the thesis","Increase confidence when several sources repeat the claim"],0],
+["falsify",["redteam","risk"],"The strongest question may hurt your thesis","Your thesis depends on margins staying high. What is the most useful next question?",["What observable evidence would prove the margin thesis wrong?","What is the strongest evidence supporting high margins?","How confident are you in management?"],0],
+["business",["business"],"Know who pays and why","Two companies have similar growth but different customer economics. What should you establish before comparing them?",["How the company creates value, who pays, pricing, costs and unit economics","Which trades on the lower multiple","Which has the stronger price trend"],0],
+["risk",["risk","valuation"],"Risk is more than volatility","A company has low price volatility but one customer supplies 55% of revenue. What does this reveal?",["A fundamental concentration risk that may not appear in price volatility","Low volatility means the business is relatively safe","Beta captures the risk"],0],
+["expectations",["valuation","research"],"The price already contains a story","A high-quality company trades at a demanding valuation. What should the analyst ask?",["What growth, margins, returns and duration the price appears to assume","Whether the company is high quality","Whether the price rose recently"],0],
+["apply",["global","research"],"Real understanding survives a context change","You learned that working capital can absorb cash while profit rises. What best demonstrates understanding?",["Explain how the mechanism appears in a different industry and what changes","Repeat the definition","Memorise the formula"],0],
+["macro",["global","valuation"],"Macro matters through transmission","Rates rise. Instead of assuming all equities fall, what should you investigate?",["How rates affect financing, demand, valuation, currency and opportunity cost","Whether the index fell that day","Apply a fixed rule that higher rates mean lower equity value"],0],
+["decision",["research","redteam"],"A good conclusion remains conditional","You finish a research note. What makes it useful for future review?",["State what must go right, what could break the thesis and what would change your mind","State the conclusion as confidently as possible","Repeat the strongest facts"],0]
 ];
-
-const state={step:0,answers:{},caseIndex:0,caseAnswers:[],confidence:[]};
-const qv=document.getElementById('questionView'),cal=document.getElementById('calibration'),res=document.getElementById('result');
-const next=document.getElementById('next'),back=document.getElementById('back'),progress=document.getElementById('progress');
-function esc(s){return String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));}
-function updateSide(){
- document.getElementById('sideGoal').textContent=state.answers.goal?labelFor('goal',state.answers.goal):'Not set';
- document.getElementById('sideLevel').textContent=state.answers.level?labelFor('level',state.answers.level):'Not set';
- document.getElementById('sideMarket').textContent=state.answers.market?labelFor('market',state.answers.market):'Not set';
- document.getElementById('sideTime').textContent=state.answers.time?labelFor('time',state.answers.time):'Not set';
+const steps=[
+["goal","01 · PURPOSE","What do you want to become able to do?",[["research","Research companies independently"],["market","Understand a new market"],["foundation","Build strong market foundations"],["advanced","Stress-test my understanding"]]],
+["level","02 · STARTING POINT","Which starting description is closest?",[["new","I am genuinely new"],["familiar","I know the basic language"],["one","I understand at least one market"],["experienced","I already research seriously"]]],
+["market","03 · REFERENCE MARKET","Which market should be your reference point?",[["India","India"],["United States","United States"],["United Kingdom","United Kingdom"],["Japan","Japan"],["China / Hong Kong","China / Hong Kong"],["Australia","Australia"],["Global","Global / cross-market"]]],
+["target","04 · DESTINATION","Where should the routine take you?",[["same","Stay with my reference market"],["United States","United States"],["India","India"],["Japan","Japan"],["China / Hong Kong","China / Hong Kong"],["United Kingdom","United Kingdom"],["Australia","Australia"],["Global","Global / cross-market"]]],
+["time","05 · REALISTIC TIME","How much time can you reliably give it?",[["5","About 5 minutes"],["15","About 15 minutes"],["30","About 30 minutes"],["60","60+ minutes"]]],
+["mode","06 · LEARNING MODE","What should PirePoint emphasise?",[["teach","Explain first"],["practice","Challenge me early"],["research","Put me into research"],["mixed","Adapt automatically"]]]
+];
+const s={i:0,a:{},queue:[],ci:0,answers:{},confidence:{},results:[]};
+const q=document.getElementById("questionView"),cal=document.getElementById("calibration"),res=document.getElementById("result"),next=document.getElementById("next"),back=document.getElementById("back"),bar=document.getElementById("progress");
+const esc=x=>String(x??"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
+const label=(k,v)=>{const z=steps.find(x=>x[0]===k)?.[3].find(x=>x[0]===v);return z?z[1]:v};
+function side(){["goal","level","market","time"].forEach(k=>{const e=document.getElementById("side"+k[0].toUpperCase()+k.slice(1));if(e)e.textContent=s.a[k]?label(k,s.a[k]):"Not set"})}
+function render(){
+ const z=steps[s.i];q.innerHTML='<div class="r-step-label">'+z[1]+'</div><h2 class="r-question">'+z[2]+'</h2><p class="r-hint">This shapes the route; it does not determine your ability. The calibration cases do that.</p><div class="r-options">'+z[3].map(o=>'<button class="r-option '+(s.a[z[0]]===o[0]?"selected":"")+'" data-v="'+esc(o[0])+'"><b>'+esc(o[1])+'</b></button>').join("")+'</div>';
+ q.querySelectorAll(".r-option").forEach(b=>b.onclick=()=>{s.a[z[0]]=b.dataset.v;render()});next.disabled=!s.a[z[0]];back.disabled=!s.i;bar.style.width=s.i/steps.length*100+"%";side()
 }
-function labelFor(key,val){const s=steps.find(x=>x.key===key);const o=s&&s.opts.find(x=>x[0]===val);return o?o[1]:val;}
-function renderStep(){
- const s=steps[state.step]; qv.innerHTML='<div class="r-step-label">'+s.label+'</div><h2 class="r-question">'+s.q+'</h2><p class="r-hint">'+s.hint+'</p><div class="r-options">'+s.opts.map(o=>'<button class="r-option '+(state.answers[s.key]===o[0]?'selected':'')+'" data-v="'+esc(o[0])+'"><b>'+esc(o[1])+'</b><small>'+esc(o[2])+'</small></button>').join('')+'</div>';
- qv.querySelectorAll('.r-option').forEach(b=>b.onclick=()=>{state.answers[s.key]=b.dataset.v;renderStep();});
- next.disabled=!state.answers[s.key];back.disabled=state.step===0;progress.style.width=((state.step)/steps.length*100)+'%';updateSide();
+function queue(){
+ let wanted=s.a.goal==="market"?["global","mechanics","research","evidence"]:s.a.goal==="research"?["business","financials","valuation","risk","research","evidence","redteam"]:s.a.goal==="advanced"?["risk","valuation","evidence","redteam","global","research"]:["market","mechanics","business","financials","valuation","risk"];
+ if(s.a.level==="new")wanted=["market","mechanics","business","financials","valuation","risk"];
+ if(s.a.target&&s.a.target!=="same"&&s.a.target!==s.a.market)wanted=["global","mechanics",...wanted.filter(x=>x!=="global"&&x!=="mechanics")];
+ const out=[],used=new Set();
+ wanted.forEach(d=>{const c=cases.find(x=>!used.has(x[0])&&x[1].includes(d));if(c){out.push(c[0]);used.add(c[0])}});
+ cases.forEach(c=>{if(out.length<7&&!used.has(c[0])){out.push(c[0]);used.add(c[0])}});
+ return out
 }
 function renderCase(){
- const c=cases[state.caseIndex];
- cal.innerHTML='<div class="r-step-label">CALIBRATION '+(state.caseIndex+1)+' / '+cases.length+'</div><h2 class="r-question">Show us how you think.</h2><p class="r-hint">There is no permanent score. Choose the response you would actually investigate first, then tell us how confident you are.</p><div class="r-case"><span class="case-kicker">Applied case</span><h3>'+c.title+'</h3><p>'+c.body+'</p><div class="r-options">'+c.opts.map(o=>'<button class="r-option '+(state.caseAnswers[state.caseIndex]===o[0]?'selected':'')+'" data-v="'+o[0]+'"><b>'+o[1]+'</b><small>'+o[2]+'</small></button>').join('')+'</div><div class="r-confidence"><button data-c="low">Not sure</button><button data-c="mid">Fairly confident</button><button data-c="high">Very confident</button></div></div><div class="r-actions"><button class="r-btn secondary" id="caseBack">Back</button><button class="r-btn" id="caseNext" disabled>Continue</button></div>';
- const chosen=state.caseAnswers[state.caseIndex];
- const conf=state.confidence[state.caseIndex];
- cal.querySelectorAll('.r-option').forEach(b=>b.onclick=()=>{state.caseAnswers[state.caseIndex]=b.dataset.v;renderCase();});
- cal.querySelectorAll('.r-confidence button').forEach(b=>{if(state.confidence[state.caseIndex]===b.dataset.c)b.classList.add('selected');b.onclick=()=>{state.confidence[state.caseIndex]=b.dataset.c;renderCase();}});
- const cn=document.getElementById('caseNext');cn.disabled=!(chosen&&conf);cn.onclick=()=>{if(state.caseIndex<cases.length-1){state.caseIndex++;renderCase();}else{buildResult();}};
- document.getElementById('caseBack').onclick=()=>{if(state.caseIndex>0){state.caseIndex--;renderCase();}else{cal.classList.remove('show');qv.style.display='block';document.querySelector('.r-actions').style.display='flex';state.step=steps.length-1;renderStep();}};
- progress.style.width=((steps.length+state.caseIndex+1)/(steps.length+cases.length)*100)+'%';
+ const c=cases.find(x=>x[0]===s.queue[s.ci]),ans=s.answers[c[0]],cf=s.confidence[c[0]];
+ cal.innerHTML='<div class="r-step-label">CALIBRATION '+(s.ci+1)+' / '+s.queue.length+'</div><h2 class="r-question">Show us how you think.</h2><p class="r-hint">Choose the move you would make first, then report your confidence. High confidence + wrong reasoning is useful diagnostic evidence.</p><div class="r-case"><span class="case-kicker">Applied case · '+c[1].join(" · ")+'</span><h3>'+esc(c[2])+'</h3><p>'+esc(c[3])+'</p><div class="r-options">'+c[4].map((o,i)=>'<button class="r-option '+(ans===i?"selected":"")+'" data-i="'+i+'"><b>'+esc(o)+'</b></button>').join("")+'</div><div class="r-confidence">'+["low","mid","high"].map((x,i)=>'<button class="'+(cf===x?"selected":"")+'" data-c="'+x+'">'+["Not sure","Fairly confident","Very confident"][i]+'</button>').join("")+'</div></div><div class="r-actions"><button class="r-btn secondary" id="cb">Back</button><button class="r-btn" id="cn" disabled>Continue</button></div>';
+ cal.querySelectorAll(".r-option").forEach(b=>b.onclick=()=>{s.answers[c[0]]=+b.dataset.i;renderCase()});
+ cal.querySelectorAll(".r-confidence button").forEach(b=>b.onclick=()=>{s.confidence[c[0]]=b.dataset.c;renderCase()});
+ const cn=document.getElementById("cn");cn.disabled=s.answers[c[0]]===undefined||!s.confidence[c[0]];cn.onclick=()=>s.ci<s.queue.length-1?(s.ci++,renderCase()):result();
+ document.getElementById("cb").onclick=()=>s.ci?(s.ci--,renderCase()):(cal.classList.remove("show"),q.style.display="block",document.querySelector(".r-actions").style.display="flex",s.i=steps.length-1,render());
+ bar.style.width=(steps.length+s.ci+1)/(steps.length+s.queue.length)*100+"%"
 }
-function buildResult(){
- qv.style.display='none';cal.classList.remove('show');res.classList.add('show');document.querySelector('.r-actions').style.display='none';progress.style.width='100%';
- const misses=state.caseAnswers.filter((a,i)=>a!==cases[i].opts[0][0]).length;
- const confHigh=state.confidence.filter(x=>x==='high').length;
- let route=[];
- if(state.answers.goal==='market')route=['Market anatomy','Same / different / new / dangerous transfer map','Destination-market practice','Cross-market research case'];
- else if(state.answers.goal==='research')route=['Business model & economics','Financial statement reasoning','Valuation & expectations','Red-team research','Evidence-backed research note'];
- else if(state.answers.goal==='advanced')route=['Exceptions & failure modes','Expectation analysis','Evidence quality','Research simulator','Transfer across markets'];
- else route=['Market mechanics','Business economics','Financial statements','Valuation & risk','Independent research'];
- if(misses>=2)route.unshift('Targeted prerequisite repair');
- const first=route[0];
- res.innerHTML='<span class="r-step-label">YOUR ROUTINE IS READY</span><div class="routine-hero-card"><span class="eyebrow">NEXT BEST STEP</span><h2>'+esc(first)+'</h2><p>This is not a fixed course. Your route will change as you demonstrate understanding, encounter exceptions, forget concepts or expose new research gaps.</p><div class="r-route-grid">'+route.slice(0,6).map((x,i)=>'<div class="r-route"><b>'+String(i+1).padStart(2,'0')+' · '+esc(x)+'</b><span>'+routeReason(x)+'</span></div>').join('')+'</div><div class="r-next"><div><small>First session</small><b>'+timePlan(state.answers.time)+'</b></div><button class="r-btn" id="startRoutine">Start routine →</button></div></div><div style="margin-top:18px"><p class="muted" style="font-size:12px">Calibration: '+(cases.length-misses)+' applied choices aligned with the strongest first-investigation response; '+confHigh+' marked as very confident. These signals guide sequencing, not a permanent ability score.</p></div>';
- document.getElementById('startRoutine').onclick=()=>location.href='learn.html#knowledge-map';
- localStorage.setItem('pirepointRoutine',JSON.stringify({answers:state.answers,caseAnswers:state.caseAnswers,confidence:state.confidence,createdAt:new Date().toISOString(),route}));
+function result(){
+ const d={};Object.keys(KG).forEach(k=>d[k]={correct:0,total:0,highWrong:0});
+ s.queue.forEach(id=>{const c=cases.find(x=>x[0]===id),ok=s.answers[id]===c[5];c[1].forEach(k=>{d[k].total++;if(ok)d[k].correct++;if(!ok&&s.confidence[id]==="high")d[k].highWrong++});s.results.push({id,correct:ok,confidence:s.confidence[id],domains:c[1]})});
+ let ranked=Object.entries(d).filter(x=>x[1].total).sort((a,b)=>((b[1].total-b[1].correct)+(b[1].highWrong*.5))-((a[1].total-a[1].correct)+(a[1].highWrong*.5)));
+ const route=[],add=(k,why)=>{if(!route.some(x=>x.k===k)&&KG[k])route.push({k,label:KG[k][0],resource:KG[k][1],why})};
+ ranked.forEach(([k,v])=>{if(v.correct<v.total)add(k,v.highWrong?"High-confidence misses suggest this concept needs a different explanation and more practice.":"Your calibration suggests this is not yet reliable under application.")});
+ if(s.a.target!=="same"&&s.a.target!==s.a.market)add("global","Your destination market needs an explicit transfer map rather than automatic reuse of familiar rules.");
+ ["market","mechanics","business","financials","valuation","risk","research","evidence","redteam"].forEach(k=>add(k,"Next dependency in the PirePoint knowledge graph."));
+ if(s.a.goal==="market")route.unshift({k:"global",label:"Market delta: same · different · new · dangerous",resource:"countries.html",why:"Start by separating transferable knowledge from market-specific rules."});
+ if(s.a.goal==="research")add("research","Finish by applying the framework to a complete research mission.");
+ const uniq=route.filter((x,i,a)=>a.findIndex(y=>y.k===x.k)===i).slice(0,7);
+ let sys={};try{sys=JSON.parse(localStorage.getItem(STORE)||"{}")}catch(e){}sys.profile=Object.assign(sys.profile||{},{stage:s.a.level,goal:s.a.goal,target:s.a.target==="same"?null:s.a.target,depth:s.a.time==="5"?"quick":s.a.time==="15"?"session":"deep",markets:[s.a.market]});sys.routine={version:3,calibrated:true,updatedAt:new Date().toISOString(),answers:s.a,domains:d,route:uniq,results:s.results};localStorage.setItem(STORE,JSON.stringify(sys));localStorage.setItem("pirepointRoutine",JSON.stringify(sys.routine));
+ q.style.display="none";cal.classList.remove("show");res.classList.add("show");document.querySelector(".r-actions").style.display="none";bar.style.width="100%";
+ const misses=s.results.filter(x=>!x.correct).length,high=s.results.filter(x=>x.confidence==="high").length,first=uniq[0]||{label:"Market mental model",resource:"learn.html",why:"Build the dependency chain before adding complexity."};
+ const cards=Object.entries(d).filter(x=>x[1].total).map(([k,v])=>'<div class="r-route"><b>'+esc(KG[k][0])+'</b><span>'+(v.correct===v.total?"Verified":"Needs work")+' · '+v.correct+'/'+v.total+' applied cases'+(v.highWrong?" · "+v.highWrong+" high-confidence miss":"")+'</span></div>').join("");
+ res.innerHTML='<span class="r-step-label">YOUR ROUTINE IS READY</span><div class="routine-hero-card"><span class="eyebrow">NEXT BEST STEP</span><h2>'+esc(first.label)+'</h2><p>'+esc(first.why)+' This route is now shared with the PirePoint Learning & Research System and can change as you learn.</p><div class="r-route-grid">'+uniq.map((x,i)=>'<div class="r-route"><b>'+String(i+1).padStart(2,"0")+" · "+esc(x.label)+'</b><span>'+esc(x.why)+'</span></div>').join("")+'</div><div class="r-next"><div><small>First session</small><b>'+esc(s.a.time==="5"?"5 minutes":s.a.time==="15"?"15 minutes":s.a.time==="30"?"30 minutes":"60+ minutes")+'</b></div><a class="r-btn r-link" href="'+esc(first.resource)+'">Start this step →</a></div></div><p class="muted" style="font-size:12px;margin-top:18px">Calibration: '+(s.queue.length-misses)+' strongest-first choices · '+high+' high-confidence responses · '+misses+' misses requiring further work.</p><div class="r-route-grid">'+cards+'</div><div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap"><a class="r-btn r-link" href="system.html#route">Open learning system →</a><button class="r-btn secondary" id="again">Recalibrate</button></div>';
+ document.getElementById("again").onclick=()=>location.reload()
 }
-function routeReason(x){
- const m={'Targeted prerequisite repair':'Repair the smallest missing dependency before adding complexity.','Market anatomy':'Understand how the destination market actually works.','Same / different / new / dangerous transfer map':'Keep transferable knowledge and isolate misleading assumptions.','Destination-market practice':'Apply market-specific concepts to unfamiliar situations.','Cross-market research case':'Test whether the knowledge transfers into research.','Business model & economics':'Understand how the business creates and captures value.','Financial statement reasoning':'Connect reported numbers to cash, capital and economics.','Valuation & expectations':'Separate a valuation framework from a conclusion.','Red-team research':'Actively search for evidence that could break the thesis.','Evidence-backed research note':'Turn findings into a transparent, testable research record.','Exceptions & failure modes':'Learn where familiar frameworks stop working cleanly.','Expectation analysis':'Ask what current prices already assume.','Evidence quality':'Separate verified facts, calculations, assumptions and unknowns.','Research simulator':'Practice the sequence under uncertainty.','Transfer across markets':'Apply the same reasoning where the rules or conventions change.','Market mechanics':'Build the minimum structure needed to reason correctly.','Business economics':'Connect operations to financial outcomes.','Financial statements':'Read profit, cash, capital and working capital together.','Valuation & risk':'Understand price, expectations and what can go wrong.','Independent research':'Use the framework on a complete investigation.'};return m[x]||'Build the skill, then prove it in a new context.'}
-function timePlan(t){return t==='5'?'5 minutes · one concept + retrieval':t==='15'?'15 minutes · learn + apply + review':t==='30'?'30 minutes · learn + case + research':'60+ minutes · deep lesson + case + research + review';}
-next.onclick=()=>{if(state.step<steps.length-1){state.step++;renderStep();}else{qv.style.display='none';document.querySelector('.r-actions').style.display='none';cal.classList.add('show');renderCase();}};
-back.onclick=()=>{if(state.step>0){state.step--;renderStep();}};
-renderStep();
-})();
+next.onclick=()=>s.i<steps.length-1?(s.i++,render()):(s.queue=queue(),s.ci=0,q.style.display="none",document.querySelector(".r-actions").style.display="none",cal.classList.add("show"),renderCase());
+back.onclick=()=>s.i?(s.i--,render()):null;
+render();
+})()
 </script>
 </body></html>
