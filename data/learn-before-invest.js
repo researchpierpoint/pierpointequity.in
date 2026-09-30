@@ -81,9 +81,10 @@ function render(app,profiles){
   const tp=profiles.markets[target],hp=profiles.homes[home];
   const same=home===target;
   const t=makeTargetNodes(tp), h=makeHomeNodes(hp,240);
-  nodes=same?t.slice(0,300):t.concat(h);
+  /* Every pair is exactly 300 lessons. Same-market routes use 240 core lessons + 60 local application/mastery lessons, not fake cross-border friction. */
+  nodes=same?t.concat(makeHomeNodes({context:"Because your home and destination market are the same, there is no foreign-market overlay. Use this final 60-lesson block to prove local application, verification, traps, research and mastery.",name:tp.name},240).map(n=>({...n,source:"target",category:"Local application & mastery",id:"a-"+n.id}))):t.concat(h);
   const raw=JSON.parse(localStorage.getItem(stateKey(home,target))||"[]");done=new Set(raw);
-  history.replaceState(null,"","?home="+encodeURIComponent(tp.name)+"&target="+encodeURIComponent(tp.name===hp.name?tp.name:tp.name));
+  history.replaceState(null,"","?home="+encodeURIComponent(hp.name)+"&target="+encodeURIComponent(tp.name));
   renderList();renderProgress();openNext();
  }
  function renderProgress(){
