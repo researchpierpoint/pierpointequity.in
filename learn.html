@@ -21,6 +21,32 @@
 </div>
 </section>
 
+<section class="wrap section learning-navigator" id="navigator">
+<div class="section-head"><div><span class="eyebrow">YOUR ROUTE</span><h2>Tell PirePoint where you are. We’ll show you what comes next.</h2><p class="muted">You do not need to know the right terminology. Choose the closest answer and the learning path will adapt.</p></div></div>
+<div class="route-panel card">
+<div class="route-step"><span>01</span><div><b>How much do you already know?</b><div class="route-options" data-group="level">
+<button type="button" data-value="new">I’m new to markets</button>
+<button type="button" data-value="one">I understand one market</button>
+<button type="button" data-value="experienced">I know the basics well</button>
+</div></div></div>
+<div class="route-step"><span>02</span><div><b>What do you want to accomplish?</b><div class="route-options" data-group="goal">
+<button type="button" data-value="learn">Build my foundation</button>
+<button type="button" data-value="research">Learn how to research a company</button>
+<button type="button" data-value="global">Understand another market</button>
+<button type="button" data-value="advanced">Go deeper into research</button>
+</div></div></div>
+<div class="route-step route-market-step" hidden><span>03</span><div><b>Which market do you already know?</b><div class="route-options" data-group="from">
+<button type="button" data-value="India">India</button><button type="button" data-value="United States">United States</button><button type="button" data-value="United Kingdom">United Kingdom</button><button type="button" data-value="Australia">Australia</button><button type="button" data-value="Japan">Japan</button><button type="button" data-value="China">China</button><button type="button" data-value="Other">Another market</button>
+</div></div></div>
+<div class="route-step route-market-step" hidden><span>04</span><div><b>Which market do you want to understand?</b><div class="route-options" data-group="to">
+<button type="button" data-value="China">China</button><button type="button" data-value="United States">United States</button><button type="button" data-value="Australia">Australia</button><button type="button" data-value="Japan">Japan</button><button type="button" data-value="United Kingdom">United Kingdom</button><button type="button" data-value="Hong Kong">Hong Kong</button><button type="button" data-value="Singapore">Singapore</button>
+</div></div></div>
+<div class="route-result" id="routeResult" hidden>
+<span class="tag">YOUR NEXT STEP</span><h3 id="routeTitle">Choose your route above.</h3><p id="routeCopy"></p><div class="route-actions"><a id="routePrimary" class="button" href="guides.html">Open your path →</a><a id="routeSecondary" class="button secondary" href="#start">See the full learning map</a></div>
+</div>
+</div>
+</section>
+
 <section id="start" class="wrap section">
 <div class="section-head"><div><span class="eyebrow">PATH A · COMPLETE BEGINNER</span><h2>From “what is a share?” to independent research.</h2><p class="muted">Follow the dependency order. You can jump ahead, but the system makes clear what knowledge you are skipping.</p></div></div>
 <div class="learning-line"><div><b>01</b><span>Market</span><small>What ownership means</small></div><div><b>02</b><span>Mechanics</span><small>Exchanges, brokers, orders</small></div><div><b>03</b><span>Business</span><small>How companies make money</small></div><div><b>04</b><span>Financials</span><small>Statements & cash</small></div><div><b>05</b><span>Valuation</span><small>Price vs expectations</small></div><div><b>06</b><span>Risk</span><small>Position & portfolio</small></div></div>
@@ -59,6 +85,29 @@
 <section class="wrap section">
 <div class="daily-card"><div><span class="eyebrow">THE RULE</span><h2>Every lesson should create a better next question.</h2><p>Finish a page and you should know what you understand, what you do not, and what evidence would resolve the gap.</p></div><a class="button" href="guides.html">Browse every guide →</a></div>
 </section>
-</main>
+<script>
+(function(){
+const state={};
+const groups=[...document.querySelectorAll('.route-options')];
+function slug(v){return v.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
+function setActive(group,value){group.querySelectorAll('button').forEach(b=>b.classList.toggle('selected',b.dataset.value===value));}
+function update(){
+ const level=state.level,goal=state.goal,from=state.from,to=state.to;
+ document.querySelectorAll('.route-market-step').forEach(x=>x.hidden=goal!=='global');
+ const result=document.getElementById('routeResult'),title=document.getElementById('routeTitle'),copy=document.getElementById('routeCopy'),primary=document.getElementById('routePrimary');
+ if(!result||!title||!copy||!primary)return;
+ let ready=false;
+ if(goal==='global'){ready=!!(from&&to); if(ready){title.textContent=from+' → '+to+' market bridge';copy.textContent='Keep the concepts you already know. Focus on the destination market’s structure, regulation, reporting, currency, access, sectors, risks and research conventions.';primary.href='countries/'+slug(to)+'.html';}}
+ else if(goal==='research'){ready=true;title.textContent='Research a company without starting from a blank page';copy.textContent='Use the PirePoint research framework to move through business model, quality, financial engine, valuation expectations, failure analysis, evidence and thesis—without treating any one number as the answer.';primary.href='intelligence.html';}
+ else if(goal==='advanced'){ready=true;title.textContent='Go from definitions to second-order research';copy.textContent='Move into accounting nuance, expectation analysis, scenario thinking, contradictions, evidence quality and red-team research.';primary.href='#advanced';}
+ else if(goal==='learn'){ready=true;title.textContent=level==='new'?'Build the complete foundation':'Reinforce the parts that make independent research possible';copy.textContent=level==='new'?'Start with how markets work, then business, financials, valuation and risk in dependency order.':'Use the full map as a reference and jump directly to the layer you need.';primary.href='#start';}
+ result.hidden=!ready;
+}
+groups.forEach(group=>group.querySelectorAll('button').forEach(btn=>btn.addEventListener('click',()=>{
+ state[group.dataset.group]=btn.dataset.value;setActive(group,btn.dataset.value);update();
+ if(group.dataset.group==='goal'&&btn.dataset.value==='global')document.querySelector('.route-market-step')?.scrollIntoView({behavior:'smooth',block:'center'});
+})));
+})();
+</script></main>
 <footer class="footer"><div class="wrap footer-grid"><div><div class="brand"><span class="mark">P</span><span>PirePoint <b>Equity</b></span></div><p>The Stock Market Guide.</p></div><div><a href="learn.html">Learn</a><a href="countries.html">Markets</a><a href="intelligence.html">Intelligence</a><a href="research-hub.html">Research</a><a href="tools.html">Tools</a><a href="methodology.html">Methodology</a></div></div><div class="wrap fine">© 2026 PirePoint Equity · Educational information, not personalised investment advice.</div></footer>
 <script src="assets/app.js"></script></body></html>
