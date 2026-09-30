@@ -322,7 +322,7 @@ const daily=[["Why can a low P/E still be expensive?","Learn how earnings qualit
 
 /* Learn Before You Invest: surface the 300-lesson route on every market page. */
 (function(){
- const m=location.pathname.match(/countries\\/([^/]+)\\.html$/); if(!m)return;
+ const m=location.pathname.match(/countries\/([^/]+)\.html$/); if(!m)return;
  const slug=m[1]; const labels={"united-states":"United States",china:"China",india:"India",japan:"Japan",hong-kong:"Hong Kong",united-kingdom:"United Kingdom",australia:"Australia",canada:"Canada",south-korea:"South Korea",germany:"Germany",singapore:"Singapore",uae:"United Arab Emirates"};
  if(!labels[slug]||document.querySelector(".pp-learn-market"))return;
  const main=document.querySelector("main"); if(!main)return;
