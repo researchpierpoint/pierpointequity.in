@@ -18,17 +18,28 @@
 </section>
 
 <section class="wrap section" id="route">
-<div class="section-head"><div><span class="eyebrow">01 · BUILD MY ROUTINE</span><h2>Tell PirePoint what you already know — and what you want to become.</h2><p class="muted">This is not a generic course selector. The routine changes its questions and its study sequence based on your starting point, market knowledge, goal, depth and gaps.</p></div><button class="text-button" id="resetProfile" type="button">Reset routine</button></div>
+<div class="section-head"><div><span class="eyebrow">01 · YOUR ADAPTIVE ROUTINE</span><h2>Your routine lives here. The diagnostic decides what comes next.</h2><p class="muted">Build My Routine is the source of truth for your learner model. This page is where you continue the route, see why each step exists, and use the mastery, case, evidence and review layers around it.</p></div><a class="button" href="routine.html">Recalibrate routine →</a></div>
 <div class="routine-shell">
-<div class="os-panel routine-builder">
-<div class="routine-step"><span>01</span><div><label>Where are you today?</label><p class="routine-help">This first answer changes the entire route.</p><div class="os-options" data-profile="stage"><button data-v="starting">I’m starting</button><button data-v="better">I want to become better</button><button data-v="understand">I already understand markets</button></div></div></div>
-<div class="routine-step"><span>02</span><div><label>What do you already understand?</label><p class="routine-help">Choose every market you genuinely know well enough to explain.</p><div class="os-options" data-profile="markets"><button data-v="India">India</button><button data-v="US">United States</button><button data-v="China">China</button><button data-v="Japan">Japan</button><button data-v="Hong Kong">Hong Kong</button><button data-v="UK">United Kingdom</button><button data-v="Germany">Germany</button><button data-v="Australia">Australia</button><button data-v="Canada">Canada</button><button data-v="South Korea">South Korea</button><button data-v="Singapore">Singapore</button><button data-v="none">None yet</button></div></div></div>
-<div class="routine-step"><span>03</span><div><label>What should the routine help you do?</label><p class="routine-help">You can change this later; the first route should still be finite.</p><div class="os-options" data-profile="goal"><button data-v="foundation">Build a complete foundation</button><button data-v="market">Learn another market</button><button data-v="research">Research a company properly</button><button data-v="valuation">Understand valuation deeply</button><button data-v="portfolio">Build portfolio & risk understanding</button><button data-v="trading">Understand trading & market mechanics</button><button data-v="macro">Understand macro & cycles</button><button data-v="judgement">Improve independent thinking</button></div></div></div>
-<div class="routine-step routine-target" hidden><span>04</span><div><label>Which market do you want to learn?</label><p class="routine-help">PirePoint will teach the destination market against what you already know — not make you relearn everything.</p><div class="os-options" data-profile="target"><button data-v="United States">United States</button><button data-v="China">China</button><button data-v="Japan">Japan</button><button data-v="Hong Kong">Hong Kong</button><button data-v="India">India</button><button data-v="Canada">Canada</button><button data-v="South Korea">South Korea</button><button data-v="United Kingdom">United Kingdom</button><button data-v="Germany">Germany</button><button data-v="Australia">Australia</button><button data-v="UAE">UAE</button><button data-v="Singapore">Singapore</button></div></div></div>
-<div class="routine-step"><span>05</span><div><label>How deep should today’s routine go?</label><p class="routine-help">The subject stays the same; the amount of work changes.</p><div class="os-options" data-profile="depth"><button data-v="quick">15 minutes</button><button data-v="session">1 hour</button><button data-v="deep">Deep study</button></div></div></div>
-<div class="routine-step"><span>06</span><div><label>What can you already do?</label><p class="routine-help">Be honest. “Not sure” is useful because it prevents false progress.</p><div class="os-options" data-profile="skills"><button data-v="market">Explain how a market works</button><button data-v="business">Explain how a business makes money</button><button data-v="financials">Read the three statements</button><button data-v="valuation">Build a valuation model</button><button data-v="risk">Assess risk & position size</button><button data-v="evidence">Trace claims to evidence</button><button data-v="research">Run independent research</button><button data-v="none">I’m not confident yet</button></div></div></div>
+<div class="os-panel route-output routine-output">
+<span class="tag">CURRENT ROUTE</span>
+<h3 id="adaptiveRouteTitle">No adaptive routine yet.</h3>
+<p id="adaptiveRouteCopy">Complete Build My Routine once. Your verified calibration, market context and learning goal will appear here.</p>
+<div id="adaptiveRouteSteps" class="route-steps"></div>
+<div id="adaptiveRouteDelta" class="routine-delta" hidden></div>
+<div id="adaptiveRouteActions" class="routine-actions" hidden></div>
 </div>
-<div class="os-panel route-output routine-output"><span class="tag">YOUR ROUTINE</span><h3 id="osRouteTitle">Start by telling me where you are.</h3><p id="osRouteCopy">PirePoint will use your answers to decide what to keep, what to teach, what to test and what is different in the market you are learning.</p><div id="osRouteSteps" class="route-steps"></div><div id="osRouteDelta" class="routine-delta" hidden></div><div id="osRouteActions" class="routine-actions" hidden><a class="button" id="osRoutePrimary" href="learn.html">Start routine →</a><a class="button secondary" href="#mastery">See mastery map</a></div></div>
+<div class="os-panel">
+<span class="tag">HOW THE SYSTEM USES IT</span>
+<h3>One learner model. Many learning surfaces.</h3>
+<p class="muted">Your routine identifies what needs attention. The rest of PirePoint supplies the experience: lessons for concepts, Case School for applied reasoning, Financial Lab for statement practice, Research for complete investigations, and Review for concepts that need to return.</p>
+<div class="route-steps">
+<div><b>01</b><span>Routine → decide the next dependency.</span></div>
+<div><b>02</b><span>Learn → understand the concept.</span></div>
+<div><b>03</b><span>Prove → apply it in a case.</span></div>
+<div><b>04</b><span>Research → use it in context.</span></div>
+<div><b>05</b><span>Review → return when evidence says you need it.</span></div>
+</div>
+</div>
 </div>
 </section>
 
