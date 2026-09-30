@@ -109,3 +109,45 @@ const daily=[["Why can a low P/E still be expensive?","Learn how earnings qualit
     return original(expanded);
   };
 })();
+/* Guide reading experience: orient the reader before asking for attention. */
+(function(){
+  const main=document.querySelector("main.page");
+  const article=main?.querySelector("article.card");
+  if(!main||!article||!document.querySelector(".guide-context")){
+    if(!main||!article)return;
+  }
+  if(main&&!main.querySelector(".guide-context")){
+    const lead=main.querySelector(".lead");
+    const box=document.createElement("aside");
+    box.className="guide-context";
+    box.innerHTML='<div><b>What this helps you answer</b><span>Build a clear mental model, know what to check, and understand which questions deserve deeper research.</span></div><div><b>Keep this distinction</b><span>This page explains the concept. Current prices, rules and company-specific facts should be verified from the relevant primary source.</span></div>';
+    (lead||article).insertAdjacentElement("afterend",box);
+  }
+  const headings=[...article.querySelectorAll("h2")];
+  if(headings.length>=3&&!main.querySelector(".guide-rail")){
+    const rail=document.createElement("nav");
+    rail.className="guide-rail";rail.setAttribute("aria-label","On this page");
+    const title=document.createElement("b");title.textContent="On this page";rail.appendChild(title);
+    headings.forEach((h,n)=>{
+      if(!h.id)h.id="section-"+(n+1);
+      const a=document.createElement("a");a.href="#"+h.id;
+      const label=h.textContent.replace(/§/g,"").trim();
+      a.innerHTML='<span>'+String(n+1).padStart(2,"0")+'</span>'+label;
+      rail.appendChild(a);
+    });
+    main.classList.add("guide-reading-layout");main.insertBefore(rail,article);
+    if("IntersectionObserver" in window){
+      const links=[...rail.querySelectorAll("a")];
+      const map=new Map(headings.map((h,i)=>[h,links[i]]));
+      const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){links.forEach(x=>x.classList.remove("active"));map.get(e.target)?.classList.add("active")}}),{rootMargin:"-18% 0px -68% 0px",threshold:0});
+      headings.forEach(h=>io.observe(h));
+    }
+  }
+  if(!main.querySelector(".guide-trust")){
+    const meta=document.querySelector('meta[property="og:updated_time"],meta[name="dateModified"]');
+    const date=meta?.content||document.querySelector('script[type="application/ld+json"]')?.textContent.match(/"dateModified":"([^\"]+)"/)?.[1];
+    const trust=document.createElement("div");trust.className="guide-trust";
+    trust.innerHTML='<span class="guide-trust-dot" aria-hidden="true"></span><div><b>Editorial guide</b><span>Educational, source-aware content. '+(date?"Reviewed "+date+".":"Check the page context and primary sources before acting.")+'</span></div>';
+    article.insertAdjacentElement("afterend",trust);
+  }
+})();
