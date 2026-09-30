@@ -83,6 +83,7 @@ const KG={
  research:["Independent research","research.html"],
  redteam:["Red-team thinking","intelligence.html"]
 };
+fetch("data/knowledge-graph.json").then(r=>r.ok?r.json():null).then(g=>{if(!g||!g.nodes)return;Object.entries(g.nodes).forEach(([k,v])=>{if(KG[k]){KG[k][0]=v.label||KG[k][0];if(v.resources&&v.resources[0])KG[k][1]=v.resources[0]}})}).catch(()=>{});
 const cases=[
 ["growth",["business","financials"],"Growth is not automatically good growth","Revenue grows 25% for four years, but receivables and inventory consume more cash and ROCE falls. What do you investigate first?",["Cash conversion, incremental returns and capital required","Whether 25% growth is high enough","Whether the share price has reacted"],0],
 ["cheap",["valuation","financials"],"A low P/E is a clue, not a conclusion","Two companies trade at 14× earnings; one is near peak margins and the other needs heavy reinvestment. What comes first?",["What the current earnings represent and what a normalised earnings base could be","Which has the lower share price","Whether both P/Es are exactly equal"],0],
