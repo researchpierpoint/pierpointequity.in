@@ -179,8 +179,8 @@ const steps=[
 ]]
 ];
 const marketCatalogFallback=["United States","China","Japan","Hong Kong","India","Canada","South Korea","United Kingdom","Germany","Australia","United Arab Emirates","Singapore"];
-function marketChoices(){const names=Object.keys(MARKET_CATALOG.markets||{});return (names.length?names:marketCatalogFallback).map(x=>[x,x,""])}
-function marketDisplay(kind){const raw=kind==="sourceMarket"?s.a.sourceMarket:s.a.targetMarket;if(raw==="Other")return (kind==="sourceMarket"?s.a.sourceMarketCustom:s.a.targetMarketCustom)||"Another market";return raw||"Not set"}
+function marketChoices(kind){const names=Object.keys(MARKET_CATALOG.markets||{});let out=(names.length?names:marketCatalogFallback).map(x=>[x,x,""]);if(kind==="targetMarket")out.push(["Global","Global / cross-market",""]);if(kind==="sourceMarket")out.push(["none","I do not have a reference market yet",""]);return out}
+function marketDisplay(kind){const raw=kind==="sourceMarket"?s.a.sourceMarket:s.a.targetMarket;if(raw==="Other")return (kind==="sourceMarket"?s.a.sourceMarketCustom:s.a.targetMarketCustom)||"Another market";if(raw==="none")return "No reference market";if(raw==="Global")return "Global / cross-market";return raw||"Not set"}
 function marketProfile(kind){const raw=kind==="sourceMarket"?s.a.sourceMarket:s.a.targetMarket;return (MARKET_CATALOG.markets||{})[raw]||null}
 function marketReady(kind){const raw=kind==="sourceMarket"?s.a.sourceMarket:s.a.targetMarket;return raw==="Other"?!!(kind==="sourceMarket"?s.a.sourceMarketCustom:s.a.targetMarketCustom):!!raw}
 function renderMarketStep(z){
@@ -229,7 +229,7 @@ function render(){
  next.disabled=multi?!(Array.isArray(s.a.knowledge)&&s.a.knowledge.length):!s.a[z[0]];renderTransferPreview();
  back.disabled=!s.i;bar.style.width=s.i/steps.length*100+"%";side();
 }
-function needsTransfer(){const source=marketDisplay("sourceMarket"),target=marketDisplay("targetMarket");return !!target&&target!=="same"&&target!==source&&source!=="none"}
+function needsTransfer(){const source=marketDisplay("sourceMarket"),target=marketDisplay("targetMarket");return !!target&&target!=="same"&&target!==source&&s.a.sourceMarket!=="none"}
 function learnerSignals(){
  let perf=[];try{perf=JSON.parse(localStorage.getItem("ppSystemV2")||"{}").performance||[]}catch(e){}
  const now=Date.now(),out={};
