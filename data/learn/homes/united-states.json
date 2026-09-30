@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "type": "home-country",
+  "slug": "united-states",
+  "name": "United States",
+  "overlayCount": 60,
+  "domains": 6,
+  "stages": 10,
+  "context": "US residents investing abroad may face foreign-account/reporting, tax, currency, broker/custody and local-market access considerations. Exact obligations depend on facts and current rules.",
+  "note": "This file supplies home-country overlay lessons. The shared engine expands it into 60 lessons and combines them with 240 target-market lessons."
+}
