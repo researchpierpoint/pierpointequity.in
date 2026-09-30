@@ -1,18 +1,34 @@
-const card=(t,v,m="")=>`<article class="card"><span class="eyebrow">${t}</span><h3>${v}</h3><p class="fine">${m}</p></article>`;
+const card=(t,v,m="")=>`<article class="card"><span class="eyebrow">${String(t)}</span><h3>${String(v)}</h3><p class="fine">${String(m)}</p></article>`;
+async function getJSON(path,fallback){try{const r=await fetch(path,{cache:"no-store"});if(!r.ok)throw 0;return await r.json();}catch{return fallback;}}
 async function load(){
- const code=new URLSearchParams(location.search).get("code");const d=await (await fetch("data/generated/amfi-nav.json",{cache:"no-store"})).json();const f=(d.funds||[]).find(x=>String(x.scheme_code)===String(code));if(!f)throw Error("fund not found");
- document.querySelector("#name").textContent=f.name;document.querySelector("#meta").textContent=`Scheme code ${f.scheme_code} · ${f.isin||"ISIN unavailable"} · NAV date ${f.date}`;
- const h=(await (await fetch("data/generated/amfi-nav-history.json",{cache:"no-store"})).json()).dates||{},ds=Object.keys(h).sort(),last=ds.at(-1);
- let info={};try{info=(await (await fetch("data/generated/mf-intelligence.json",{cache:"no-store"})).json()).schemes?.[String(code)]||{}}catch{}
- const cards=[card("LATEST NAV",f.nav,f.date)];
- if(info.amc)cards.push(card("AMC",info.amc,"Secondary enrichment source"));
- if(info.category)cards.push(card("CATEGORY",info.category,"Secondary enrichment source"));
- if(info.aum_cr!=null)cards.push(card("AUM",Number(info.aum_cr).toLocaleString("en-IN")+" Cr","Secondary enrichment source"));
- if(info.expense_ratio!=null)cards.push(card("EXPENSE RATIO",info.expense_ratio+"%","TER · secondary enrichment source"));
- const ret=info.returns||{};for(const k of ["1m","3m","6m","1y","3y","5y"]){if(ret[k]?.value!=null)cards.push(card(k.toUpperCase(),ret[k].value+"%", "CAGR / reported return · secondary enrichment source"))}
- const ratios=info.ratios||{};for(const k of ["pe","pb","sharpe","beta","alpha","std_dev"]){if(ratios[k]!=null)cards.push(card(k.toUpperCase(),ratios[k],"Fund ratio · secondary enrichment source"))}
+ const code=new URLSearchParams(location.search).get("code");
+ const d=await getJSON("data/generated/amfi-nav.json",null);
+ if(!d)throw Error("AMFI NAV unavailable");
+ const f=(d.funds||[]).find(x=>String(x.scheme_code)===String(code));
+ if(!f)throw Error("fund not found");
+ document.querySelector("#name").textContent=f.name;
+ document.querySelector("#meta").textContent=`Scheme code ${f.scheme_code} · ${f.isin||"ISIN unavailable"} · NAV date ${f.date||"—"}`;
+
+ const hist=await getJSON("data/generated/amfi-nav-history.json",null);
+ const snapshots=Array.isArray(hist?.snapshots)?hist.snapshots:[];
+ let info={};
+ try{info=(await getJSON("data/generated/mf-intelligence.json",{schemes:{}})).schemes?.[String(code)]||{};}catch{}
+ const cards=[card("LATEST NAV",f.nav,f.date||"AMFI")];
+ if(info.amc)cards.push(card("AMC",info.amc,"Enrichment source"));
+ if(info.category)cards.push(card("CATEGORY",info.category,"Enrichment source"));
+ if(info.aum_cr!=null)cards.push(card("AUM",Number(info.aum_cr).toLocaleString("en-IN")+" Cr","Enrichment source"));
+ if(info.expense_ratio!=null)cards.push(card("EXPENSE RATIO",info.expense_ratio+"%","Enrichment source"));
+ const ret=info.returns||{};for(const k of ["1m","3m","6m","1y","3y","5y"])if(ret[k]?.value!=null)cards.push(card(k.toUpperCase(),ret[k].value+"%","Reported/enriched return"));
+ const ratios=info.ratios||{};for(const k of ["pe","pb","sharpe","beta","alpha","std_dev"])if(ratios[k]!=null)cards.push(card(k.toUpperCase(),ratios[k],"Fund ratio"));
  document.querySelector("#facts").innerHTML=cards.join("");
- document.querySelector("#history").innerHTML=ds.slice(-20).reverse().map(x=>card(x,h[x][f.scheme_code]??"—","AMFI NAV")).join("");
- document.querySelector("#note").textContent="AMFI is the primary NAV source. Additional category, AMC, AUM, TER, return and ratio fields are secondary enrichment and are shown only when the enrichment source has a current record.";
+
+ const historyCards=[];
+ for(const snap of snapshots.slice(-20).reverse()){
+   const found=(snap.funds||[]).find(x=>String(x.scheme_code)===String(code));
+   if(found)historyCards.push(card(snap.as_of||"NAV",found.nav??"—","AMFI NAV"));
+ }
+ document.querySelector("#history").innerHTML=historyCards.join("")||emptyHistory();
+ document.querySelector("#note").textContent="AMFI is the primary NAV source. Enrichment fields are shown only when a current enrichment record exists.";
 }
-load().catch(()=>document.querySelector("#name").textContent="Fund data unavailable.");
+function emptyHistory(){return `<article class="card"><h3>NAV history not yet available</h3><p>Current NAV is available from AMFI; historical snapshots will appear as the automated history store accumulates them.</p></article>`;}
+load().catch(e=>{document.querySelector("#name").textContent="Fund data temporarily unavailable.";document.querySelector("#meta").textContent="Please retry shortly.";console.error(e);});
