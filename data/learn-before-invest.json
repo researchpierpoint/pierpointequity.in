@@ -1,0 +1,198 @@
+{
+  "markets": {
+    "india": {
+      "slug": "india",
+      "name": "India",
+      "system": "NSE · BSE · SEBI",
+      "sources": [
+        "NSE India",
+        "SEBI"
+      ],
+      "focus": "Indian exchange structure, demat ownership, IPOs, corporate actions, disclosure and investor protection."
+    },
+    "united-states": {
+      "slug": "united-states",
+      "name": "United States",
+      "system": "NYSE · Nasdaq · SEC",
+      "sources": [
+        "SEC",
+        "NYSE",
+        "Nasdaq"
+      ],
+      "focus": "US listings, SEC filings, market structure, earnings culture, buybacks, options and shareholder disclosure."
+    },
+    "china": {
+      "slug": "china",
+      "name": "China",
+      "system": "SSE · SZSE · CSRC",
+      "sources": [
+        "SSE",
+        "SZSE",
+        "CSRC"
+      ],
+      "focus": "Mainland exchanges, A/B shares, state influence, policy sensitivity, access and disclosure."
+    },
+    "hong-kong": {
+      "slug": "hong-kong",
+      "name": "Hong Kong",
+      "system": "HKEX · SFC",
+      "sources": [
+        "HKEX",
+        "SFC"
+      ],
+      "focus": "HKEX listings, H-shares, international participation, HKD, disclosure and access."
+    },
+    "japan": {
+      "slug": "japan",
+      "name": "Japan",
+      "system": "JPX · TSE · FSA",
+      "sources": [
+        "JPX",
+        "FSA Japan"
+      ],
+      "focus": "TSE structure, governance, shareholder returns, cross-shareholdings, yen and disclosure."
+    },
+    "united-kingdom": {
+      "slug": "united-kingdom",
+      "name": "United Kingdom",
+      "system": "LSE · FCA",
+      "sources": [
+        "LSE",
+        "FCA"
+      ],
+      "focus": "London listings, UK disclosure, dividends, governance, FCA framework and market access."
+    },
+    "australia": {
+      "slug": "australia",
+      "name": "Australia",
+      "system": "ASX · ASIC",
+      "sources": [
+        "ASX",
+        "ASIC"
+      ],
+      "focus": "ASX structure, resources, banks, dividends, AUD, governance and disclosure."
+    },
+    "canada": {
+      "slug": "canada",
+      "name": "Canada",
+      "system": "TSX · CIRO · CSA",
+      "sources": [
+        "TSX",
+        "CIRO",
+        "CSA"
+      ],
+      "focus": "TSX/TSXV, resources and financials, Canadian disclosure, governance and access."
+    },
+    "south-korea": {
+      "slug": "south-korea",
+      "name": "South Korea",
+      "system": "KRX · FSC · FSS",
+      "sources": [
+        "KRX",
+        "FSC",
+        "FSS"
+      ],
+      "focus": "KRX structure, chaebol exposure, governance, shareholder rights, KRW and disclosure."
+    },
+    "germany": {
+      "slug": "germany",
+      "name": "Germany",
+      "system": "Frankfurt · BaFin",
+      "sources": [
+        "Deutsche Börse",
+        "BaFin"
+      ],
+      "focus": "German listings, European market context, governance, reporting, EUR and investor access."
+    },
+    "singapore": {
+      "slug": "singapore",
+      "name": "Singapore",
+      "system": "SGX · MAS",
+      "sources": [
+        "SGX",
+        "MAS"
+      ],
+      "focus": "SGX structure, REITs, regional exposure, governance, SGD and disclosure."
+    },
+    "uae": {
+      "slug": "uae",
+      "name": "United Arab Emirates",
+      "system": "ADX · DFM · SCA",
+      "sources": [
+        "ADX",
+        "DFM",
+        "SCA"
+      ],
+      "focus": "UAE exchanges, regional companies, ownership, disclosure, AED and investor access."
+    }
+  },
+  "homes": {
+    "india": {
+      "slug": "india",
+      "name": "India",
+      "context": "Home overlay: outward investing route, FX conversion, Indian tax treatment of overseas investments/income, remittance rules, reporting, broker/custody and time-zone workflow."
+    },
+    "united-states": {
+      "slug": "united-states",
+      "name": "United States",
+      "context": "Home overlay: US resident cross-border investing, FX, foreign tax, reporting, broker/custody, account type and destination-market access."
+    },
+    "china": {
+      "slug": "china",
+      "name": "China",
+      "context": "Home overlay: mainland resident cross-border investing, FX/capital-flow constraints, access route, foreign securities tax/reporting and custody."
+    },
+    "hong-kong": {
+      "slug": "hong-kong",
+      "name": "Hong Kong",
+      "context": "Home overlay: Hong Kong resident overseas investing, HK broker/custody, FX, withholding, tax status and destination access."
+    },
+    "japan": {
+      "slug": "japan",
+      "name": "Japan",
+      "context": "Home overlay: Japan resident overseas investing, FX, foreign income, withholding, reporting, broker/custody and destination access."
+    },
+    "united-kingdom": {
+      "slug": "united-kingdom",
+      "name": "United Kingdom",
+      "context": "Home overlay: UK resident overseas investing, GBP conversion, dividend/capital-gain treatment, withholding, reporting and destination access."
+    },
+    "australia": {
+      "slug": "australia",
+      "name": "Australia",
+      "context": "Home overlay: Australian resident overseas investing, AUD conversion, foreign income/assets, withholding, reporting and custody."
+    },
+    "canada": {
+      "slug": "canada",
+      "name": "Canada",
+      "context": "Home overlay: Canadian resident overseas investing, CAD conversion, foreign reporting, taxable/registered accounts, withholding and custody."
+    },
+    "south-korea": {
+      "slug": "south-korea",
+      "name": "South Korea",
+      "context": "Home overlay: Korean resident overseas investing, KRW conversion, foreign securities tax/reporting, broker access and custody."
+    },
+    "germany": {
+      "slug": "germany",
+      "name": "Germany",
+      "context": "Home overlay: German resident overseas investing, EUR conversion, withholding, foreign income/capital gains, reporting and custody."
+    },
+    "singapore": {
+      "slug": "singapore",
+      "name": "Singapore",
+      "context": "Home overlay: Singapore resident overseas investing, SGD conversion, withholding, broker/custody and destination-market rules."
+    },
+    "uae": {
+      "slug": "uae",
+      "name": "United Arab Emirates",
+      "context": "Home overlay: UAE resident overseas investing, residency/tax status, FX, withholding, broker/custody and destination-market access."
+    }
+  },
+  "version": 1,
+  "contract": {
+    "targetLessons": 240,
+    "homeLessons": 60,
+    "total": 300,
+    "rule": "240 target-market lessons + 60 home-country overlay lessons; if home and target are the same, the engine uses 300 target/context lessons rather than inventing cross-border friction."
+  }
+}
