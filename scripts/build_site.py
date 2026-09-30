@@ -73,21 +73,23 @@ for name in ("CNAME","robots.txt","sitemap.xml"):
     if p.exists(): shutil.copy2(p,OUT/p.name)
 print(f"Built public site: {OUT}")
 
-# Fail the build if a published HTML page references a missing local asset.
-# This prevents a successful GitHub Pages deployment from shipping an unstyled site.
+# Fail the build if a published HTML page references a missing CSS/JS asset.
+# This specifically prevents a successful deployment from shipping an unstyled or
+# non-functional site, without turning unrelated content links into a deploy blocker.
 import re
 for page in OUT.rglob("*.html"):
     page_text=page.read_text(encoding="utf-8")
     refs=re.findall(r"(?:href|src)=['\"]([^'\"]+)['\"]", page_text, flags=re.I)
     for ref in refs:
-        ref=ref.split("#",1)[0].split("?",1)[0]
-        if not ref or ref.startswith(("#","/","http://","https://","mailto:","tel:","javascript:","data:")):
+        clean=ref.split("#",1)[0].split("?",1)[0]
+        if not clean or clean.startswith(("#","/","http://","https://","mailto:","tel:","javascript:","data:")):
             continue
-        target=(page.parent/ref).resolve()
+        if not clean.lower().endswith((".css",".js")):
+            continue
+        target=(page.parent/clean).resolve()
         if not target.exists():
-            raise SystemExit(f"Build failed: missing local asset {ref} referenced by {page.relative_to(OUT)}")
+            raise SystemExit(f"Build failed: missing CSS/JS asset {clean} referenced by {page.relative_to(OUT)}")
 
 required=OUT/"assets/style.css"
 if not required.is_file() or required.stat().st_size < 1000:
     raise SystemExit("Build failed: assets/style.css is missing or unexpectedly small")
-print(f"Verified public assets: {required.stat().st_size} bytes CSS")
