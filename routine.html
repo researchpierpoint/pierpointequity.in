@@ -181,13 +181,21 @@ function render(){
  back.disabled=!s.i;bar.style.width=s.i/steps.length*100+"%";side();
 }
 function needsTransfer(){return s.a.targetMarket&&s.a.targetMarket!=="same"&&s.a.targetMarket!==s.a.sourceMarket&&s.a.sourceMarket!=="none"}
+function learnerSignals(){
+ let perf=[];try{perf=JSON.parse(localStorage.getItem("ppSystemV2")||"{}").performance||[]}catch(e){}
+ const now=Date.now(),out={};
+ perf.forEach(p=>{const k=p.topic||"market";out[k]=out[k]||{n:0,correct:0,highWrong:0,last:0};const d=out[k];d.n++;if(p.correct)d.correct++;if(p.confidence==="high"&&!p.correct)d.highWrong++;d.last=Math.max(d.last,Date.parse(p.timestamp)||0)});
+ return Object.entries(out).map(([k,v])=>({k,score:(v.n-v.correct)+v.highWrong*.75+(v.last&&now-v.last>14*864e5?.5:0),...v})).sort((a,b)=>b.score-a.score);
+}
 function buildQueue(){
+ const signals=learnerSignals();
  let wanted=s.a.goal==="market"?["global","mechanics","market","evidence","research"]:s.a.goal==="research"?["business","financials","valuation","risk","research","evidence","redteam"]:s.a.goal==="advanced"?["risk","valuation","evidence","redteam","research","accounting"]:["market","mechanics","business","financials","valuation","risk"];
  if(s.a.level==="new")wanted=["market","mechanics","business","financials","valuation","risk","evidence"];
  if(s.a.level==="experienced")wanted=["business","financials","valuation","risk","evidence","research","redteam"];
  const known=s.a.knowledge||[];
  wanted=wanted.filter(k=>!known.includes(k)||known.includes("none"));
  if(needsTransfer())wanted=["global",...wanted.filter(k=>k!=="global")];
+ signals.slice(0,4).reverse().forEach(x=>{if(x.k&&domains[x.k]&&!wanted.includes(x.k))wanted.unshift(x.k)});
  const out=[],used=new Set();
  const source=(needsTransfer()?marketCases:[]).concat(cases);
  wanted.forEach(d=>{const pool=source.filter(x=>x.domains.includes(d)&&!used.has(x.id));if(pool.length){const c=pool[Math.floor(Math.random()*pool.length)];out.push(c);used.add(c.id)}});
@@ -219,7 +227,7 @@ function buildBridge(){
  return bridge
 }
 function result(){
- const stats={};Object.keys(domains).forEach(k=>stats[k]={total:0,correct:0,highWrong:0});
+ const previous=(JSON.parse(localStorage.getItem("ppSystemV2")||"{}").routine||{}).domains||{};const stats={};Object.keys(domains).forEach(k=>{const p=previous[k]||{};stats[k]={total:p.total||0,correct:p.correct||0,highWrong:p.highWrong||0,lastSeen:p.lastSeen||null}});
  s.queue.forEach(c=>c.domains.forEach(k=>{stats[k].total++;if(s.answers[c.id]===c.correct)stats[k].correct++;if(s.answers[c.id]!==c.correct&&s.confidence[c.id]==="high")stats[k].highWrong++}));
  const ranked=Object.entries(stats).filter(x=>x[1].total).sort((a,b)=>((b[1].total-b[1].correct)+(b[1].highWrong*.75))-((a[1].total-a[1].correct)+(a[1].highWrong*.75)));
  const route=[],add=(k,why)=>{if(!route.some(x=>x.k===k)&&KG[k])route.push({k,label:KG[k].label,resource:KG[k].resource,why})};
