@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "type": "target-market",
+  "slug": "united-states",
+  "name": "United States",
+  "system": "NYSE · Nasdaq · SEC",
+  "sources": [
+    "https://www.sec.gov/",
+    "https://www.nyse.com/",
+    "https://www.nasdaq.com/"
+  ],
+  "core": {
+    "nodeCount": 240,
+    "domains": 24,
+    "stages": 10
+  },
+  "note": "This market file supplies local context. The shared learning engine expands it into 240 destination-market lessons; it is never combined by hand with a home country."
+}
