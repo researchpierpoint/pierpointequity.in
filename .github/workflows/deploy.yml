@@ -24,6 +24,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Normalize guide experience
+        run: python scripts/normalize_guides.py
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
