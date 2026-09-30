@@ -172,3 +172,9 @@ h2:hover .pp-anchor,.pp-anchor:focus-visible{opacity:1}
 .guide-share:hover{border-color:#cbd3b5;background:#f7f9ed}
 @media(max-width:700px){.pp-top{right:14px;bottom:14px}.pp-top span{display:none}.pp-anchor{opacity:1}}
 @media(prefers-reduced-motion:reduce){.pp-reveal{opacity:1;transform:none;transition:none}.pp-top:hover{transform:none}}
+
+.pp-breadcrumb{display:flex;gap:8px;align-items:center;margin-bottom:20px;color:var(--muted);font-size:11px;font-weight:750}
+.pp-breadcrumb a:hover{color:var(--ink)}
+#guideSearchCount{margin-top:7px}
+[hidden]{display:none!important}
+@media(max-width:700px){.pp-breadcrumb{margin-bottom:14px}}
