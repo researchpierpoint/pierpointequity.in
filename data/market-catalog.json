@@ -1,0 +1,263 @@
+{
+  "version": 1,
+  "principle": "Any market can be learned through the same universal market-learning architecture. Where PirePoint has a dedicated market guide, the routine can connect to verified local material; where it does not, the routine must clearly distinguish universal knowledge from destination-specific verification.",
+  "universalModules": [
+    [
+      "orientation",
+      "Market identity & map",
+      "What market is this, which venues matter, who regulates it, what securities are actually being studied?"
+    ],
+    [
+      "access",
+      "Investor access & eligibility",
+      "How an investor reaches the market, account/custody requirements, foreign access and practical friction."
+    ],
+    [
+      "structure",
+      "Market structure",
+      "Exchanges, venues, listing segments, ownership forms, participants and price formation."
+    ],
+    [
+      "instruments",
+      "Instruments & corporate actions",
+      "Share classes, ETFs/funds, derivatives, ADR/GDR-style instruments where relevant, dividends, splits and other actions."
+    ],
+    [
+      "mechanics",
+      "Trading, clearing & settlement",
+      "Sessions, auctions, order types, shorting, clearing, custody, settlement and operational mechanics."
+    ],
+    [
+      "regulation",
+      "Regulation & investor protection",
+      "Regulators, rulebooks, disclosure obligations, enforcement and investor protections."
+    ],
+    [
+      "reporting",
+      "Reporting & accounting",
+      "Fiscal year, filing cadence, accounting standards, presentation, segment reporting and comparability traps."
+    ],
+    [
+      "ownership",
+      "Ownership & governance",
+      "Founders/promoters, state ownership, institutions, voting, related parties, boards and shareholder rights."
+    ],
+    [
+      "macro",
+      "Currency, rates & macro transmission",
+      "FX, monetary policy, inflation, fiscal conditions and how macro variables reach sectors and earnings."
+    ],
+    [
+      "sectors",
+      "Sector and business-model map",
+      "Which industries matter, local economics, industry structure, regulation and business-model differences."
+    ],
+    [
+      "research",
+      "Research & evidence system",
+      "Where primary evidence lives, issuer disclosures, exchange data, regulator material and source hierarchy."
+    ],
+    [
+      "valuation",
+      "Valuation in local context",
+      "Earnings quality, multiples, cash flows, rates, currency, sector mix, expectations and cross-market comparability."
+    ],
+    [
+      "risk",
+      "Market-specific risk map",
+      "Liquidity, currency, governance, regulation, concentration, political/legal, accounting and operational risks."
+    ],
+    [
+      "application",
+      "Company research application",
+      "Take a real company through business, financials, cash, capital allocation, valuation, risks and evidence."
+    ],
+    [
+      "transfer",
+      "Transfer proof & red team",
+      "Prove what transferred, identify misleading assumptions and stress-test the learner in unfamiliar cases."
+    ]
+  ],
+  "markets": {
+    "India": {
+      "label": "India",
+      "guide": "countries/india.html",
+      "primarySources": [
+        [
+          "NSE India",
+          "https://www.nseindia.com/"
+        ],
+        [
+          "SEBI",
+          "https://www.sebi.gov.in/"
+        ]
+      ]
+    },
+    "United States": {
+      "label": "United States",
+      "guide": "countries/united-states.html",
+      "primarySources": [
+        [
+          "SEC",
+          "https://www.sec.gov/"
+        ],
+        [
+          "Nasdaq",
+          "https://www.nasdaq.com/"
+        ],
+        [
+          "NYSE",
+          "https://www.nyse.com/"
+        ]
+      ]
+    },
+    "United Kingdom": {
+      "label": "United Kingdom",
+      "guide": "countries/united-kingdom.html",
+      "primarySources": [
+        [
+          "FCA",
+          "https://www.fca.org.uk/"
+        ],
+        [
+          "London Stock Exchange",
+          "https://www.londonstockexchange.com/"
+        ]
+      ]
+    },
+    "Japan": {
+      "label": "Japan",
+      "guide": "countries/japan.html",
+      "primarySources": [
+        [
+          "JPX",
+          "https://www.jpx.co.jp/english/"
+        ],
+        [
+          "FSA Japan",
+          "https://www.fsa.go.jp/en/"
+        ]
+      ]
+    },
+    "China": {
+      "label": "China",
+      "guide": "countries/china.html",
+      "primarySources": [
+        [
+          "CSRC",
+          "https://www.csrc.gov.cn/"
+        ],
+        [
+          "Shanghai Stock Exchange",
+          "https://english.sse.com.cn/"
+        ],
+        [
+          "Shenzhen Stock Exchange",
+          "https://www.szse.cn/English/"
+        ]
+      ]
+    },
+    "Hong Kong": {
+      "label": "Hong Kong",
+      "guide": "countries/hong-kong.html",
+      "primarySources": [
+        [
+          "HKEX",
+          "https://www.hkex.com.hk/"
+        ],
+        [
+          "SFC",
+          "https://www.sfc.hk/"
+        ]
+      ]
+    },
+    "Canada": {
+      "label": "Canada",
+      "guide": "countries/canada.html",
+      "primarySources": [
+        [
+          "Canadian Securities Administrators",
+          "https://www.securities-administrators.ca/"
+        ],
+        [
+          "TMX",
+          "https://www.tmx.com/"
+        ]
+      ]
+    },
+    "South Korea": {
+      "label": "South Korea",
+      "guide": "countries/south-korea.html",
+      "primarySources": [
+        [
+          "FSC Korea",
+          "https://www.fsc.go.kr/eng/"
+        ],
+        [
+          "KRX",
+          "https://global.krx.co.kr/"
+        ]
+      ]
+    },
+    "Germany": {
+      "label": "Germany",
+      "guide": "countries/germany.html",
+      "primarySources": [
+        [
+          "BaFin",
+          "https://www.bafin.de/EN/Homepage/homepage_node.html"
+        ],
+        [
+          "Deutsche Börse",
+          "https://www.deutsche-boerse.com/"
+        ]
+      ]
+    },
+    "Australia": {
+      "label": "Australia",
+      "guide": "countries/australia.html",
+      "primarySources": [
+        [
+          "ASIC",
+          "https://asic.gov.au/"
+        ],
+        [
+          "ASX",
+          "https://www.asx.com.au/"
+        ]
+      ]
+    },
+    "United Arab Emirates": {
+      "label": "United Arab Emirates",
+      "guide": "countries/uae.html",
+      "primarySources": [
+        [
+          "SCA",
+          "https://www.sca.gov.ae/"
+        ],
+        [
+          "ADX",
+          "https://www.adx.ae/"
+        ],
+        [
+          "DFM",
+          "https://www.dfm.ae/"
+        ]
+      ]
+    },
+    "Singapore": {
+      "label": "Singapore",
+      "guide": "countries/singapore.html",
+      "primarySources": [
+        [
+          "MAS",
+          "https://www.mas.gov.sg/"
+        ],
+        [
+          "SGX",
+          "https://www.sgx.com/"
+        ]
+      ]
+    }
+  }
+}
