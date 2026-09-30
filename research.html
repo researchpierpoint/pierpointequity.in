@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Company Research Workspace — PirePoint Equity</title>
+<meta name="description" content="A structured company-research workspace for business quality, financials, valuation, risks, evidence and investment thesis.">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="canonical" href="https://pierpointequity.in/research.html">
+</head>
+<body>
+<header class="site-header"><div class="wrap nav">
+<a class="brand" href="index.html"><span class="mark">P</span><span>PirePoint <b>Equity</b></span></a>
+<nav><a href="guides.html">Guides</a><a href="countries.html">Countries</a><a href="glossary.html">Glossary</a><a class="active" href="research.html">Research</a><a href="tools.html">Tools</a></nav>
+<a class="nav-search" href="#research-start">Search</a>
+</div></header>
+<main class="wrap page research-page">
+<section class="research-hero" id="research-start">
+<span class="eyebrow">COMPANY RESEARCH WORKSPACE</span>
+<h1>Understand the business before you decide what the stock means.</h1>
+<p class="lead">A disciplined research canvas for moving from business model → financial quality → valuation → risks → evidence → thesis. PirePoint does not invent missing market data.</p>
+<div class="research-startbar">
+<label>Company / asset<input id="researchCompany" placeholder="e.g. Company name or NSE symbol" autocomplete="off"></label>
+<button class="button" type="button" onclick="startResearch()">Start research workspace</button>
+</div>
+<p class="fine">Current prices, filings and other time-sensitive facts should be verified from primary sources before you rely on them.</p>
+</section>
+
+<section class="research-status card" id="researchStatus" hidden>
+<div><span class="tag">RESEARCH STATE</span><strong id="researchTitle">—</strong><p id="researchStateText" class="muted">Your workspace is local to this browser.</p></div>
+<div class="state-pills"><span>Evidence <b id="evidenceCount">0</b></span><span>Questions <b id="questionCount">0</b></span><span>Assumptions <b id="assumptionCount">0</b></span></div>
+</section>
+
+<section class="research-layout">
+<aside class="research-nav card" aria-label="Research sections">
+<span class="tag">RESEARCH MAP</span>
+<a href="#business" class="active">01 · Business</a>
+<a href="#quality">02 · Quality</a>
+<a href="#financials">03 · Financials</a>
+<a href="#valuation">04 · Valuation</a>
+<a href="#risks">05 · Risks</a>
+<a href="#evidence">06 · Evidence</a>
+<a href="#thesis">07 · Thesis</a>
+</aside>
+
+<div class="research-main">
+<section id="business" class="research-section card">
+<div class="research-section-head"><span class="step">01</span><div><span class="tag">BUSINESS</span><h2>Can you explain how this company makes money?</h2><p class="muted">If the economic engine is unclear, the numbers are harder to interpret.</p></div></div>
+<div class="research-grid">
+<label>What does it sell?<textarea data-field="business" rows="4" placeholder="Products, services, customers, geography"></textarea></label>
+<label>Who pays and why?<textarea data-field="customers" rows="4" placeholder="Customer type, need, switching costs, purchase frequency"></textarea></label>
+<label>What drives revenue?<textarea data-field="revenue-driver" rows="4" placeholder="Volume × price × mix, market share, capacity, new products"></textarea></label>
+<label>What could change the economics?<textarea data-field="economics" rows="4" placeholder="Competition, regulation, technology, input costs, cycle"></textarea></label>
+</div>
+</section>
+
+<section id="quality" class="research-section card">
+<div class="research-section-head"><span class="step">02</span><div><span class="tag">QUALITY</span><h2>How good is the business?</h2><p class="muted">Do not reduce quality to one ratio. Look for durable economics across several dimensions.</p></div></div>
+<div class="metric-grid">
+<label>ROCE<textarea data-field="roce" rows="2" placeholder="Verified figure + period + source"></textarea></label>
+<label>ROE<textarea data-field="roe" rows="2" placeholder="Verified figure + period + source"></textarea></label>
+<label>Operating margin<textarea data-field="margin" rows="2" placeholder="Trend and reason"></textarea></label>
+<label>Cash conversion<textarea data-field="cash-conversion" rows="2" placeholder="Profit vs operating cash flow"></textarea></label>
+<label>Debt / net debt<textarea data-field="debt" rows="2" placeholder="Balance-sheet position"></textarea></label>
+<label>Competitive advantage<textarea data-field="moat" rows="2" placeholder="Evidence, not adjectives"></textarea></label>
+</div>
+</section>
+
+<section id="financials" class="research-section card">
+<div class="research-section-head"><span class="step">03</span><div><span class="tag">FINANCIAL ENGINE</span><h2>What changed—and why?</h2><p class="muted">Enter the figures you have verified. PirePoint keeps the interpretation separate from the raw evidence.</p></div></div>
+<div class="financial-table-wrap"><table class="research-table"><thead><tr><th>Metric</th><th>FY-3</th><th>FY-2</th><th>FY-1</th><th>Latest</th><th>Why did it change?</th></tr></thead><tbody>
+<tr><th>Revenue</th><td><input data-fin="revenue-3"></td><td><input data-fin="revenue-2"></td><td><input data-fin="revenue-1"></td><td><input data-fin="revenue-0"></td><td><input data-fin="revenue-why"></td></tr>
+<tr><th>EBIT / operating profit</th><td><input data-fin="ebit-3"></td><td><input data-fin="ebit-2"></td><td><input data-fin="ebit-1"></td><td><input data-fin="ebit-0"></td><td><input data-fin="ebit-why"></td></tr>
+<tr><th>Net profit</th><td><input data-fin="profit-3"></td><td><input data-fin="profit-2"></td><td><input data-fin="profit-1"></td><td><input data-fin="profit-0"></td><td><input data-fin="profit-why"></td></tr>
+<tr><th>Operating cash flow</th><td><input data-fin="cfo-3"></td><td><input data-fin="cfo-2"></td><td><input data-fin="cfo-1"></td><td><input data-fin="cfo-0"></td><td><input data-fin="cfo-why"></td></tr>
+</tbody></table></div>
+<p class="fine">The table is intentionally source-neutral: add the period, unit and source in your evidence ledger below.</p>
+</section>
+
+<section id="valuation" class="research-section card">
+<div class="research-section-head"><span class="step">04</span><div><span class="tag">VALUATION</span><h2>What expectations are already in the price?</h2><p class="muted">Valuation is a relationship between a price and a set of assumptions—not a magic “fair value” number.</p></div></div>
+<div class="scenario-grid">
+<article><span class="scenario-label">BEAR</span><label>Revenue growth %<input data-scenario="bear-growth" type="number" value="4" step=".1"></label><label>Operating margin %<input data-scenario="bear-margin" type="number" value="12" step=".1"></label><label>Exit P/E ×<input data-scenario="bear-pe" type="number" value="12" step=".1"></label></article>
+<article><span class="scenario-label">BASE</span><label>Revenue growth %<input data-scenario="base-growth" type="number" value="8" step=".1"></label><label>Operating margin %<input data-scenario="base-margin" type="number" value="15" step=".1"></label><label>Exit P/E ×<input data-scenario="base-pe" type="number" value="18" step=".1"></label></article>
+<article><span class="scenario-label">BULL</span><label>Revenue growth %<input data-scenario="bull-growth" type="number" value="12" step=".1"></label><label>Operating margin %<input data-scenario="bull-margin" type="number" value="18" step=".1"></label><label>Exit P/E ×<input data-scenario="bull-pe" type="number" value="24" step=".1"></label></article>
+</div>
+<div class="scenario-check"><label>Current / entry price (₹)<input id="scenarioPrice" type="number" min="0" step=".01" placeholder="Optional"></label><label>Current EPS (₹)<input id="scenarioEps" type="number" min="0" step=".01" placeholder="Optional"></label><button class="button" type="button" onclick="runScenario()">Show simple scenario values</button></div>
+<div id="scenarioOut" class="scenario-output" aria-live="polite"></div>
+<p class="fine">Illustrative scenario math only. This is not a forecast or target-price recommendation. A full model should also address dilution, cash/debt, reinvestment, cyclicality and terminal assumptions.</p>
+</section>
+
+<section id="risks" class="research-section card">
+<div class="research-section-head"><span class="step">05</span><div><span class="tag">FAILURE ANALYSIS</span><h2>What could make the thesis wrong?</h2><p class="muted">Strong research tries to break the thesis before the market does.</p></div></div>
+<div class="risk-list">
+<label>Business risk<textarea data-field="risk-business" rows="3" placeholder="Demand, competition, technology, regulation"></textarea></label>
+<label>Financial risk<textarea data-field="risk-financial" rows="3" placeholder="Debt, cash flow, dilution, working capital"></textarea></label>
+<label>Valuation risk<textarea data-field="risk-valuation" rows="3" placeholder="What assumptions might already be priced in?"></textarea></label>
+<label>Management / governance risk<textarea data-field="risk-governance" rows="3" placeholder="Capital allocation, ownership, related parties, disclosures"></textarea></label>
+</div>
+</section>
+
+<section id="evidence" class="research-section card">
+<div class="research-section-head"><span class="step">06</span><div><span class="tag">EVIDENCE LEDGER</span><h2>Make every important claim traceable.</h2><p class="muted">Primary source first. If something is calculated, say so. If something is unknown, leave it unknown.</p></div></div>
+<div class="evidence-form">
+<input id="evClaim" placeholder="Claim / number you want to support">
+<select id="evType"><option>Annual report / filing</option><option>Exchange / regulator</option><option>Company presentation</option><option>Company website</option><option>Calculated from source data</option><option>Secondary source</option></select>
+<input id="evDate" type="date">
+<input id="evSource" placeholder="Source name or reference">
+<select id="evState"><option>Verified</option><option>Calculated</option><option>Needs verification</option><option>Contradictory</option></select>
+<button class="button" type="button" onclick="addEvidence()">Add evidence</button>
+</div>
+<div id="evidenceList" class="evidence-list"></div>
+</section>
+
+<section id="thesis" class="research-section card">
+<div class="research-section-head"><span class="step">07</span><div><span class="tag">THESIS</span><h2>Write the decision in one page.</h2><p class="muted">The goal is not certainty. It is a clear, falsifiable explanation of what you believe and what would change your mind.</p></div></div>
+<div class="thesis-grid">
+<label>My thesis<textarea data-field="thesis" rows="7" placeholder="In one paragraph: what is the business, what is changing, why might value differ from price?"></textarea></label>
+<label>What must go right<textarea data-field="must-go-right" rows="7"></textarea></label>
+<label>What would change my mind<textarea data-field="change-mind" rows="7"></textarea></label>
+<label>Next research action<textarea data-field="next-action" rows="7" placeholder="The single most useful unanswered question"></textarea></label>
+</div>
+<div class="memo-actions"><button class="button" type="button" onclick="saveWorkspace()">Save workspace on this device</button><button class="button secondary" type="button" onclick="clearWorkspace()">Clear workspace</button><span id="workspaceStatus" class="section-note" aria-live="polite"></span></div>
+</section>
+</div>
+</section>
+</main>
+<footer class="footer"><div class="wrap fine">PirePoint Equity · <a href="methodology.html">Methodology</a> · <a href="disclosures.html">Disclosures</a></div></footer>
+<script src="assets/research.js"></script><script src="assets/app.js"></script>
+</body></html>
