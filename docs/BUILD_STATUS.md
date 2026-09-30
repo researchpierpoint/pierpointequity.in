@@ -73,3 +73,6 @@ A missing fact is therefore represented as non-computable/unavailable, not as a 
 ## Operating principle
 
 No credential is committed to GitHub. No unverified market number is presented as live. Evidence and source dates remain attached to generated records.
+
+
+- 2026-09-30: maintenance pipeline hardened for NSE session/encoding failures and serialized execution.
