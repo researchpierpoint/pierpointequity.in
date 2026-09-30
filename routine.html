@@ -113,7 +113,7 @@ const marketCases=[
 ];
 let s={i:0,a:{},queue:[],ci:0,answers:{},confidence:{},selectedDomains:[]};
 const q=document.getElementById("questionView"),cal=document.getElementById("calibration"),res=document.getElementById("result"),next=document.getElementById("next"),back=document.getElementById("back"),bar=document.getElementById("progress");
-const esc=x=>String(x??"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
+const esc=x=>String(x??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;");
 const getStep=k=>steps.find(x=>x[0]===k);
 const label=(k,v)=>getStep(k)?.[3].find(x=>x[0]===v)?.[1]||v;
 function side(){const map={goal:"sideGoal",level:"sideLevel",sourceMarket:"sideMarket",time:"sideTime"};Object.entries(map).forEach(([k,id])=>{const e=document.getElementById(id);if(e)e.textContent=s.a[k]?label(k,s.a[k]):"Not set"})}
