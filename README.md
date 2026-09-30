@@ -21,4 +21,8 @@ PirePoint intentionally does not maintain a large live stock, mutual-fund or ETF
 
 Guide pages are checked automatically for required metadata, internal links and core hub pages through the Guide Quality GitHub Action.
 
+## Publishing
+
+PirePoint is a single-editor publication. Content is intended to be published only by the site owner. The public website does not provide a community-posting, guest-posting or user-content workflow.
+
 Educational information only; not personalised investment advice.
