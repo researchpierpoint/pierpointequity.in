@@ -41,7 +41,7 @@ jobs:
       - name: Refresh ownership and announcements
         env:
           SHAREHOLDING_LIMIT: "100"
-          ANNOUNCEMENT_LIMIT: "150"
+          ANNOUNCEMENT_LIMIT: "25"
         run: |
           python data/pipeline/nse_shareholding.py
           python data/pipeline/nse_announcements.py
