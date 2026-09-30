@@ -178,3 +178,17 @@ h2:hover .pp-anchor,.pp-anchor:focus-visible{opacity:1}
 #guideSearchCount{margin-top:7px}
 [hidden]{display:none!important}
 @media(max-width:700px){.pp-breadcrumb{margin-bottom:14px}}
+
+/* Final responsive/product-grade safeguards */
+@media(max-width:560px){
+  .hero-home h1{letter-spacing:-.07em}
+  .hero-home .search{display:grid;grid-template-columns:1fr}
+  .hero-home .search button{min-height:48px}
+  .quick-search button{padding:8px 12px}
+  .home-signal>div{padding:17px}
+  .section-head{align-items:flex-start}
+  .section-head .button{margin-top:8px}
+  .source-card{display:block}
+  .source-icon{margin-bottom:12px}
+  .footer-grid>div:last-child{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+}
