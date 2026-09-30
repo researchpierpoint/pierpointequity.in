@@ -15,7 +15,16 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  publication-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify publisher
+        run: |
+          test "${{ github.actor }}" = "researchpierpoint"
+          echo "Publication approved for the PirePoint owner."
+
   deploy:
+    needs: publication-gate:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
