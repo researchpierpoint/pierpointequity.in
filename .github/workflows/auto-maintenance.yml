@@ -28,8 +28,8 @@ jobs:
           python data/pipeline/market_snapshot.py
       - name: Refresh financial results and integrated filings
         env:
-          RESULT_LIMIT: "50"
-          INTEGRATED_FINANCIAL_LIMIT: "50"
+          RESULT_LIMIT: "10"
+          INTEGRATED_FINANCIAL_LIMIT: "10"
         run: |
           python data/pipeline/nse_financial_results.py
           python data/pipeline/nse_integrated_financials.py
