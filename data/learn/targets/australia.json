@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "type": "target-market",
+  "slug": "australia",
+  "name": "Australia",
+  "system": "ASX · ASIC",
+  "sources": [
+    "https://www.asx.com.au/",
+    "https://asic.gov.au/"
+  ],
+  "core": {
+    "nodeCount": 240,
+    "domains": 24,
+    "stages": 10
+  },
+  "note": "This market file supplies local context. The shared learning engine expands it into 240 destination-market lessons; it is never combined by hand with a home country."
+}
