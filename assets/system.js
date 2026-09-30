@@ -43,7 +43,7 @@ function selected(group,v){$$(`[data-profile="${group}"] button`).forEach(x=>x.c
 function buildRoutine(){
  const p=s.profile||profileDefaults,title=$("#osRouteTitle"),copy=$("#osRouteCopy"),steps=$("#osRouteSteps"),delta=$("#osRouteDelta"),actions=$("#osRouteActions"),primary=$("#osRoutePrimary");
  if(!title)return;
- const showTarget=p.goal==="market" || p.stage==="understand";
+ const showTarget=p.goal==="market";
  $(".routine-target")?.toggleAttribute("hidden",!showTarget);
  if(!p.stage||!p.goal||!p.depth || (showTarget&&!p.target)){
   title.textContent=p.stage==="understand"?"Now tell me which market you want to understand next.":"Tell me where you are and what you want to become.";
