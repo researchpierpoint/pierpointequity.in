@@ -183,3 +183,24 @@ const daily=[["Why can a low P/E still be expensive?","Learn how earnings qualit
 
 /* Global Research navigation */
 (function(){const nav=document.querySelector(".site-header nav");if(!nav||nav.querySelector('a[href="research.html"]'))return;const a=document.createElement("a");a.href="research-hub.html";a.textContent="Research";const tools=nav.querySelector('a[href="tools.html"]');tools?nav.insertBefore(a,tools):nav.appendChild(a)})();
+
+/* Global command palette: one fast way through a very large knowledge system. */
+(function(){
+ if(document.querySelector('.pp-command-palette'))return;
+ const wrap=document.createElement('div');wrap.className='pp-command-palette';wrap.hidden=true;
+ wrap.innerHTML='<div class="pp-command-backdrop" data-close></div><section class="pp-command-dialog" role="dialog" aria-modal="true" aria-labelledby="ppCommandTitle"><div class="pp-command-head"><div><span class="tag">PirePoint command</span><h2 id="ppCommandTitle">Where do you want to go?</h2></div><button type="button" class="pp-command-close" data-close aria-label="Close">Esc</button></div><input id="ppCommandInput" class="pp-command-input" autocomplete="off" placeholder="Ask for a concept, market, guide or research task…"><div class="pp-command-hint">Press <kbd>Enter</kbd> to open the first match · <kbd>Esc</kbd> to close</div><div id="ppCommandResults" class="pp-command-results"></div></section></div>';
+ document.body.appendChild(wrap);
+ const input=wrap.querySelector('#ppCommandInput'),results=wrap.querySelector('#ppCommandResults');
+ const run=q=>{const low=q.toLowerCase().trim();let items=[];if(low){items=search(low).slice(0,7)}else{items=index.slice(0,7).map(x=>({x,score:0}))}results.innerHTML=items.length?items.map((z,i)=>'<a class="pp-command-item" href="'+esc(z.x[2])+'"><span>'+String(i+1).padStart(2,'0')+'</span><div><b>'+esc(z.x[0])+'</b><small>'+esc(z.x[1])+'</small></div><i>↗</i></a>').join(''):'<div class="pp-command-empty">No close match. Try a plain-language question such as “how do I value a company?” or “learn China”.</div>'};
+ const open=()=>{wrap.hidden=false;document.body.classList.add('pp-command-open');input.value='';run('');setTimeout(()=>input.focus(),30)};
+ const close=()=>{wrap.hidden=true;document.body.classList.remove('pp-command-open')};
+ input.addEventListener('input',()=>run(input.value));input.addEventListener('keydown',e=>{if(e.key==='Escape')close();if(e.key==='Enter'){const a=results.querySelector('a');if(a)location.href=a.href}});wrap.querySelectorAll('[data-close]').forEach(x=>x.addEventListener('click',close));
+ document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();open()}else if(e.key==='/'&&document.activeElement?.tagName!=='INPUT'&&document.activeElement?.tagName!=='TEXTAREA'){e.preventDefault();open()}else if(e.key==='Escape'&&!wrap.hidden)close()});
+ document.querySelectorAll('.nav-search').forEach(a=>a.addEventListener('click',e=>{if(!document.getElementById('searchInput')){e.preventDefault();open()}}));
+})();
+
+/* Small accessibility and reading-comfort upgrades. */
+(function(){
+ if(!document.querySelector('.pp-skip-link')){const a=document.createElement('a');a.className='pp-skip-link';a.href='#main-content';a.textContent='Skip to content';document.body.prepend(a);const m=document.querySelector('main');if(m){m.id='main-content'}}
+ document.querySelectorAll('a,button,input,select,textarea').forEach(el=>{if(!el.hasAttribute('aria-label')&&el.textContent.trim()===''&&el.tagName==='BUTTON')el.setAttribute('aria-label','Action')});
+})();
