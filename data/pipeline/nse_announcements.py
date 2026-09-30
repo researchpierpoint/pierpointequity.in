@@ -13,7 +13,13 @@ def main():
  targets=[c["nse_symbol"] for c in u["companies"]]
  limit=int(os.getenv("ANNOUNCEMENT_LIMIT","300")); start=(today-dt.timedelta(days=30)).strftime("%d-%m-%Y"); end=today.strftime("%d-%m-%Y")
  ses=requests.Session();ses.headers.update(H)
- if ses.get("https://www.nseindia.com/",timeout=20).status_code>=400:raise RuntimeError("NSE warmup failed")
+ warmed=False
+ for url in ["https://www.nseindia.com/","https://www.nseindia.com/market-data/live-equity-market","https://www.nseindia.com/companies-listing/corporate-filings-announcements"]:
+  try:
+   z=ses.get(url,timeout=20,headers=H)
+   if z.status_code<400:warmed=True;break
+  except Exception: pass
+ if not warmed:raise RuntimeError("NSE warmup failed")
  ok=0
  for s in targets[:limit]:
   try:
