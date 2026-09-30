@@ -350,3 +350,19 @@ h2:hover .pp-anchor,.pp-anchor:focus-visible{opacity:1}
 .intel-resume p{margin:0;font-size:12px}
 .intel-resume .button{white-space:nowrap}
 @media(max-width:620px){.intel-resume{display:block}.intel-resume .button{display:block;margin-top:14px;text-align:center}}
+
+/* Executive research view — fast orientation, depth underneath */
+.research-executive{padding:24px;margin:22px 0;background:linear-gradient(180deg,#fff,#f7f8f2)}
+.executive-top{display:flex;align-items:flex-start;justify-content:space-between;gap:20px}
+.executive-top h2{margin:5px 0 7px;font-size:clamp(24px,3vw,36px);letter-spacing:-.04em}
+.executive-top p{max-width:720px;margin:0;font-size:13px}
+.exec-state{font-size:9px;font-weight:900;letter-spacing:.16em;padding:9px 11px;border:1px solid var(--line);border-radius:999px;white-space:nowrap}
+.exec-grid{display:grid;grid-template-columns:repeat(6,1fr);margin-top:22px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.exec-grid>div{padding:15px 12px;border-right:1px solid var(--line);min-width:0}
+.exec-grid>div:last-child{border-right:0}
+.exec-grid span{display:block;font-size:9px;font-weight:900;letter-spacing:.13em;color:var(--muted);margin-bottom:7px}
+.exec-grid b{display:block;font-size:12px;line-height:1.35}
+.exec-next{margin-top:17px;padding:13px 15px;border-left:3px solid currentColor;background:rgba(255,255,255,.7);display:grid;gap:4px}
+.exec-next strong{font-size:14px}
+@media(max-width:900px){.exec-grid{grid-template-columns:repeat(3,1fr)}.exec-grid>div:nth-child(3){border-right:0}.exec-grid>div:nth-child(-n+3){border-bottom:1px solid var(--line)}}
+@media(max-width:560px){.executive-top{display:block}.exec-state{display:inline-block;margin-top:14px}.exec-grid{grid-template-columns:repeat(2,1fr)}.exec-grid>div{border-right:0;border-bottom:1px solid var(--line)}}
