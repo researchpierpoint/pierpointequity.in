@@ -46,18 +46,18 @@ def main():
                                       "amc":x.get("amc"),"category":x.get("category"),"nav":x.get("nav"),
                                       "aum_cr":x.get("aum_cr"),"master_source":"mfdata.in","master_updated_at":today.isoformat()})
         if not schemes:
-        for f in nav.get("funds", []):
-            code=str(f.get("scheme_code") or "")
-            if code:
-                schemes[code]={
-                    "scheme_code":code,
-                    "scheme_name":f.get("scheme_name"),
-                    "nav":f.get("nav"),
-                    "nav_date":f.get("date"),
-                    "master_source":"AMFI",
-                    "master_updated_at":today.isoformat()
-                }
-    old["scheme_master_updated_at"]=today.isoformat()
+        if not schemes:
+                        code=str(f.get("scheme_code") or "")
+                        if code:
+                            schemes[code]={
+                                "scheme_code":code,
+                                "scheme_name":f.get("scheme_name"),
+                                "nav":f.get("nav"),
+                                "nav_date":f.get("date"),
+                                "master_source":"AMFI",
+                                "master_updated_at":today.isoformat()
+                            }
+                old["scheme_master_updated_at"]=today.isoformat()
     # Keep the detailed enrichment bounded; rotate the stalest schemes.
     targets=[]
     for f in nav.get("funds",[]):
