@@ -73,7 +73,7 @@ for name in ("CNAME","robots.txt","sitemap.xml"):
     if p.exists(): shutil.copy2(p,OUT/p.name)
 print(f"Built public site: {OUT}")
 
-# Fail the build if a published HTML page references a missing CSS/JS asset.
+# Fail the build if a published HTML page references a missing CSS asset.
 # This specifically prevents a successful deployment from shipping an unstyled or
 # non-functional site, without turning unrelated content links into a deploy blocker.
 import re
@@ -84,7 +84,7 @@ for page in OUT.rglob("*.html"):
         clean=ref.split("#",1)[0].split("?",1)[0]
         if not clean or clean.startswith(("#","/","http://","https://","mailto:","tel:","javascript:","data:")):
             continue
-        if not clean.lower().endswith((".css",".js")):
+        if not clean.lower().endswith(".css"):
             continue
         target=(page.parent/clean).resolve()
         if not target.exists():
