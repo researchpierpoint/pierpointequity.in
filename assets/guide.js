@@ -22,6 +22,7 @@ addEventListener("scroll",scroll,{passive:true});scroll();
 /* Guide depth layer */
 (function(){
   const article=document.querySelector("main article"); if(!article)return;
+  const title=document.querySelector("main h1")?.textContent?.trim()||"Guide";
   const links=[
     ["How to Analyse a Stock","how-to-analyse-a-stock.html"],
     ["P/E Ratio Explained","pe-ratio.html"],
