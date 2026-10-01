@@ -14,9 +14,9 @@ CONTACT='''<div class="pp-footer-contact"><span class="footer-label">Contact</sp
 def copy_html(src, dst):
     html=src.read_text(encoding="utf-8")
     # Keep browser caches from serving stale UX/content engines after a release.
-    html=re.sub(r"(assets/style\\.css)(?:\\?v=[^\"']*)?", r"\\1?v=20261004", html)
-    html=re.sub(r"(assets/app\\.js)(?:\\?v=[^\"']*)?", r"\\1?v=20261004", html)
-    html=re.sub(r"(assets/market-curriculum\\.js)(?:\\?v=[^\"']*)?", r"\\1?v=20261004", html)
+    html=re.sub(r"(assets/style\.css)(?:\?v=[^\"]*)?", r"\1?v=20261004", html)
+    html=re.sub(r"(assets/app\.js)(?:\?v=[^\"]*)?", r"\1?v=20261004", html)
+    html=re.sub(r"(assets/market-curriculum\.js)(?:\?v=[^\"]*)?", r"\1?v=20261004", html)
     if "pp-footer-contact" not in html and '<div class="footer-grid">' in html:
         marker='</div></div><div class="wrap fine">'
         if marker in html:
@@ -65,7 +65,7 @@ for folder in ("guides","countries"):
     for p in target.rglob("*.html"):
         copy_html(p,p)
 # Static assets are part of the public site. Copy them into the deployment artifact
-# so HTML references such as assets/style.css and assets/app.js always resolve.
+    html=re.sub(r"(assets/style\.css)(?:\?v=[^\"]*)?", r"\1?v=20261004", html)
 ASSETS=ROOT/"assets"
 if ASSETS.exists():
     shutil.copytree(ASSETS, OUT/"assets")
@@ -94,6 +94,6 @@ for page in OUT.rglob("*.html"):
         if not target.exists():
             raise SystemExit(f"Build failed: missing CSS/JS asset {clean} referenced by {page.relative_to(OUT)}")
 
-required=OUT/"assets/style.css"
+    html=re.sub(r"(assets/style\.css)(?:\?v=[^\"]*)?", r"\1?v=20261004", html)
 if not required.is_file() or required.stat().st_size < 1000:
-    raise SystemExit("Build failed: assets/style.css is missing or unexpectedly small")
+    html=re.sub(r"(assets/style\.css)(?:\?v=[^\"]*)?", r"\1?v=20261004", html)
