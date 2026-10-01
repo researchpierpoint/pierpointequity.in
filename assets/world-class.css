@@ -285,3 +285,13 @@ body.pp-world-class .dark-section .muted,body.pp-world-class .dark-section .subt
 body.pp-world-class .dark-section .eyebrow{color:#d0d5dd!important}
 body.pp-world-class .dark-section h1,body.pp-world-class .dark-section h2,
 body.pp-world-class .dark-section h3,body.pp-world-class .dark-section h4{color:#fff!important}
+
+
+/* FINAL TOKEN AUTHORITY — legacy themes cannot override readability */
+:root{
+ --accent:#2457e6!important;--accent-2:#173ea5!important;--accent-soft:#eef3ff!important;
+ --muted:#475467!important;--ink:#111827!important;--line:#e4e7ec!important;
+ --pp-accent:#2457e6!important;--pp-focus:#2457e6!important;--pp-bg:#f7f8fa!important;
+ --pp-ink:#111827!important;--pp-muted:#475467!important;--pp-line:#e4e7ec!important;
+ --pp-panel:#fff!important;
+}
