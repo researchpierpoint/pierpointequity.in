@@ -1676,3 +1676,31 @@ td{border-color:var(--line)!important}
   html{scroll-behavior:auto}
   *,*:before,*:after{transition:none!important;animation:none!important}
 }
+
+
+/* READABILITY / CONTRAST SAFETY NET */
+body{color:#111827!important}
+body p,body li,body td,body dd,body .copy,body .description,body .lead,body .muted,body .subtle,
+body .card p,body .feature p,body .guide-card p,body .country-card p,body .section-head p,
+body .hero-copy,body .eyebrow,body .tag,body small,body label{color:#475467!important;opacity:1!important}
+body .muted,body .subtle{color:#475467!important}
+body h1,body h2,body h3,body h4,body h5,body h6{color:#111827!important}
+body a{color:#1d4ed8}
+body nav a{color:#344054}
+body input,body textarea,body select{color:#111827!important;background:#fff!important}
+body input::placeholder,body textarea::placeholder{color:#667085!important;opacity:1!important}
+body button{color:#111827}
+body .button,body button.primary,body .primary{color:#fff!important}
+body .notice,body .source-card,body .meaning-card,body .guide-at-a-glance{color:#344054}
+body .dark-section,body .dark-section p,body .dark-section li,body .dark-section .muted,
+body .dark-section .subtle,body .dark-section h1,body .dark-section h2,body .dark-section h3,
+body .dark-section h4,body .dark-section h5,body .dark-section h6{color:#f8fafc!important}
+body .dark-section .muted,body .dark-section .subtle,body .dark-section .eyebrow{color:#cbd5e1!important}
+body .footer,body .footer p,body .footer li{color:#475467}
+body .footer a{color:#344054}
+body .footer a:hover{color:#1d4ed8}
+@media(max-width:700px){
+ body{font-size:16px}
+ body .muted,body .subtle,body small{font-size:13px}
+ body .wrap{width:min(calc(100% - 28px),var(--max))}
+}
