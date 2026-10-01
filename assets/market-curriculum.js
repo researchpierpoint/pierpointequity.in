@@ -57,83 +57,23 @@ const DOMAIN_PLAYBOOK={
 "application":["Combine market mechanics, company evidence, valuation and risk into one research process.","Define the investor question before collecting facts.","Trace the question through market context, company economics, evidence and valuation.","Evaluate the thesis as a complete chain rather than isolated facts.","Connect the final conclusion to assumptions, downside cases and evidence quality.","Build a primary-source research trail for the complete case.","Red-team the conclusion before accepting it.","Reconstruct a full real-company case from first question to final thesis.","Present a concise investment research case with evidence and uncertainty clearly separated.","Defend the reasoning, identify what would change it and specify the next best research action."]
 };
 function lessonAnswer(domain,market,term,stageIndex,title){
- const core={
-  orientation:[
-   "China's public equity landscape is not one single pool of identical shares. Mainland A-shares are RMB-denominated ordinary shares traded on the Shanghai and Shenzhen exchanges; B-shares are mainland-listed shares traded in foreign currency; H-shares are shares of mainland companies listed in Hong Kong. For an investor, the listing venue and share line can change access, currency, liquidity and the route through which you own the security.",
-   "Shanghai Stock Exchange (SSE) and Shenzhen Stock Exchange (SZSE) are the two principal mainland exchanges. Within them, the SSE STAR Market focuses on science-and-technology innovation companies, while SZSE operates ChiNext for growth-oriented and innovative companies alongside its Main Board. These are not just branding labels: different boards can carry different listing, trading and investor-access rules.",
-   "Stock Connect links Hong Kong with the mainland exchanges and gives eligible Hong Kong and overseas investors a route into selected mainland A-shares. Northbound trading is not the same as having unrestricted access to every mainland-listed security: eligibility depends on the security, market and investor category, and STAR/ChiNext access has additional professional-investor conditions. That distinction is essential when a foreign investor finds a company on a mainland screen and assumes it can be bought.",
-   "The practical map is therefore: company → share class/listing → SSE or SZSE board → eligibility route → broker/custody chain → RMB exposure → trading and settlement rules → disclosure and shareholder rights. A company can have more than one listed share line, and the economics of owning one line can differ from another because price, currency, liquidity and investor access are not identical.",
-   "This structure matters because the same Chinese operating business can be represented in different markets. Before comparing two prices, first establish whether they are actually the same economic claim, what currency each price uses, whether the shares are fungible, and whether your investor route can reach them. The market map is therefore part of company research, not background trivia.",
-   "Start with primary infrastructure: the SSE and SZSE market pages for listings and board structure, HKEX's Stock Connect materials for Northbound access, and CSRC investor education for the regulatory framework. Record the exact share class, exchange, board and access route for one company rather than copying a country-level summary.",
-   "A common mistake is to see a familiar Chinese company name and assume every ticker represents the same investable object. Another is to treat Stock Connect as a universal pass into the mainland market. The safer mental model is security-specific: identify the exact share line, then check its eligibility and trading route before drawing conclusions about price or ownership.",
-   "Take a real dual-listed Chinese company and map its mainland and Hong Kong listings. Record the company name, ticker, exchange, share class, trading currency and whether the mainland line is eligible through Stock Connect. Then compare the two prices only after you know what each security represents.",
-   "Build a one-page China market map using three real securities: one SSE Main Board or STAR security, one SZSE Main Board or ChiNext security, and one Hong Kong-listed H-share. For each, identify the investor-access route and the primary source supporting your answer.",
-   "You have mastered the orientation when you can answer, without looking it up: what A-, B- and H-shares mean; how SSE differs from SZSE; what STAR Market and ChiNext are; what Stock Connect actually opens; and why 'a Chinese stock' is not precise enough to describe what an investor owns."
-  ],
-  "corporate-actions":[
-   "A dividend is a distribution of company value to eligible shareholders. Learn declaration, record/ex-dividend mechanics, payment and sustainability. You gain the ability to distinguish a cash distribution from the company's underlying earning power.",
-   "A split changes the number of shares and the per-share price without, by itself, creating economic value. A consolidation does the reverse. You gain the ability to adjust historical per-share figures and avoid treating a mechanical price change as a change in business value.",
-   "A rights issue gives existing shareholders an opportunity to subscribe for newly issued shares under stated terms. It can provide capital to the company while creating dilution for holders who do not participate. You gain the ability to calculate the before-and-after ownership and understand the economic trade-off.",
-   "A buyback reduces shares outstanding when shares are actually repurchased and retired under the applicable rules. The effect on per-share metrics depends on price paid, funding, shares removed and earnings/cash generation. You gain a framework for judging the economics instead of treating every buyback as automatically positive.",
-   "In an acquisition or merger, shareholders can receive cash, shares of the acquiring company, a combination of both, or another form of consideration depending on the transaction. The shareholder outcome depends on the offer terms, exchange ratio, transaction completion, ownership after closing and applicable voting or tender mechanics. You gain the ability to read an acquisition as an economic transaction: identify what you own before, what you may receive, what conditions must be satisfied, how continuing ownership changes, and what risks remain before completion.",
-   "You will learn how to investigate a corporate action from the original announcement, terms, dates, shareholder approvals and completion notice rather than relying on a headline.",
-   "You will learn to look for dilution, consideration changes, financing needs, related-party effects and conditions that can materially change the apparent headline benefit.",
-   "You will learn by reconstructing a real corporate action from announcement to completion and calculating what happened to a shareholder's position.",
-   "You will gain the ability to calculate the economic effect of a corporate action on a shareholder's number of shares, cash received, ownership percentage and continuing exposure.",
-   "You will be able to explain a corporate action in economic terms and identify what remains uncertain until the transaction is completed."
-  ],
-  "access":[
-   "Investor access is the route from a person's investor status and available intermediary to a security that can actually be bought and held. You gain a checklist for separating theoretical market availability from practical access.",
-   "You will learn which variables can affect eligibility, such as investor category, residence, account type, security, venue and current rules. You gain the ability to identify which variable needs verification.",
-   "Foreign access can involve brokerage, custody, currency conversion, registration, investment limits or other local requirements. You gain a map of the moving parts without turning a general lesson into a personal legal or eligibility determination.",
-   "You gain the ability to distinguish the roles of broker, custodian, depository and exchange, and to identify where friction or cost enters the investment route.",
-   "You will learn to compare access costs and constraints with the investment thesis, including fees, FX conversion, liquidity and operational friction.",
-   "You will learn where current access requirements are published and how to distinguish an official rule from a broker's operational policy.",
-   "You will learn which access assumptions can fail and how to detect them before spending money or relying on a route.",
-   "You will trace a real investor route from cash to ownership and identify each institution involved.",
-   "You will be able to map the exact information you would need before using an access route.",
-   "You will gain a repeatable verification habit for current access rules."
-  ],
-  "regulation":[
-   "Market regulation is the framework governing disclosure, conduct, listings, trading integrity and investor protections. You gain a mental model of what regulation is designed to accomplish rather than treating it as a list of laws.",
-   "You will learn the regulator's role and the difference between a regulation, guidance, exchange rule, issuer disclosure and intermediary procedure. You gain the ability to identify which document has authority for a particular question.",
-   "You will learn how a rule changes an actual market process, from disclosure to trading or shareholder action. You gain the ability to trace a rule to its practical consequence.",
-   "You will learn how regulation can affect an investor's rights, information, cost, access and risk.",
-   "You will learn how regulation changes company behaviour: reporting, governance, fundraising, acquisitions, related-party dealings and market conduct.",
-   "You will learn to find the current primary rule and read the operative section rather than relying on an old article or summary.",
-   "You will learn how to spot regulatory headlines that omit scope, exceptions, effective dates or transitional provisions.",
-   "You will practise reading a real regulatory action or rule and translating it into investor consequences.",
-   "You will gain the ability to locate the exact rule supporting an investment-relevant claim.",
-   "You will be able to explain a rule, why it exists, who it applies to and what practical consequence it has, while leaving individualized legal conclusions to qualified professionals."
-  ],
-  "tax":[
-   "Investor taxation is the set of rules that can change the amount of an investment return ultimately retained by the investor. You gain a framework for separating price return, distributions, transaction costs and taxes.",
-   "Tax treatment can depend on residence, investor status, instrument, holding period, transaction type and current law. You gain a checklist of variables to identify before treating a tax rate as applicable.",
-   "You will learn how a taxable event can arise and how gross proceeds differ from taxable income or gains. You gain conceptual clarity without receiving individualized tax advice.",
-   "You gain the ability to think in after-tax economics rather than comparing investments only on headline returns.",
-   "You will learn how tax can affect distributions, transactions, cross-border investing and company-level economics, and why the same security can have different treatment for different investors.",
-   "You will learn where current tax rules are verified and how to record the effective date and taxpayer category attached to a rule.",
-   "You will learn why tax shortcuts can be dangerous: residence, exemptions, holding periods and transaction structure can change the result.",
-   "You will work through a clearly labelled educational scenario and separate assumptions from current-law facts.",
-   "You will be able to build a gross-to-net return calculation once the applicable current tax inputs have been independently verified.",
-   "You will gain a repeatable tax-check process—not a personalized tax conclusion."
-  ]
- };
- const arr=core[domain];
- if(arr && arr[stageIndex]) return arr[stageIndex]+" Market-specific details should be checked against the current primary source.";
- const generic=DOMAIN_PLAYBOOK[domain]||[
-  "Build a concrete mental model of "+domain+" in "+market+" and connect it to an investor question.",
-  "Identify the local mechanism governing "+domain+" in "+market+" and separate it from imported assumptions.",
-  "Trace one real mechanism from investor action to company or market consequence.",
-  "Turn "+domain+" into a decision question before relying on a number, rule or narrative.",
-  "Connect "+domain+" to cash flows, ownership, financing, risk or valuation.",
-  "Research "+domain+" from the strongest available primary evidence.",
-  "Identify the most dangerous assumption or misconception around "+domain+" in "+market+".",
-  "Apply "+domain+" to a real "+market+" security, company, filing or event.",
-  "Solve a small "+domain+" problem with explicit assumptions and evidence.",
-  "Transfer your understanding of "+domain+" to a new situation and explain the change."
+ const p=PROFILES[market]||{regulator:"the market regulator",venues:"the principal exchanges",currency:"the local currency",terms:[term],sources:[]};
+ const stages=DOMAIN_PLAYBOOK[domain]||DOMAIN_PLAYBOOK.orientation;
+ const localOrientation=[
+  market+" is built around "+p.venues+" and supervised through "+p.regulator+". Before analysing a company, identify the exact security, listing venue, market segment and currency so you know what you are actually studying.",
+  "The key local vocabulary includes "+p.terms.slice(0,Math.min(3,p.terms.length)).join(", ")+". These terms are not decorative: they describe institutions, instruments or conventions that can change how an investor accesses information, trades or evaluates a security.",
+  "A security moves through a local chain of issuer, venue, intermediary, clearing or settlement infrastructure and shareholder records. The exact chain differs by market, so learn the local mechanism rather than importing the process from another country.",
+  "For an investor, the important question is not simply whether a company is listed. It is which security represents the ownership claim, where it trades, who can access it, what information is required and what frictions affect the realised return.",
+  "The market's design affects liquidity, disclosure, shareholder rights, financing and valuation. That is why market orientation belongs at the beginning of company research rather than being treated as background reading.",
+  "Use "+p.regulator+" and "+p.venues+" as the starting points for primary evidence. Verify the current rule, listing status or market definition there before relying on a secondary explanation.",
+  "A dangerous assumption is that a familiar word means the same thing here as it does elsewhere. Test every important term against the local rulebook, exchange definition and actual security before using it in a thesis.",
+  "Choose one real "+market+" security and trace it from issuer to listing venue, instrument type, trading route, ownership record and primary disclosures. The goal is a working map, not a memorised country description.",
+  "Build a one-page market map using three real "+market+" securities. Record their issuer, ticker or identifier, venue, instrument, currency, access route and the primary source supporting each classification.",
+  "You have mastered orientation when you can explain what an investor can own in "+market+", how it reaches the market, which institutions govern the process and which local assumptions must be checked before researching a company."
  ];
- return generic[stageIndex]+" In "+market+", pay particular attention to "+term+". Current rules and facts should be checked against the relevant primary source.";
+ const core=domain==="orientation"?localOrientation:stages;
+ const base=core[stageIndex]||("Study "+domain+" through the specific rules and mechanisms of "+market+".");
+ return base+" Focus on "+term+" and verify current details against the relevant primary source.";
 }
 function fallbackNodes(){
  const p=PROFILES[market]||{regulator:"the local regulator",venues:"the local exchanges",currency:"the local currency",terms:[market]};
