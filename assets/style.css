@@ -771,3 +771,66 @@ button,a,input{touch-action:manipulation}
 
 /* Market School card alignment */
 .country-node-grid{align-items:stretch}.country-node-grid .country-node{height:100%;box-sizing:border-box;display:flex;flex-direction:column}.country-node-grid .mcc-node-meta{margin-top:auto}.country-node-grid .mcc-card-tease{flex:1;align-content:start}
+
+
+/* =========================================================
+   FINAL INTERACTION + STATE CONSISTENCY PASS
+   Stable visual states after tap/click/focus across touch,
+   mouse and keyboard. No sticky hover, no faded completed work.
+   ========================================================= */
+button,a,input,select,textarea{ -webkit-tap-highlight-color:transparent; }
+button,.button,.text-button{font-family:inherit;}
+button:active,.button:active,.text-button:active{transform:translateY(1px);}
+button:focus:not(:focus-visible),a:focus:not(:focus-visible),input:focus:not(:focus-visible),select:focus:not(:focus-visible),textarea:focus:not(:focus-visible){outline:none;}
+:where(a,button,input,select,textarea):focus-visible{
+  outline:3px solid #718331!important;
+  outline-offset:3px;
+}
+:where(a,button,input,select,textarea):disabled{cursor:not-allowed;opacity:.55;}
+select{appearance:auto;color:var(--ink);}
+input::placeholder,textarea::placeholder{color:#858b82;opacity:1;}
+
+.market-curriculum-shell .country-curriculum-group summary:focus-visible{
+  outline:3px solid #718331;
+  outline-offset:2px;
+  border-radius:10px;
+}
+.market-curriculum-shell .mcc-open-lesson{
+  min-height:40px;
+  border-radius:8px;
+  padding:8px 0;
+}
+.market-curriculum-shell .mcc-open-lesson:hover{color:var(--pp-accent-2,var(--ink));text-decoration:underline;text-underline-offset:4px;}
+.market-curriculum-shell .mcc-node-head label{min-height:32px;}
+.market-curriculum-shell .country-node.is-learned{
+  opacity:1;
+  background:linear-gradient(145deg,#fff,#f7faed);
+  border-color:#cfd9a9;
+}
+.market-curriculum-shell .country-node.is-learned .mcc-node-meta{
+  color:#69752d;
+}
+.market-curriculum-shell .mcc-drawer-panel{
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+}
+.market-curriculum-shell .mcc-drawer-close{
+  color:var(--ink);
+  background:var(--panel);
+  z-index:2;
+}
+.market-curriculum-shell .mcc-drawer-close:hover{
+  background:var(--accent-soft);
+  border-color:#b9c98a;
+}
+.market-curriculum-shell .mcc-drawer-backdrop{cursor:pointer;}
+.market-curriculum-shell .mcc-drawer-actions .button{min-width:140px;}
+@media (hover:none){
+  .card:hover,.feature:hover,.country-card:hover,.guide-card:hover,.command-card:hover,.country-node:hover{
+    transform:none;
+    box-shadow:inherit;
+  }
+}
+@media (prefers-reduced-motion:reduce){
+  button:active,.button:active,.text-button:active{transform:none;}
+}
