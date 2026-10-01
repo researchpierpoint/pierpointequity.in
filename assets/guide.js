@@ -3,7 +3,14 @@ const article=document.querySelector("main article");if(!article)return;
 const title=document.querySelector("main h1")?.textContent?.trim()||"Guide";
 document.body.classList.add("guide-reading");
 const bar=document.createElement("div");bar.className="reading-progress";bar.innerHTML="<span></span>";document.body.prepend(bar);
-const nav=document.querySelector(".nav nav");if(nav&&!document.querySelector(".mobile-menu-button")){const b=document.createElement("button");b.className="mobile-menu-button";b.setAttribute("aria-label","Open navigation");b.textContent="Menu";b.onclick=()=>nav.classList.toggle("open");nav.parentElement?.insertBefore(b,nav);}const page=document.querySelector("main.page");
+const nav=document.querySelector(".nav nav");
+if(nav){
+  nav.setAttribute("aria-label","Primary navigation");
+  nav.innerHTML='<a href="../learn.html">Learn</a><a href="../countries.html">Markets</a><a href="../intelligence.html">Intelligence</a><a href="../research-hub.html">Research</a><a href="../tools.html">Tools</a><a href="../system.html">System</a>';
+  const current=location.pathname.split("/").pop();
+  nav.querySelector('a[href="../learn.html"]')?.classList.add("active");
+}
+if(nav&&!document.querySelector(".mobile-menu-button")){const b=document.createElement("button");b.className="mobile-menu-button";b.setAttribute("aria-label","Open navigation");b.textContent="Menu";b.onclick=()=>nav.classList.toggle("open");nav.parentElement?.insertBefore(b,nav);}const page=document.querySelector("main.page");
 const rail=document.createElement("aside");rail.className="guide-rail";rail.innerHTML='<div class="rail-inner"><b>ON THIS PAGE</b><div id="guideToc"></div><a class="rail-back" href="../guides.html">All guides →</a></div>';
 if(page)page.insertBefore(rail,article);
 const toc=document.getElementById("guideToc");
