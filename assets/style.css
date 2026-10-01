@@ -1704,3 +1704,13 @@ body .footer a:hover{color:#1d4ed8}
  body .muted,body .subtle,body small{font-size:13px}
  body .wrap{width:min(calc(100% - 28px),var(--max))}
 }
+
+
+/* FINAL TOKEN AUTHORITY — legacy themes cannot override readability */
+:root{
+ --accent:#2457e6!important;--accent-2:#173ea5!important;--accent-soft:#eef3ff!important;
+ --muted:#475467!important;--ink:#111827!important;--line:#e4e7ec!important;
+ --pp-accent:#2457e6!important;--pp-focus:#2457e6!important;--pp-bg:#f7f8fa!important;
+ --pp-ink:#111827!important;--pp-muted:#475467!important;--pp-line:#e4e7ec!important;
+ --pp-panel:#fff!important;
+}
