@@ -1,6 +1,7 @@
 from pathlib import Path
 import shutil
 import json, re
+
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/"_site"
 OUT.mkdir(exist_ok=True)
@@ -10,13 +11,14 @@ if OUT.exists():
         else: child.unlink()
 
 CONTACT='''<div class="pp-footer-contact"><span class="footer-label">Contact</span><a href="mailto:research.pirepoint@gmail.com">research.pirepoint@gmail.com</a><small>Questions, corrections, source issues or suggestions.</small></div>'''
+ASSET_VERSION="20261005"
 
 def copy_html(src, dst):
     html=src.read_text(encoding="utf-8")
-    # Keep browser caches from serving stale UX/content engines after a release.
-    html=re.sub(r"(assets/style\.css)(?:\?v=[^\"]*)?", r"\1?v=20261004", html)
-    html=re.sub(r"(assets/app\.js)(?:\?v=[^\"]*)?", r"\1?v=20261004", html)
-    html=re.sub(r"(assets/market-curriculum\.js)(?:\?v=[^\"]*)?", r"\1?v=20261004", html)
+    html=re.sub(r"(assets/style\.css)(?:\?v=[^"]*)?", rf"\1?v={ASSET_VERSION}", html)
+    html=re.sub(r"(assets/app\.js)(?:\?v=[^"]*)?", rf"\1?v={ASSET_VERSION}", html)
+    html=re.sub(r"(assets/market-curriculum\.js)(?:\?v=[^"]*)?", rf"\1?v={ASSET_VERSION}", html)
+
     if "pp-footer-contact" not in html and '<div class="footer-grid">' in html:
         marker='</div></div><div class="wrap fine">'
         if marker in html:
@@ -44,16 +46,7 @@ def copy_html(src, dst):
 
     if 'application/ld+json' not in html:
         schema_type="Article" if rel.startswith("guides/") else "WebPage"
-        data={
-            "@context":"https://schema.org",
-            "@type":schema_type,
-            "name":title,
-            "headline":title,
-            "description":desc,
-            "url":url,
-            "inLanguage":"en",
-            "publisher":{"@type":"Organization","name":"PirePoint Equity","url":"https://pierpointequity.in/"}
-        }
+        data={"@context":"https://schema.org","@type":schema_type,"name":title,"headline":title,"description":desc,"url":url,"inLanguage":"en","publisher":{"@type":"Organization","name":"PirePoint Equity","url":"https://pierpointequity.in/"}}
         html=html.replace("</head>", '<script type="application/ld+json">'+json.dumps(data,ensure_ascii=False,separators=(",",":"))+'</script>\n</head>', 1)
     dst.write_text(html, encoding="utf-8")
 
@@ -64,8 +57,7 @@ for folder in ("guides","countries"):
     shutil.copytree(ROOT/folder,target)
     for p in target.rglob("*.html"):
         copy_html(p,p)
-# Static assets are part of the public site. Copy them into the deployment artifact
-    html=re.sub(r"(assets/style\.css)(?:\?v=[^\"]*)?", r"\1?v=20261004", html)
+
 ASSETS=ROOT/"assets"
 if ASSETS.exists():
     shutil.copytree(ASSETS, OUT/"assets")
@@ -75,15 +67,10 @@ else:
 for name in ("CNAME","robots.txt","sitemap.xml"):
     p=ROOT/name
     if p.exists(): shutil.copy2(p,OUT/p.name)
-print(f"Built public site: {OUT}")
 
-# Fail the build if a published HTML page references a missing CSS asset.
-# This specifically prevents a successful deployment from shipping an unstyled or
-# non-functional site, without turning unrelated content links into a deploy blocker.
-import re
 for page in OUT.rglob("*.html"):
     page_text=page.read_text(encoding="utf-8")
-    refs=re.findall(r"(?:href|src)=['\"]([^'\"]+)['\"]", page_text, flags=re.I)
+    refs=re.findall(r"(?:href|src)=['"]([^'"]+)['"]", page_text, flags=re.I)
     for ref in refs:
         clean=ref.split("#",1)[0].split("?",1)[0]
         if not clean or clean.startswith(("#","/","http://","https://","mailto:","tel:","javascript:","data:")):
@@ -92,8 +79,6 @@ for page in OUT.rglob("*.html"):
             continue
         target=(page.parent/clean).resolve()
         if not target.exists():
-            raise SystemExit(f"Build failed: missing CSS/JS asset {clean} referenced by {page.relative_to(OUT)}")
+            raise SystemExit(f"Build failed: missing CSS asset {clean} referenced by {page.relative_to(OUT)}")
 
-    html=re.sub(r"(assets/style\.css)(?:\?v=[^\"]*)?", r"\1?v=20261004", html)
-if not required.is_file() or required.stat().st_size < 1000:
-    html=re.sub(r"(assets/style\.css)(?:\?v=[^\"]*)?", r"\1?v=20261004", html)
+print(f"Built public site: {OUT}")
