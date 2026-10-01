@@ -11,7 +11,7 @@ if OUT.exists():
         else: child.unlink()
 
 CONTACT='''<div class="pp-footer-contact"><span class="footer-label">Contact</span><a href="mailto:research.pirepoint@gmail.com">research.pirepoint@gmail.com</a><small>Questions, corrections, source issues or suggestions.</small></div>'''
-ASSET_VERSION="20261005"
+ASSET_VERSION="20261007"
 
 def copy_html(src, dst):
     html=src.read_text(encoding="utf-8")
