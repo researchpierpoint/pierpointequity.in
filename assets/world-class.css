@@ -273,3 +273,15 @@ td{border-color:var(--line)!important}
   html{scroll-behavior:auto}
   *,*:before,*:after{transition:none!important;animation:none!important}
 }
+
+
+/* FINAL CONTRAST OVERRIDES — shared with every world-class page */
+body.pp-world-class .muted,body.pp-world-class .subtle,body.pp-world-class .eyebrow,
+body.pp-world-class .tag,body.pp-world-class small{color:#475467!important;opacity:1!important}
+body.pp-world-class p,body.pp-world-class li,body.pp-world-class td,body.pp-world-class dd{color:#344054}
+body.pp-world-class h1,body.pp-world-class h2,body.pp-world-class h3,body.pp-world-class h4{color:#111827}
+body.pp-world-class .dark-section p,body.pp-world-class .dark-section li,
+body.pp-world-class .dark-section .muted,body.pp-world-class .dark-section .subtle,
+body.pp-world-class .dark-section .eyebrow{color:#d0d5dd!important}
+body.pp-world-class .dark-section h1,body.pp-world-class .dark-section h2,
+body.pp-world-class .dark-section h3,body.pp-world-class .dark-section h4{color:#fff!important}
