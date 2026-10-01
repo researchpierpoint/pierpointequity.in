@@ -834,3 +834,160 @@ input::placeholder,textarea::placeholder{color:#858b82;opacity:1;}
 @media (prefers-reduced-motion:reduce){
   button:active,.button:active,.text-button:active{transform:none;}
 }
+
+/* =========================================================
+   MARKET SCHOOL — LESSON READING EXPERIENCE
+   Isolated, high-contrast reading surface for "Read the lesson".
+   ========================================================= */
+.market-curriculum-shell .mcc-drawer{
+  color:#11150f;
+}
+.market-curriculum-shell .mcc-drawer-panel{
+  --lesson-ink:#11150f;
+  --lesson-muted:#596157;
+  --lesson-line:#d9ded2;
+  --lesson-panel:#ffffff;
+  --lesson-soft:#f4f7e9;
+  --lesson-accent:#64752a;
+  color:var(--lesson-ink);
+  background:var(--lesson-panel);
+  border-left:1px solid rgba(17,21,15,.10);
+  box-shadow:-30px 0 80px rgba(12,18,8,.20);
+}
+.market-curriculum-shell .mcc-drawer-panel,
+.market-curriculum-shell .mcc-drawer-panel *{
+  -webkit-font-smoothing:antialiased;
+}
+.market-curriculum-shell .mcc-drawer-panel .eyebrow{
+  color:var(--lesson-accent);
+  font-size:11px;
+  font-weight:850;
+  letter-spacing:.14em;
+}
+.market-curriculum-shell .mcc-drawer-panel h2{
+  color:var(--lesson-ink);
+  font-weight:800;
+  letter-spacing:-.045em;
+  max-width:620px;
+}
+.market-curriculum-shell .mcc-drawer-objective{
+  color:#454d43;
+  max-width:620px;
+  font-size:17px;
+  line-height:1.7;
+  margin:0 0 12px;
+}
+.market-curriculum-shell .mcc-drawer-panel section{
+  border-top:1px solid var(--lesson-line);
+}
+.market-curriculum-shell .mcc-drawer-panel section p{
+  color:#20271f;
+  max-width:620px;
+  font-size:15px;
+  line-height:1.78;
+}
+.market-curriculum-shell .mcc-drawer-panel .mcc-label{
+  display:block;
+  color:var(--lesson-accent);
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.14em;
+}
+.market-curriculum-shell .mcc-drawer-panel .mcc-gain{
+  background:var(--lesson-soft);
+  border:1px solid #d8e1b8;
+}
+.market-curriculum-shell .mcc-drawer-panel .mcc-gain p{
+  color:#26301f;
+}
+.market-curriculum-shell .mcc-drawer-close{
+  color:#11150f!important;
+  background:#fff!important;
+  border-color:#cfd6c7!important;
+  box-shadow:0 4px 16px rgba(12,18,8,.08);
+}
+.market-curriculum-shell .mcc-drawer-close:hover{
+  color:#11150f!important;
+  background:#edf4cf!important;
+  border-color:#b7c789!important;
+}
+.market-curriculum-shell .mcc-drawer-close:active{
+  color:#11150f!important;
+  background:#e2ebbf!important;
+}
+.market-curriculum-shell .mcc-drawer-actions{
+  border-top:1px solid var(--lesson-line);
+  margin-top:8px;
+}
+.market-curriculum-shell .mcc-drawer-actions .button{
+  color:#fff!important;
+  background:#11150f!important;
+  border:1px solid #11150f!important;
+  box-shadow:none;
+}
+.market-curriculum-shell .mcc-drawer-actions .button:hover{
+  color:#11150f!important;
+  background:#c5e653!important;
+  border-color:#aabe43!important;
+}
+.market-curriculum-shell .mcc-drawer-actions .button.secondary{
+  color:#11150f!important;
+  background:#fff!important;
+  border:1px solid #cfd6c7!important;
+}
+.market-curriculum-shell .mcc-drawer-actions .button.secondary:hover{
+  background:#f0f4e3!important;
+  border-color:#b7c789!important;
+}
+.market-curriculum-shell .mcc-drawer-panel a{
+  color:#526421;
+  text-decoration:underline;
+  text-decoration-color:#bdcf82;
+  text-underline-offset:3px;
+}
+.market-curriculum-shell .mcc-drawer-panel a:hover{
+  color:#26310f;
+}
+.market-curriculum-shell .mcc-drawer-panel ::selection{
+  background:#c5e653;
+  color:#11150f;
+}
+.market-curriculum-shell .mcc-drawer-panel:focus-visible{
+  outline:none;
+}
+.market-curriculum-shell .mcc-drawer-backdrop{
+  background:rgba(9,13,10,.58);
+}
+@media(max-width:640px){
+  .market-curriculum-shell .mcc-drawer-panel{
+    padding:54px 22px 34px;
+    border-left:0;
+  }
+  .market-curriculum-shell .mcc-drawer-panel h2{
+    font-size:clamp(2rem,10vw,2.65rem);
+    line-height:1.04;
+  }
+  .market-curriculum-shell .mcc-drawer-objective{
+    font-size:15px;
+    line-height:1.65;
+  }
+  .market-curriculum-shell .mcc-drawer-panel section{
+    padding:20px 0;
+  }
+  .market-curriculum-shell .mcc-drawer-panel section p{
+    font-size:15px;
+    line-height:1.72;
+  }
+  .market-curriculum-shell .mcc-drawer-actions{
+    position:sticky;
+    bottom:-1px;
+    margin:8px -22px -34px;
+    padding:14px 22px 18px;
+    background:rgba(255,255,255,.97);
+    backdrop-filter:blur(12px);
+    z-index:3;
+  }
+  .market-curriculum-shell .mcc-drawer-actions .button{
+    flex:1 1 150px;
+  }
+}
