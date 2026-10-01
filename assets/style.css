@@ -1714,3 +1714,146 @@ body .footer a:hover{color:#1d4ed8}
  --pp-ink:#111827!important;--pp-muted:#475467!important;--pp-line:#e4e7ec!important;
  --pp-panel:#fff!important;
 }
+
+
+/* PIREPOINT LESSON READER V2 — MOBILE READING MODE */
+.market-curriculum-shell .mcc-drawer{
+  position:fixed!important;inset:0!important;z-index:2000!important;
+}
+.market-curriculum-shell .mcc-drawer.is-open{
+  display:block!important;
+}
+.market-curriculum-shell .mcc-drawer-backdrop{
+  position:absolute!important;inset:0!important;
+  background:rgba(10,18,32,.78)!important;
+  backdrop-filter:blur(3px)!important;
+  -webkit-backdrop-filter:blur(3px)!important;
+}
+.market-curriculum-shell .mcc-drawer-panel{
+  position:absolute!important;top:0!important;right:0!important;
+  height:100%!important;width:min(760px,94vw)!important;
+  overflow:auto!important;box-sizing:border-box!important;
+  background:#fff!important;color:#101828!important;
+  box-shadow:-20px 0 70px rgba(0,0,0,.24)!important;
+  padding:72px clamp(28px,5vw,58px) 56px!important;
+  animation:mccReaderIn .24s ease-out both!important;
+}
+.market-curriculum-shell .mcc-drawer-panel .mcc-reader{
+  width:min(100%,680px)!important;margin:0 auto!important;
+}
+.market-curriculum-shell .mcc-drawer-close{
+  position:fixed!important;right:22px!important;top:18px!important;
+  z-index:4!important;width:44px!important;height:44px!important;
+  border:1px solid #d0d5dd!important;border-radius:50%!important;
+  background:#fff!important;color:#101828!important;
+  box-shadow:0 5px 18px rgba(16,24,40,.12)!important;
+  font-size:25px!important;line-height:1!important;
+}
+.market-curriculum-shell .mcc-drawer-panel .mcc-reader>.eyebrow{
+  display:inline-flex!important;align-items:center!important;
+  min-height:28px!important;padding:6px 10px!important;
+  border-radius:999px!important;background:#eef3ff!important;
+  color:#2457e6!important;font-size:10px!important;
+  letter-spacing:.12em!important;font-weight:850!important;
+}
+.market-curriculum-shell .mcc-drawer-panel .mcc-reader h2{
+  max-width:680px!important;margin:18px 0 16px!important;
+  color:#101828!important;font-size:clamp(34px,5vw,52px)!important;
+  line-height:1.04!important;letter-spacing:-.045em!important;
+  text-wrap:balance!important;
+}
+.market-curriculum-shell .mcc-drawer-panel .mcc-reader .mcc-drawer-objective{
+  max-width:62ch!important;margin:0 0 34px!important;
+  color:#475467!important;font-size:18px!important;
+  line-height:1.6!important;
+}
+.market-curriculum-shell .mcc-drawer-panel .mcc-reader section{
+  padding:28px 0!important;margin:0!important;
+  border-top:1px solid #e4e7ec!important;
+}
+.market-curriculum-shell .mcc-drawer-panel .mcc-reader section:first-of-type{
+  border-top:0!important;padding-top:8px!important;
+}
+.market-curriculum-shell .mcc-drawer-panel .mcc-reader section:not(.mcc-gain){
+  max-width:68ch!important;
+}
+.market-curriculum-shell .mcc-drawer-panel .mcc-reader .mcc-label{
+  display:block!important;margin-bottom:10px!important;
+  color:#2457e6!important;opacity:1!important;
+  font-size:10px!important;line-height:1.4!important;
+  font-weight:850!important;letter-spacing:.14em!important;
+  text-transform:uppercase!important;
+}
+.market-curriculum-shell .mcc-drawer-panel .mcc-reader p{
+  max-width:68ch!important;margin:0!important;
+  color:#1d2939!important;opacity:1!important;
+  font-size:17px!important;line-height:1.78!important;
+  font-weight:450!important;
+}
+.market-curriculum-shell .mcc-drawer-panel .mcc-reader .mcc-gain{
+  max-width:68ch!important;margin:8px 0!important;
+  padding:22px 22px!important;
+  border:1px solid #c8d7fb!important;
+  border-radius:16px!important;
+  background:#f5f8ff!important;
+}
+.market-curriculum-shell .mcc-drawer-panel .mcc-reader .mcc-gain p{
+  color:#173ea5!important;font-weight:600!important;
+}
+.market-curriculum-shell .mcc-drawer-panel .mcc-reader .mcc-drawer-actions{
+  position:sticky!important;bottom:0!important;
+  margin:28px 0 -1px!important;padding:18px 0 4px!important;
+  background:linear-gradient(to bottom,rgba(255,255,255,0),#fff 18px)!important;
+  border-top:1px solid #e4e7ec!important;
+  display:flex!important;gap:10px!important;flex-wrap:wrap!important;
+}
+.market-curriculum-shell .mcc-drawer-panel .mcc-reader .mcc-drawer-actions .button{
+  min-height:46px!important;border-radius:10px!important;
+  background:#2457e6!important;color:#fff!important;
+}
+.market-curriculum-shell .mcc-drawer-panel .mcc-reader .mcc-drawer-actions .button.secondary{
+  background:#fff!important;color:#101828!important;border:1px solid #d0d5dd!important;
+}
+@keyframes mccReaderIn{from{transform:translateX(18px);opacity:.98}to{transform:none;opacity:1}}
+@media(max-width:640px){
+  .market-curriculum-shell .mcc-drawer-backdrop{
+    background:rgba(10,18,32,.84)!important;
+    backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+  }
+  .market-curriculum-shell .mcc-drawer-panel{
+    width:100%!important;height:100dvh!important;
+    padding:78px 20px 34px!important;
+    box-shadow:none!important;
+  }
+  .market-curriculum-shell .mcc-drawer-close{
+    right:14px!important;top:12px!important;
+  }
+  .market-curriculum-shell .mcc-drawer-panel .mcc-reader{
+    width:100%!important;
+  }
+  .market-curriculum-shell .mcc-drawer-panel .mcc-reader h2{
+    font-size:clamp(32px,9.5vw,46px)!important;
+    line-height:1.04!important;margin:16px 0 14px!important;
+  }
+  .market-curriculum-shell .mcc-drawer-panel .mcc-reader .mcc-drawer-objective{
+    font-size:16px!important;line-height:1.6!important;margin-bottom:26px!important;
+  }
+  .market-curriculum-shell .mcc-drawer-panel .mcc-reader section{
+    padding:24px 0!important;
+  }
+  .market-curriculum-shell .mcc-drawer-panel .mcc-reader p{
+    font-size:16px!important;line-height:1.72!important;
+  }
+  .market-curriculum-shell .mcc-drawer-panel .mcc-reader .mcc-gain{
+    padding:19px!important;
+  }
+  .market-curriculum-shell .mcc-drawer-panel .mcc-reader .mcc-drawer-actions{
+    margin-top:18px!important;padding-top:14px!important;
+  }
+  .market-curriculum-shell .mcc-drawer-panel .mcc-reader .mcc-drawer-actions .button{
+    flex:1 1 150px!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .market-curriculum-shell .mcc-drawer-panel{animation:none!important}
+}
