@@ -334,3 +334,6 @@ const daily=[["Why can a low P/E still be expensive?","Learn how earnings qualit
  box.innerHTML='<div><span class="tag">LEARN BEFORE YOU INVEST</span><h2 style="margin:6px 0">300 things to know before investing in '+labels[slug]+'</h2><p style="margin:0;color:var(--muted);line-height:1.55">240 destination-market lessons + 60 lessons for the investor\'s home-country context. Learn, prove, verify and track progress.</p></div><a class="button" href="../learn-before-invest.html?target='+encodeURIComponent(labels[slug])+'">Open the 300-lesson route →</a>';
  const first=main.firstElementChild; main.insertBefore(box,first||null);
 })();
+
+/* Shared world-class UX loader */
+(function(){if(document.querySelector('script[src*="world-class.js"]'))return;var s=document.createElement("script");s.src=(location.pathname.split("/").filter(Boolean).length>1?"../":"./")+"assets/world-class.js?v=20261001";s.defer=true;document.body.appendChild(s)})();
