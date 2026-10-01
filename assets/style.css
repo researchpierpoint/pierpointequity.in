@@ -1307,3 +1307,85 @@ input:focus,select:focus,textarea:focus{border-color:#aab982;box-shadow:0 0 0 3p
   html{scroll-behavior:auto}
   *,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}
 }
+
+
+/* =========================================================
+   PIREPOINT — PAGE-BY-PAGE QUALITY GATE v1
+   Human-first rules: orientation, hierarchy, restraint,
+   progressive disclosure, touch safety, accessibility.
+   ========================================================= */
+:root{
+  --content-measure:760px;
+  --reading-measure:68ch;
+  --touch-min:44px;
+}
+main{min-width:0}
+main>*{min-width:0}
+h1,h2,h3,h4{ text-wrap:balance }
+p,li{ text-wrap:pretty }
+button,input,select,textarea{font:inherit}
+button,.button,a[role="button"]{min-height:var(--touch-min)}
+main .page,.page{padding-top:72px}
+.page>h1,.page>p.lead,.page>.eyebrow{max-width:900px}
+.page>p.lead{line-height:1.65}
+.page section{scroll-margin-top:104px}
+.page .section-head{align-items:flex-end}
+.page .section-head>div{min-width:0}
+.page .section-head h2{max-width:820px}
+.prose,.lesson-main,.guide-page article{max-width:var(--content-measure)}
+.prose p,.prose li,.lesson-main p,.lesson-main li,.guide-page article p,.guide-page article li{max-width:var(--reading-measure)}
+.card p,.feature p{line-height:1.62}
+.card,.feature{overflow-wrap:anywhere}
+table{border-collapse:separate;border-spacing:0;width:100%}
+th,td{line-height:1.5}
+th{font-weight:800}
+input,textarea,select{min-height:var(--touch-min);border-radius:10px;border:1px solid var(--line);background:#fff;padding:10px 12px}
+input:focus,textarea:focus,select:focus{border-color:#a9c25c;box-shadow:0 0 0 4px rgba(197,230,83,.16);outline:none}
+::placeholder{color:#899086}
+[hidden]{display:none!important}
+
+/* Long-form pages: one dominant reading column, tools beside it only when useful. */
+@media(min-width:1100px){
+  .guide-page,.lesson-layout{position:relative}
+  .lesson-main{min-width:0}
+}
+@media(max-width:900px){
+  .wrap{width:min(calc(100% - 32px),var(--max))}
+  .page{padding-top:52px}
+  .hero,.hero-home{padding-left:0;padding-right:0}
+  .section{padding:64px 0}
+  .card,.feature{padding:22px}
+  .section-head{display:block}
+  .section-head>a{display:inline-block;margin-top:12px}
+  .grid.three,.grid.four{grid-template-columns:1fr}
+  .search{flex-direction:column}
+  .search input{width:100%}
+  .search button{min-height:46px;padding:12px 18px}
+}
+@media(max-width:600px){
+  .wrap{width:min(calc(100% - 24px),var(--max))}
+  .site-header,.nav{height:68px}
+  .nav{gap:10px}
+  .brand{font-size:14px}
+  .mark{width:32px;height:32px}
+  .hero-home h1{font-size:clamp(46px,14vw,72px)}
+  .hero-copy{font-size:17px}
+  .page h1{font-size:clamp(38px,11vw,58px)}
+  .lead{font-size:16px}
+  .section{padding:52px 0}
+  .daily-card,.continue-card{padding:24px}
+  .source-card{display:block}
+  .source-icon{margin-bottom:14px}
+  .home-signal{margin-top:38px}
+}
+
+/* Never let motion become a prerequisite for comprehension. */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+}
+/* High-contrast / forced-colour resilience. */
+@media(forced-colors:active){
+  *{box-shadow:none!important}
+  .button,.nav nav a.active{border:1px solid ButtonText}
+  :focus-visible{outline:3px solid Highlight!important}
+}
