@@ -1,5 +1,6 @@
 from pathlib import Path
 import shutil
+import json, re
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/"_site"
 OUT.mkdir(exist_ok=True)
@@ -21,7 +22,6 @@ def copy_html(src, dst):
         if marker in html:
             html=html.replace(marker, '</div>'+CONTACT+'</div><div class="wrap fine">', 1)
 
-    import json, re
     from html import unescape
     title_match=re.search(r"<title>(.*?)</title>", html, re.I|re.S)
     desc_match=re.search(r'<meta[^>]+name=["\']description["\'][^>]+content=["\'](.*?)["\']', html, re.I|re.S)
