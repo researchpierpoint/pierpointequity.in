@@ -1389,3 +1389,12 @@ input:focus,textarea:focus,select:focus{border-color:#a9c25c;box-shadow:0 0 0 4p
   .button,.nav nav a.active{border:1px solid ButtonText}
   :focus-visible{outline:3px solid Highlight!important}
 }
+
+
+/* Orientation cue */
+.site-breadcrumb{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-top:18px;font-size:11px;color:var(--muted)}
+.site-breadcrumb a{color:var(--muted);text-decoration:none}
+.site-breadcrumb a:hover{color:var(--ink)}
+.site-breadcrumb span[aria-current="page"]{color:var(--ink);font-weight:750}
+.site-breadcrumb span[aria-hidden="true"]{opacity:.5}
+@media(max-width:600px){.site-breadcrumb{padding-top:12px;font-size:10px}}
