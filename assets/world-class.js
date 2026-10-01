@@ -2,8 +2,8 @@
 (function(){
 "use strict";
 if(document.body.dataset.ppWorldClass)return;
-document.body.dataset.ppWorldClass="1"; body.classList.add("pp-world-class");
 const root=document.documentElement, body=document.body;
+body.dataset.ppWorldClass="1"; body.classList.add("pp-world-class");
 const q=(s,r=document)=>r.querySelector(s), qa=(s,r=document)=>[...r.querySelectorAll(s)];
 const depth=location.pathname.split("/").filter(Boolean).length;
 const rel=depth>1?"../":"./";
