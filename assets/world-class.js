@@ -2,7 +2,7 @@
 (function(){
 "use strict";
 if(document.body.dataset.ppWorldClass)return;
-document.body.dataset.ppWorldClass="1";
+document.body.dataset.ppWorldClass="1"; body.classList.add("pp-world-class");
 const root=document.documentElement, body=document.body;
 const q=(s,r=document)=>r.querySelector(s), qa=(s,r=document)=>[...r.querySelectorAll(s)];
 const depth=location.pathname.split("/").filter(Boolean).length;
@@ -95,8 +95,12 @@ if(!reduce&&"IntersectionObserver"in window){
  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("pp-visible");io.unobserve(e.target)}}),{rootMargin:"0px 0px -6% 0px",threshold:.03});els.forEach(e=>io.observe(e));
 }
 
-/* External links open predictably and announce themselves to assistive tech. */
-qa('a[href^="http"]').forEach(a=>{if(!a.target){a.target="_blank";a.rel="noopener noreferrer"}if(!a.getAttribute("aria-label")&&a.hostname!==location.hostname){a.setAttribute("aria-label",(a.textContent.trim()||"External link")+" (opens in new tab)")}});
+/* External links remain in the user's current browsing context unless the page explicitly chooses otherwise. */
+qa('a[href^="http"]').forEach(a=>{
+  if(a.hostname!==location.hostname && !a.getAttribute("aria-label")){
+    a.setAttribute("aria-label",(a.textContent.trim()||"External link")+" (external link)");
+  }
+});
 function h1ish(r){return q("h1",r)||q(".lead,.hero-copy",r)}
 function esc(s){return String(s??"").replace(/[<>&"]/g,c=>({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[c]))}
 })();
