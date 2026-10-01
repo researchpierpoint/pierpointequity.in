@@ -189,3 +189,5 @@ const labs=[{m:/DCF/i,k:"dcf",t:"Try the DCF yourself",d:"Change growth and disc
   // Remove a generator artefact that previously appeared as a literal "undefined".
   [...article.querySelectorAll("p")].forEach(p=>{if(p.textContent.trim()==="undefined")p.remove()});
 })();
+
+(function(){if(document.querySelector('script[src*="world-class.js"]'))return;var s=document.createElement("script");s.src="../assets/world-class.js?v=20261001";s.defer=true;document.body.appendChild(s)})();
