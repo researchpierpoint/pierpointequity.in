@@ -103,4 +103,4 @@ qa('a[href^="http"]').forEach(a=>{
 });
 function h1ish(r){return q("h1",r)||q(".lead,.hero-copy",r)}
 function esc(s){return String(s??"").replace(/[<>&"]/g,c=>({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[c]))}
-})();
+})();\n/* PirePoint world-class navigation correction */\n(function(){const nav=document.querySelector(".nav nav");if(!nav)return;const links=[["Learn","learn.html","learn"],["Markets","countries.html","countries"],["Intelligence","intelligence.html","intelligence"],["Research","research-hub.html","research"],["Tools","tools.html","tools"],["System","system.html","system"]];const depth=location.pathname.split("/").filter(Boolean).length;const root=depth>1?"../":"./";const current=location.pathname.split("/").pop().replace(/\\.html$/,"")||"index";nav.innerHTML=links.map(x=>'<a href="'+root+x[1]+'"'+(current===x[2]?' class="active" aria-current="page"':'')+'>'+x[0]+'</a>').join("");})();
