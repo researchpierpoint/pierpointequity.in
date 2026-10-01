@@ -1086,3 +1086,138 @@ input::placeholder,textarea::placeholder{color:#858b82;opacity:1;}
   .market-curriculum-shell .mcc-drawer-panel .mcc-reader .mcc-drawer-objective{font-size:16px!important;}
   .market-curriculum-shell .mcc-drawer-panel .mcc-reader p{font-size:15px!important;line-height:1.76!important;}
 }
+
+/* =========================================================
+   MARKET SCHOOL — CARD GRID + INTERACTION STATES
+   Equal geometry and one deliberate interaction language across
+   mouse, keyboard and touch. Avoid sticky hover colour shifts.
+   ========================================================= */
+.market-curriculum-shell .country-node-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
+  align-items:stretch;
+  background:transparent;
+}
+.market-curriculum-shell .country-node-grid .country-node{
+  min-width:0;
+  min-height:100%;
+  margin:0!important;
+  align-self:stretch;
+  display:flex;
+  flex-direction:column;
+  box-sizing:border-box;
+  border:1px solid var(--line);
+  border-radius:16px!important;
+  overflow:hidden;
+  background:var(--paper,#fff);
+  transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease,background .18s ease;
+}
+.market-curriculum-shell .country-node-grid .country-node:hover{
+  border-color:#bccb91;
+  background:#fbfcf8;
+  box-shadow:0 10px 28px rgba(18,24,10,.08);
+}
+.market-curriculum-shell .country-node-grid .country-node:active{
+  transform:translateY(1px);
+  border-color:#9eaf6d;
+  background:#f5f8ea;
+  box-shadow:0 4px 14px rgba(18,24,10,.08);
+}
+.market-curriculum-shell .country-node-grid .country-node:focus-visible{
+  outline:3px solid #718331!important;
+  outline-offset:3px;
+  border-color:#718331;
+}
+.market-curriculum-shell .mcc-node-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  min-height:34px;
+}
+.market-curriculum-shell .mcc-node-head label{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  min-height:32px;
+  margin:0;
+  color:#596157;
+  cursor:pointer;
+}
+.market-curriculum-shell .mcc-node-head input{
+  accent-color:#64752a;
+}
+.market-curriculum-shell .mcc-card-tease{
+  flex:1 1 auto;
+  min-height:0;
+}
+.market-curriculum-shell .mcc-open-lesson{
+  color:#526421!important;
+  background:transparent!important;
+  border:1px solid transparent!important;
+  border-radius:8px;
+  font-weight:850;
+  text-decoration:none!important;
+  transition:background .16s ease,color .16s ease,border-color .16s ease,transform .16s ease;
+}
+.market-curriculum-shell .mcc-open-lesson:hover{
+  color:#26310f!important;
+  background:#edf4cf!important;
+  border-color:#cbd89f!important;
+  text-decoration:none!important;
+}
+.market-curriculum-shell .mcc-open-lesson:active{
+  color:#11150f!important;
+  background:#dfeab9!important;
+  border-color:#afc17b!important;
+  transform:translateY(1px);
+}
+.market-curriculum-shell .mcc-open-lesson:focus-visible{
+  outline:3px solid #718331!important;
+  outline-offset:3px;
+  color:#11150f!important;
+  background:#f1f5df!important;
+}
+.market-curriculum-shell .mcc-sources a,
+.market-curriculum-shell .source-link{
+  transition:background .16s ease,color .16s ease,border-color .16s ease;
+}
+.market-curriculum-shell .mcc-sources a:hover,
+.market-curriculum-shell .source-link:hover{
+  color:#26310f!important;
+  background:#edf4cf!important;
+  border-color:#b7c789!important;
+}
+.market-curriculum-shell .mcc-sources a:active,
+.market-curriculum-shell .source-link:active{
+  color:#11150f!important;
+  background:#dfeab9!important;
+}
+.market-curriculum-shell .mcc-sources a:focus-visible,
+.market-curriculum-shell .source-link:focus-visible{
+  outline:3px solid #718331!important;
+  outline-offset:3px;
+}
+.market-curriculum-shell .mcc-drawer-actions .button:focus-visible,
+.market-curriculum-shell .mcc-drawer-close:focus-visible{
+  outline:3px solid #718331!important;
+  outline-offset:3px;
+}
+@media(max-width:700px){
+  .market-curriculum-shell .country-node-grid{grid-template-columns:1fr;gap:12px;}
+}
+@media(hover:none){
+  .market-curriculum-shell .country-node-grid .country-node:hover{
+    border-color:var(--line);
+    background:var(--paper,#fff);
+    box-shadow:none;
+  }
+  .market-curriculum-shell .mcc-open-lesson:hover,
+  .market-curriculum-shell .mcc-sources a:hover,
+  .market-curriculum-shell .source-link:hover{
+    color:inherit!important;
+    background:transparent!important;
+    border-color:transparent;
+  }
+}
