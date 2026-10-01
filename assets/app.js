@@ -337,3 +337,58 @@ const daily=[["Why can a low P/E still be expensive?","Learn how earnings qualit
 
 /* Shared world-class UX loader */
 (function(){if(document.querySelector('script[src*="world-class.js"]'))return;var s=document.createElement("script");s.src=(location.pathname.split("/").filter(Boolean).length>1?"../":"./")+"assets/world-class.js?v=20261001";s.defer=true;document.body.appendChild(s)})();
+
+
+/* PirePoint human-first interaction layer */
+(function(){
+  "use strict";
+  const qs=s=>document.querySelector(s);
+  const qsa=s=>Array.from(document.querySelectorAll(s));
+
+  /* Mobile navigation: conventional, reversible, keyboard-safe. */
+  const nav=qs(".nav nav"), navWrap=qs(".nav");
+  if(nav && navWrap && !qs(".mobile-menu-button")){
+    const b=document.createElement("button");
+    b.type="button"; b.className="mobile-menu-button";
+    b.setAttribute("aria-expanded","false"); b.setAttribute("aria-controls","primary-nav");
+    b.textContent="Menu";
+    nav.id="primary-nav";
+    navWrap.insertBefore(b,nav);
+    const close=()=>{nav.classList.remove("open");b.setAttribute("aria-expanded","false")};
+    b.addEventListener("click",()=>{const open=!nav.classList.contains("open");nav.classList.toggle("open",open);b.setAttribute("aria-expanded",String(open))});
+    nav.addEventListener("click",e=>{if(e.target.closest("a"))close()});
+    document.addEventListener("keydown",e=>{if(e.key==="Escape")close()});
+  }
+
+  /* Long-page orientation. Only add it when a page genuinely needs it. */
+  const main=qs("main");
+  if(main && document.body.scrollHeight>1800 && !qs(".reading-progress")){
+    const bar=document.createElement("div");
+    bar.className="reading-progress";
+    bar.setAttribute("aria-hidden","true");
+    bar.innerHTML="<span></span>";
+    document.body.prepend(bar);
+    const fill=bar.firstElementChild;
+    const update=()=>{
+      const max=document.documentElement.scrollHeight-window.innerHeight;
+      fill.style.width=(max>0?Math.min(100,Math.max(0,window.scrollY/max*100)):0)+"%";
+    };
+    window.addEventListener("scroll",update,{passive:true}); update();
+  }
+
+  /* Make external links explicit without changing existing wording. */
+  qsa('a[target="_blank"]').forEach(a=>{
+    if(!a.getAttribute("rel")) a.setAttribute("rel","noopener noreferrer");
+  });
+
+  /* Prevent accidental double-submit while preserving normal forms. */
+  qsa("form").forEach(form=>{
+    form.addEventListener("submit",()=>{
+      const submit=form.querySelector('button[type="submit"],button:not([type])');
+      if(submit && !submit.dataset.once){
+        submit.dataset.once="1";
+        window.setTimeout(()=>delete submit.dataset.once,1200);
+      }
+    });
+  });
+})();
