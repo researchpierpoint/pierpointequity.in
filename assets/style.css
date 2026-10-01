@@ -991,3 +991,98 @@ input::placeholder,textarea::placeholder{color:#858b82;opacity:1;}
     flex:1 1 150px;
   }
 }
+
+/* Hard reset for the lesson reader: never inherit low-contrast site typography. */
+.market-curriculum-shell .mcc-drawer-panel .mcc-reader,
+.market-curriculum-shell .mcc-drawer-panel .mcc-reader *{
+  color:#11150f;
+  opacity:1;
+  text-shadow:none;
+}
+.market-curriculum-shell .mcc-drawer-panel .mcc-reader{
+  display:block;
+  width:100%;
+  max-width:650px;
+  margin:0 auto;
+  font-family:inherit;
+}
+.market-curriculum-shell .mcc-drawer-panel .mcc-reader .eyebrow{
+  display:block;
+  color:#5b6f1f!important;
+  opacity:1!important;
+  font-size:11px!important;
+  line-height:1.4!important;
+  font-weight:900!important;
+  letter-spacing:.14em!important;
+}
+.market-curriculum-shell .mcc-drawer-panel .mcc-reader h2{
+  color:#0b1009!important;
+  opacity:1!important;
+  font-size:clamp(2.25rem,5vw,3.5rem)!important;
+  line-height:1.03!important;
+  font-weight:850!important;
+  margin:14px 0 18px!important;
+  letter-spacing:-.04em!important;
+}
+.market-curriculum-shell .mcc-drawer-panel .mcc-reader .mcc-drawer-objective{
+  color:#343c32!important;
+  opacity:1!important;
+  font-size:18px!important;
+  line-height:1.7!important;
+  font-weight:500!important;
+  margin:0 0 10px!important;
+}
+.market-curriculum-shell .mcc-drawer-panel .mcc-reader section{
+  display:block;
+  color:#11150f!important;
+  border-top:1px solid #d5dbd0!important;
+  padding:24px 0!important;
+}
+.market-curriculum-shell .mcc-drawer-panel .mcc-reader section.mcc-gain{
+  color:#11150f!important;
+  background:#f1f5df!important;
+  border:1px solid #d5dfbd!important;
+  border-radius:16px!important;
+  padding:20px 18px!important;
+  margin:8px 0!important;
+}
+.market-curriculum-shell .mcc-drawer-panel .mcc-reader .mcc-label{
+  display:block;
+  color:#52651b!important;
+  opacity:1!important;
+  font-size:10px!important;
+  line-height:1.4!important;
+  font-weight:900!important;
+  letter-spacing:.14em!important;
+  text-transform:uppercase!important;
+}
+.market-curriculum-shell .mcc-drawer-panel .mcc-reader p{
+  color:#1c241a!important;
+  opacity:1!important;
+  font-size:16px!important;
+  line-height:1.8!important;
+  font-weight:450!important;
+  margin:9px 0 0!important;
+  max-width:650px!important;
+}
+.market-curriculum-shell .mcc-drawer-panel .mcc-reader .mcc-drawer-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  border-top:1px solid #d5dbd0!important;
+  padding:22px 0 8px!important;
+}
+.market-curriculum-shell .mcc-drawer-panel .mcc-reader .mcc-drawer-actions .button{
+  color:#fff!important;
+  background:#11150f!important;
+  opacity:1!important;
+}
+.market-curriculum-shell .mcc-drawer-panel .mcc-reader .mcc-drawer-actions .button.secondary{
+  color:#11150f!important;
+  background:#fff!important;
+}
+@media(max-width:640px){
+  .market-curriculum-shell .mcc-drawer-panel .mcc-reader h2{font-size:clamp(2rem,10vw,2.65rem)!important;}
+  .market-curriculum-shell .mcc-drawer-panel .mcc-reader .mcc-drawer-objective{font-size:16px!important;}
+  .market-curriculum-shell .mcc-drawer-panel .mcc-reader p{font-size:15px!important;line-height:1.76!important;}
+}
