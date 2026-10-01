@@ -1221,3 +1221,88 @@ input::placeholder,textarea::placeholder{color:#858b82;opacity:1;}
     border-color:transparent;
   }
 }
+
+/* =========================================================
+   PIREPOINT GLOBAL UX SYSTEM v20261008
+   Shared interaction, rhythm, accessibility and responsive rules.
+   ========================================================= */
+:root{
+  --pp-focus:#718331;
+  --pp-focus-soft:#eef4d9;
+  --pp-accent-dark:#4f5f20;
+  --pp-radius-sm:10px;
+  --pp-radius-md:14px;
+  --pp-radius-lg:18px;
+  --pp-shadow:0 12px 32px rgba(20,25,10,.07);
+}
+html{scroll-padding-top:92px}
+body{overflow-x:hidden;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+img,svg,video{max-width:100%;height:auto}
+button,input,select,textarea{font:inherit}
+button,a,.button,.text-button,.card,.feature,.country-card,.guide-card,.question-card,.command-card,.market-preview,.route-options button,.r-option{touch-action:manipulation}
+:where(a,button,input,select,textarea,summary,[tabindex]):focus-visible{outline:3px solid var(--pp-focus)!important;outline-offset:3px}
+:where(button,.button,.text-button){-webkit-tap-highlight-color:transparent}
+button{cursor:pointer}
+button:disabled{cursor:not-allowed}
+.button{min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 17px;border-radius:var(--pp-radius-sm);font-weight:800;line-height:1.15;transition:background .16s ease,color .16s ease,border-color .16s ease,transform .12s ease,box-shadow .16s ease}
+.button:hover{transform:translateY(-1px);box-shadow:0 7px 18px rgba(20,25,10,.08)}
+.button:active{transform:translateY(1px);box-shadow:none}
+.button.secondary:hover{background:#f0f3e7;border-color:#c4cdb0}
+.text-button{min-height:40px;display:inline-flex;align-items:center;font-weight:800;border-radius:8px;padding:7px 8px;transition:background .16s ease,color .16s ease}
+.text-button:hover{background:#edf4cf;color:#26310f}
+.text-button:active{background:#dfeab9;color:#11150f}
+.nav nav a,.nav-search{min-height:40px;display:inline-flex;align-items:center}
+.nav nav a{padding:8px 2px;border-radius:7px}
+.nav nav a:hover{background:#edf1e5}
+.nav-search{transition:background .16s ease,border-color .16s ease}
+.nav-search:hover{background:#edf1e5;border-color:#c8cfbc}
+.site-header{z-index:100}
+.mobile-menu-button{display:none;min-height:42px;padding:8px 13px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);font-weight:800}
+.mobile-menu-button:hover{background:#edf1e5;border-color:#c8cfbc}
+.card,.feature,.country-card,.guide-card,.question-card,.command-card,.market-preview{transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease,background .16s ease}
+.card:hover,.feature:hover,.country-card:hover,.guide-card:hover,.question-card:hover,.command-card:hover,.market-preview:hover{border-color:#cbd3b7}
+.card:active,.feature:active,.country-card:active,.guide-card:active,.question-card:active,.command-card:active,.market-preview:active{transform:translateY(1px)}
+input,select,textarea{color:var(--ink);background:#fff;border-color:var(--line)}
+input::placeholder,textarea::placeholder{color:#7a7f76;opacity:1}
+input:focus,select:focus,textarea:focus{border-color:#aab982;box-shadow:0 0 0 3px rgba(113,131,49,.13)}
+.notice{color:var(--ink)}
+.prose{font-size:16px;line-height:1.8}
+.prose p{max-width:75ch}
+.prose h2,.prose h3{line-height:1.2;color:var(--ink)}
+.page{padding-top:68px}
+.page>.eyebrow{display:block}
+.section{scroll-margin-top:92px}
+@media(max-width:800px){
+  .wrap{width:min(calc(100% - 28px),var(--max))}
+  .nav{height:64px;gap:10px}
+  .brand{font-size:14px}
+  .nav nav{display:none;position:absolute;left:14px;right:14px;top:72px;padding:10px;background:rgba(255,255,255,.98);border:1px solid var(--line);border-radius:16px;box-shadow:0 18px 45px rgba(20,25,10,.14);z-index:101}
+  .nav nav.open{display:grid;gap:2px}
+  .nav nav a{padding:12px 13px;min-height:44px}
+  .mobile-menu-button{display:inline-flex;align-items:center;justify-content:center;margin-left:auto}
+  .nav-search{order:3;padding:7px 11px;font-size:12px}
+  .hero{padding:68px 0 54px}
+  .hero h1{font-size:clamp(42px,13vw,68px);line-height:.98}
+  .hero-copy,.lead{font-size:16px;line-height:1.6}
+  .section{padding:54px 0}
+  .section-head{align-items:flex-start;gap:14px}
+  .section-head h2{font-size:28px;line-height:1.1}
+  .section-head>.button{width:100%}
+  .search{border-radius:13px}
+  .search input{min-width:0}
+  .search button{min-height:46px;padding:0 16px}
+  .footer-grid>div:last-child{gap:8px 14px}
+  .footer-grid>div:last-child a{padding:6px 0}
+}
+@media(max-width:520px){
+  .page{padding-top:48px}
+  .page h1{font-size:clamp(38px,12vw,56px)}
+  .hero-actions,.finish-actions,.research-home-actions{display:grid;gap:10px}
+  .hero-actions .button,.finish-actions .button,.research-home-actions .button{width:100%}
+  .source-card{display:block}
+  .source-icon{margin-bottom:14px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}
+}
