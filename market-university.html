@@ -118,4 +118,4 @@
 <script>
 (()=>{const q=document.getElementById("topicSearch"),items=[...document.querySelectorAll(".topic")],count=document.getElementById("count");function run(){const s=q.value.trim().toLowerCase();let n=0;items.forEach(x=>{const ok=!s||x.dataset.topic.toLowerCase().includes(s);x.hidden=!ok;if(ok)n++});count.textContent=n+" topics visible · "+items.length+" curriculum topics mapped";document.querySelectorAll(".school").forEach(d=>{if(s&&[...d.querySelectorAll(".topic")].some(x=>!x.hidden))d.open=true})}q.addEventListener("input",run);
 items.forEach(x=>{if(!x.querySelector("a")){x.tabIndex=0;x.setAttribute("role","link");x.addEventListener("click",e=>{if(e.target.closest("a"))return;location.href="lesson.html?topic="+encodeURIComponent(x.querySelector("b").textContent.trim())});x.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();location.href="lesson.html?topic="+encodeURIComponent(x.querySelector("b").textContent.trim())}})}});run()})();
-</script></body></html>
+</script><script src="assets/world-class.js?v=20261001"></script></body></html>
