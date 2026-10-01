@@ -392,3 +392,45 @@ const daily=[["Why can a low P/E still be expensive?","Learn how earnings qualit
     });
   });
 })();
+
+
+/* Global information architecture: the same mental map everywhere. */
+(function(){
+  "use strict";
+  const nav=document.querySelector(".nav nav");
+  if(nav){
+    const path=location.pathname.replace(/^\//,"");
+    const root=path.startsWith("countries/")||path.startsWith("guides/")?"../":"";
+    const items=[
+      ["Learn",root+"learn.html",["learn.html","guides.html","lesson.html","academy.html"]],
+      ["Markets",root+"countries.html",["countries.html","compare.html","countries/"]],
+      ["Research",root+"intelligence.html",["intelligence.html","research-hub.html","research.html","research-compare.html","research/"]],
+      ["Tools",root+"tools.html",["tools.html","labs.html"]],
+      ["Academy",root+"academy.html",["academy.html","routine.html","system.html"]]
+    ];
+    nav.innerHTML=items.map(([label,href,matches])=>{
+      const active=matches.some(x=>path===x||path.startsWith(x))?" aria-current=\"page\"":"";
+      return '<a href="'+href+'"'+active+'>'+label+'</a>';
+    }).join("");
+  }
+
+  /* Breadcrumbs only on genuinely deep pages; never on the homepage. */
+  const main=document.querySelector("main");
+  if(main && !document.querySelector(".site-breadcrumb") && location.pathname!="/" && !location.pathname.endsWith("/index.html")){
+    const parts=location.pathname.split("/").filter(Boolean);
+    if(parts.length){
+      const last=(parts[parts.length-1]||"").replace(/\.html$/,"").replace(/[-_]+/g," ");
+      const section=parts[0]==="countries"?"Markets":parts[0]==="guides"?"Guides":parts[0]==="research"?"Research":"";
+      const crumb=document.createElement("nav");
+      crumb.className="site-breadcrumb";
+      crumb.setAttribute("aria-label","Breadcrumb");
+      const label=last?last.charAt(0).toUpperCase()+last.slice(1):"Current page";
+      crumb.innerHTML='<a href="'+(parts.length>1?"../":"./")+'index.html">Home</a><span aria-hidden="true">/</span>'+(section?'<a href="'+(parts[0]==="countries"?"../countries.html":parts[0]==="guides"?"../guides.html":"../research-hub.html")+'">'+section+'</a><span aria-hidden="true">/</span>':'')+'<span aria-current="page">'+label+'</span>';
+      const first=main.firstElementChild;
+      if(first) main.insertBefore(crumb,first);
+    }
+  }
+
+  /* Tell assistive technology that page title content has a clear main landmark. */
+  if(main && !main.id) main.id="main-content";
+})();
