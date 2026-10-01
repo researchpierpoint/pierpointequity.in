@@ -12,6 +12,10 @@ CONTACT='''<div class="pp-footer-contact"><span class="footer-label">Contact</sp
 
 def copy_html(src, dst):
     html=src.read_text(encoding="utf-8")
+    # Keep browser caches from serving stale UX/content engines after a release.
+    html=re.sub(r"(assets/style\\.css)(?:\\?v=[^\"']*)?", r"\\1?v=20261004", html)
+    html=re.sub(r"(assets/app\\.js)(?:\\?v=[^\"']*)?", r"\\1?v=20261004", html)
+    html=re.sub(r"(assets/market-curriculum\\.js)(?:\\?v=[^\"']*)?", r"\\1?v=20261004", html)
     if "pp-footer-contact" not in html and '<div class="footer-grid">' in html:
         marker='</div></div><div class="wrap fine">'
         if marker in html:
