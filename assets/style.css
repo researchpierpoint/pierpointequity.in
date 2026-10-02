@@ -2109,3 +2109,28 @@ html.mcc-drawer-lock body{
     padding-bottom:calc(32px + env(safe-area-inset-bottom))!important;
   }
 }
+
+/* Tablet lesson reader: keep the side-sheet design, but give it a
+   real dynamic viewport and an explicit scroll container. */
+@media (min-width:701px) and (max-width:900px){
+  .market-curriculum-shell .mcc-drawer-panel{
+    height:100dvh!important;
+    max-height:100dvh!important;
+    min-height:0!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    -webkit-overflow-scrolling:touch!important;
+    overscroll-behavior:contain!important;
+    box-sizing:border-box!important;
+    padding-bottom:72px!important;
+  }
+  .market-curriculum-shell .mcc-drawer-close{
+    position:fixed!important;
+    top:18px!important;
+    right:22px!important;
+    z-index:50!important;
+  }
+  .market-curriculum-shell .mcc-drawer-panel .mcc-reader{
+    padding-bottom:32px!important;
+  }
+}
