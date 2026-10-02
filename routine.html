@@ -91,6 +91,36 @@
 .r-market-curriculum,.r-deep-map{margin-top:10px}.r-market-curriculum summary,.r-deep-map summary{padding:13px 15px;font-size:11px}.r-node{padding:11px 13px}.r-node b{font-size:10px}
 @media(max-width:850px){.r-learning-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.r-learning-grid{grid-template-columns:1fr}}
+</style><style id="routine-ux-v2">
+/* Keep the decision surface inside the visitor's first viewport. */
+.r-main{overflow:visible}
+.r-main>.r-progress{position:sticky;top:0;z-index:30;border-radius:20px 20px 0 0}
+#builder{min-height:0}
+.r-question{max-width:680px}
+.r-option{min-height:66px;display:flex;flex-direction:column;justify-content:center}
+.r-after-question{max-width:680px}
+.r-actions{position:sticky;bottom:10px;z-index:25;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:12px;padding:8px;box-shadow:0 8px 26px rgba(16,24,40,.08)}
+.r-actions .r-btn{min-width:105px}
+.r-actions .r-btn:first-child{margin-right:auto}
+.r-transfer-preview{max-width:900px}
+.r-transfer-grid{font-size:.96em}
+.r-side-card:nth-child(2){padding:12px 14px}
+.r-side-card:nth-child(2) p{margin:0}
+#expert-model{margin-top:8px}
+@media(min-width:851px){
+ .r-main{max-height:calc(100vh - 150px);overflow:auto;scrollbar-width:thin}
+ .r-main>.r-progress{position:sticky}
+ .r-pad{padding:20px 24px}
+ .r-orientation-bar{margin:-20px -24px 18px}
+ .r-options{margin-top:13px}
+ .r-after-question{margin-top:9px}
+ .r-actions{bottom:8px}
+}
+@media(max-width:560px){
+ .r-option{min-height:54px}
+ .r-actions{bottom:5px}
+ .r-after-question{font-size:10px}
+}
 </style></head>
 <body>
 <header class="site-header"><div class="wrap nav">
@@ -380,7 +410,7 @@ function buildLearningHtml(){
  const sources=(marketProfile("targetMarket")?.primarySources||[]).map(x=>'<a href="'+esc(x[1])+'" target="_blank" rel="noopener">'+esc(x[0])+' ↗</a>').join("");
  const dims=MARKET_DATA.dimensions||[];
  const deep=dims.map((x,i)=>'<div class="r-deep-map-item"><b>'+String(i+1).padStart(3,"0")+' · '+esc(x[1])+'</b><span>'+esc(x[2]||"Observed, tested or verified as the learner progresses.")+'</span></div>').join("");
- return '<section class="r-learning"><div class="r-learning-head"><span class="eyebrow">TEACH ME THE MARKET</span><div class="r-learning-badge">'+nodes.length+' LEARNING NODES</div><h2>'+esc(marketDisplay("targetMarket"))+' is a system, not a list of rules.</h2><p>Now the teaching begins. PirePoint covers the destination from orientation through real-company research. It compresses what your evidence proves, teaches what is genuinely new, and deliberately tests assumptions that may have transferred incorrectly.</p></div><div class="r-learning-grid">'+cards+'</div>'+(sources?'<div class="r-local-sources"><h3>Primary-source checkpoints</h3><div class="r-source-list">'+sources+'</div></div>':'')+'</section><details class="r-market-curriculum"><summary><strong>Open the complete '+nodes.length+'-node '+esc(marketDisplay("targetMarket"))+' curriculum</strong><span>Every node has a learning objective, proof method and destination-source context.</span></summary><div class="r-node-toolbar"><div class="r-node-pills">'+nodeDomains+'</div><a href="'+esc(guide)+'" class="r-btn r-link">Open market guide →</a></div><div class="r-node-list">'+nodeList+'</div></details><details class="r-deep-map"><summary>See the deeper intelligence map — '+(dims.length||106)+' dimensions</summary><div class="r-deep-map-body"><p class="muted" style="font-size:11px;line-height:1.6">These are not extra homework questions. They are dimensions PirePoint can observe, test, verify, revisit or connect to later research.</p><div class="r-deep-map-grid">'+deep+'</div></div></details>';
+ return '<section class="r-learning" id="learning"><div class="r-learning-head"><span class="eyebrow">TEACH ME THE MARKET</span><div class="r-learning-badge">'+nodes.length+' LEARNING NODES</div><h2>'+esc(marketDisplay("targetMarket"))+' is a system, not a list of rules.</h2><p>Now the teaching begins. PirePoint covers the destination from orientation through real-company research. It compresses what your evidence proves, teaches what is genuinely new, and deliberately tests assumptions that may have transferred incorrectly.</p></div><div class="r-learning-grid">'+cards+'</div>'+(sources?'<div class="r-local-sources"><h3>Primary-source checkpoints</h3><div class="r-source-list">'+sources+'</div></div>':'')+'</section><details class="r-market-curriculum"><summary><strong>Open the complete '+nodes.length+'-node '+esc(marketDisplay("targetMarket"))+' curriculum</strong><span>Every node has a learning objective, proof method and destination-source context.</span></summary><div class="r-node-toolbar"><div class="r-node-pills">'+nodeDomains+'</div><a href="'+esc(guide)+'" class="r-btn r-link">Open market guide →</a></div><div class="r-node-list">'+nodeList+'</div></details><details class="r-deep-map"><summary>See the deeper intelligence map — '+(dims.length||106)+' dimensions</summary><div class="r-deep-map-body"><p class="muted" style="font-size:11px;line-height:1.6">These are not extra homework questions. They are dimensions PirePoint can observe, test, verify, revisit or connect to later research.</p><div class="r-deep-map-grid">'+deep+'</div></div></details>';
 }
 
 function result(){
@@ -400,7 +430,7 @@ function result(){
  const bridgeHtml=bridge.length?'<div class="routine-hero-card" style="margin-top:14px"><span class="eyebrow">MARKET TRANSFER MAP</span><h2>Same · Different · New · Potentially misleading</h2><div class="r-route-grid">'+bridge.map(x=>'<div class="r-route"><b>'+esc(x[0].toUpperCase())+'</b><span>'+esc(x[1])+'</span></div>').join("")+'</div><p style="margin-top:14px;color:#d0d5dd">Destination focus is generated from PirePoint’s market-transfer framework. Primary-source checkpoints are kept separate from general learning so a rule can be verified before it becomes part of the learner’s model.</p></div>':'';
  const learningHtml=buildLearningHtml();
  const cards=Object.entries(stats).filter(x=>x[1].total).map(([k,v])=>'<div class="r-route"><b>'+esc(domains[k].label)+'</b><span>'+v.correct+'/'+v.total+' applied · '+(v.correct===v.total?"reliable in this calibration":"needs further work")+(v.highWrong?" · "+v.highWrong+" high-confidence miss":"")+'</span></div>').join("");
- res.innerHTML='<span class="r-step-label">YOUR ROUTINE IS READY</span><div class="routine-hero-card"><span class="eyebrow">NEXT BEST STEP</span><h2>'+esc(first.label)+'</h2><p>'+esc(first.why)+' The route is evidence-based and will change when later work gives PirePoint new evidence.</p><div class="r-route-grid">'+uniq.map((x,i)=>'<div class="r-route"><b>'+String(i+1).padStart(2,"0")+" · "+esc(x.label)+'</b><span>'+esc(x.why)+'</span></div>').join("")+'</div><div class="r-next"><div><small>Routine depth</small><b>'+esc(s.a.time==="5"?"5 min":s.a.time==="15"?"15 min":s.a.time==="30"?"30 min":"60+ min")+'</b></div><a class="r-btn r-link" href="'+esc(first.resource)+'">Start this step →</a></div></div>'+bridgeHtml+learningHtml+'<p class="muted" style="font-size:12px;margin-top:18px">This is not a permanent score. It is a working diagnosis: what appears reliable, what needs verification, and what should be tested next.</p><div class="r-route-grid">'+cards+'</div><div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap"><a class="r-btn r-link" href="system.html#route">Open learning system →</a><button class="r-btn secondary" id="again">Recalibrate</button></div>';
+ res.innerHTML='<span class="r-step-label">YOUR ROUTINE IS READY</span><div class="routine-hero-card"><span class="eyebrow">NEXT BEST STEP</span><h2>'+esc(first.label)+'</h2><p>'+esc(first.why)+' The route is evidence-based and will change when later work gives PirePoint new evidence.</p><div class="r-route-grid">'+uniq.map((x,i)=>'<div class="r-route"><b>'+String(i+1).padStart(2,"0")+" · "+esc(x.label)+'</b><span>'+esc(x.why)+'</span></div>').join("")+'</div><div class="r-next"><div><small>Routine depth</small><b>'+esc(s.a.time==="5"?"5 min":s.a.time==="15"?"15 min":s.a.time==="30"?"30 min":"60+ min")+'</b></div><a class="r-btn r-link" href="'+esc(first.resource)+'">Start this step →</a></div></div>'+bridgeHtml+learningHtml+'<p class="muted" style="font-size:12px;margin-top:18px">This is not a permanent score. It is a working diagnosis: what appears reliable, what needs verification, and what should be tested next.</p><div class="r-route-grid">'+cards+'</div><div class="r-result-nav" style="position:sticky;bottom:10px;z-index:20;margin-top:16px;padding:8px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);display:flex;gap:7px;flex-wrap:wrap"><a class="r-btn r-link" href="#result">Your route ↑</a><a class="r-btn secondary r-link" href="#transferPreview">Transfer map</a><a class="r-btn secondary r-link" href="#learning">Lessons</a><a class="r-btn secondary r-link" href="system.html#route">Learning system</a><button class="r-btn secondary" id="again">Recalibrate</button></div>';
  document.getElementById("again").onclick=()=>location.reload()
 }
 next.onclick=()=>s.i<steps.length-1?(s.i++,render()):(s.queue=buildQueue(),s.ci=0,q.style.display="none",document.querySelector("#builder .r-actions").style.display="none",cal.classList.add("show"),renderCase());
