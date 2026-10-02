@@ -25,7 +25,62 @@
 @media(max-width:560px){.r-transfer-grid,.r-check-grid{grid-template-columns:1fr}.r-transfer-cell{border-right:0!important}}
 .r-market-picker{margin-top:20px}.r-market-search{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:12px;padding:13px 14px;font:inherit;font-size:13px;outline:none}.r-market-search:focus{border-color:var(--routine-accent);box-shadow:0 0 0 3px rgba(36,87,230,.10)}.r-market-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:12px;max-height:390px;overflow:auto;padding-right:2px}.r-market-option{border:1px solid var(--line);background:#fff;border-radius:13px;padding:13px;text-align:left;cursor:pointer}.r-market-option:hover{border-color:#9bb5f5}.r-market-option.selected{border-color:var(--routine-accent);background:var(--routine-soft)}.r-market-option b{display:block;font-size:13px}.r-market-option small{display:block;color:var(--muted);font-size:10px;line-height:1.4;margin-top:3px}.r-custom-market{display:none;margin-top:12px;padding:14px;border:1px dashed #b8c7ea;border-radius:13px;background:#f8fafc}.r-custom-market.show{display:block}.r-custom-market label{display:block;font-size:10px;font-weight:850;text-transform:uppercase;letter-spacing:.08em;color:var(--routine-accent)}.r-custom-market input{width:100%;box-sizing:border-box;margin-top:7px;border:1px solid var(--line);border-radius:10px;padding:11px;font:inherit}.r-market-meta{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.r-market-meta span{font-size:9px;padding:5px 7px;border-radius:999px;background:#f2f4f7;color:#475467}.r-syllabus{border-top:1px solid #d7e2ff;padding:18px 20px}.r-syllabus-head{display:flex;justify-content:space-between;gap:12px;align-items:end}.r-syllabus-head b{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#2457e6}.r-syllabus-head span{font-size:10px;color:var(--muted)}.r-syllabus-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:11px}.r-syllabus-item{padding:10px;border:1px solid #e4e7ec;border-radius:10px;background:#fff}.r-syllabus-item b{display:block;font-size:10px}.r-syllabus-item span{display:block;color:var(--muted);font-size:9px;line-height:1.4;margin-top:3px}@media(max-width:850px){.r-market-grid,.r-syllabus-grid{grid-template-columns:1fr 1fr}}@media(max-width:560px){.r-market-grid,.r-syllabus-grid{grid-template-columns:1fr}}
 .r-learning-badge{display:inline-flex;float:right;padding:7px 10px;border:1px solid #56604d;border-radius:999px;color:#d7ec83;font-size:10px;font-weight:900;letter-spacing:.08em}.r-market-curriculum{margin-top:18px;border:1px solid var(--line);border-radius:18px;background:#fff;overflow:hidden}.r-market-curriculum summary{cursor:pointer;padding:18px 20px;font-size:13px}.r-market-curriculum summary span{display:block;color:var(--muted);font-size:10px;margin-top:5px}.r-node-toolbar{padding:14px 20px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;justify-content:space-between}.r-node-pills{display:flex;gap:5px;flex-wrap:wrap}.r-node-pill{font-size:9px;padding:5px 7px;border-radius:999px;background:#f2f4f7}.r-node-list{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line)}.r-node{background:#fff;padding:13px 16px;display:grid;grid-template-columns:35px 1fr;gap:9px}.r-node-no{font-size:10px;font-weight:900;color:var(--muted)}.r-node b{font-size:10px}.r-node p{font-size:9px;line-height:1.5;color:var(--muted);margin:4px 0}.r-node small{font-size:8px;color:#73796e}@media(max-width:700px){.r-node-list{grid-template-columns:1fr}.r-learning-badge{float:none;margin-bottom:8px}.r-node-toolbar{align-items:flex-start;flex-direction:column}}</style>
-</head>
+<style id="routine-ux-overrides">
+/* 2026-10-02 — orientation + question surface redesign
+   Goal: keep the question, progress, options and “what comes next” in one visual frame. */
+.r-main{box-shadow:0 18px 55px rgba(20,28,22,.07)}
+.r-pad{padding:24px 26px}
+.r-orientation-bar{display:grid;grid-template-columns:auto minmax(120px,1fr) auto;gap:14px;align-items:center;margin:-24px -26px 22px;padding:12px 16px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fbfcfa,#fff)}
+.r-mini-kicker{display:block;font-size:8px;font-weight:900;letter-spacing:.13em;color:var(--routine-accent);text-transform:uppercase}
+.r-orientation-bar strong{font-size:12px;letter-spacing:-.01em}
+.r-mini-progress{height:5px;border-radius:999px;background:#edf0eb;overflow:hidden}
+.r-mini-progress i{display:block;width:0;height:100%;background:var(--routine-accent);border-radius:inherit;transition:width .3s ease}
+.r-skip-info{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 10px;color:var(--muted);font:700 10px inherit;cursor:pointer;white-space:nowrap}
+.r-skip-info:hover{border-color:#aeb9ad;color:var(--ink);background:#f8faf8}
+.r-step-label{font-size:9px}
+.r-question{font-size:clamp(25px,3vw,34px);max-width:760px;margin:7px 0 6px}
+.r-hint{font-size:13px;line-height:1.48;margin:0;max-width:700px}
+.r-options{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:16px}
+.r-option{padding:12px 13px;border-radius:12px;min-height:0}
+.r-option b{font-size:13px;line-height:1.3}
+.r-option small{font-size:10.5px;line-height:1.4;margin-top:3px}
+.r-actions{margin-top:15px;padding-top:13px;border-top:1px solid #eef0ed}
+.r-btn{padding:10px 14px}
+.r-after-question{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:10px;row-gap:1px;margin-top:13px;padding:10px 12px;border-radius:11px;background:#f6f8f5;border:1px solid #e7ebe5}
+.r-after-question span{grid-row:1/3;font-size:8px;font-weight:900;letter-spacing:.12em;color:var(--routine-accent);padding-top:2px}
+.r-after-question b{font-size:10.5px}
+.r-after-question small{font-size:10px;color:var(--muted);line-height:1.35}
+.r-side{top:86px}
+.r-side-card{padding:15px}
+.r-side-card h3{font-size:13px}
+.r-side-card p{font-size:11px}
+.r-signal{gap:5px;margin-top:8px}
+.signal{padding:7px 8px;font-size:10px}
+.r-transfer-preview{margin-top:13px}
+.r-transfer-grid{grid-template-columns:repeat(3,1fr)}
+.r-transfer-cell{padding:12px 14px}
+.r-transfer-cell span{font-size:10px}
+.r-market-grid{max-height:250px}
+.r-expert{margin-top:13px}
+@media(max-width:850px){
+ .r-shell{grid-template-columns:1fr}
+ .r-side{display:none}
+ .r-pad{padding:20px}
+ .r-orientation-bar{margin:-20px -20px 18px;grid-template-columns:auto 1fr}
+ .r-skip-info{display:none}
+ .r-options{grid-template-columns:1fr 1fr}
+}
+@media(max-width:560px){
+ .r-options{grid-template-columns:1fr}
+ .r-question{font-size:25px}
+ .r-hint{font-size:12.5px}
+ .r-orientation-bar{grid-template-columns:1fr}
+ .r-mini-progress{order:3}
+ .r-actions{position:sticky;bottom:7px;z-index:8;margin-inline:-4px;padding:8px;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.08)}
+ .r-actions .r-btn{flex:1}
+ .r-after-question{margin-bottom:2px}
+}
+</style></head>
 <body>
 <header class="site-header"><div class="wrap nav">
 <a class="brand" href="index.html"><span class="mark">P</span><span>PirePoint <b>Equity</b></span></a>
@@ -45,8 +100,11 @@
 <div class="r-main">
 <div class="r-progress"><i id="progress"></i></div>
 <div class="r-pad" id="builder">
+<div class="r-orientation-bar"><div><span class="r-mini-kicker">YOUR LEARNING ROUTE</span><strong id="questionCounter">Question 1</strong></div><div class="r-mini-progress"><i id="miniProgress"></i></div><button class="r-skip-info" id="showRouteInfo" type="button">Why am I being asked this?</button></div>
 <div id="questionView"></div>
-<div class="r-transfer-preview" id="transferPreview"></div><div class="r-actions"><button class="r-btn secondary" id="back" disabled><button class="r-btn" id="next" disabled>Continue</button></div>
+<div class="r-transfer-preview" id="transferPreview"></div>
+<div class="r-actions"><button class="r-btn secondary" id="back" type="button" disabled>Back</button><button class="r-btn" id="next" type="button" disabled>Continue <span>→</span></button></div>
+<div class="r-after-question" id="afterQuestion"><span>UP NEXT</span><b id="upNextTitle">Your next step will appear here.</b><small id="upNextText">Short questions first. Deeper learning comes after your route is calibrated.</small></div>
 </div>
 <div class="r-pad r-calibration" id="calibration"></div>
 <div class="r-pad r-result" id="result"></div>
@@ -213,6 +271,11 @@ function renderTransferPreview(){
 }
 function returnToQuestion(){const el=document.getElementById("questionView");if(el)setTimeout(()=>el.scrollIntoView({behavior:"smooth",block:"start"}),40)} function returnToCalibration(){const el=document.getElementById("calibration");if(el)setTimeout(()=>el.scrollIntoView({behavior:"smooth",block:"start"}),40)} function render(){
  const z=steps[s.i];
+ if(counter)counter.textContent="Question "+(s.i+1)+" of "+steps.length;
+ if(mini)mini.style.width=((s.i+1)/steps.length*100)+"%";
+ if(upTitle)upTitle.textContent=s.i<steps.length-1?steps[s.i+1][2]:"Calibration begins next";
+ if(upText)upText.textContent=s.i<steps.length-1?"You’ll only see what is needed for the next decision.":"Your answers will now be tested through short applied cases.";
+
  if(z[0]==="sourceMarket"||z[0]==="targetMarket"){renderMarketStep(z);next.disabled=!(s.a[z[0]]&&marketReady(z[0]));renderTransferPreview();back.disabled=!s.i;bar.style.width=s.i/steps.length*100+"%";side();return}
  const multi=z[0]==="knowledge";
  const hint=z[0]==="knowledge"?"Select what you think you already understand. We will verify it; you can also choose to prove it.":"This shapes the route; it does not determine your ability. Calibration does that.";
