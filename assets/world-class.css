@@ -689,3 +689,23 @@ body.pp-world-class .pp-search-hint kbd{
 @media(prefers-reduced-motion:reduce){
   body.pp-world-class .command-card:hover,body.pp-world-class .knowledge-strip a:hover{transform:none}
 }
+
+/* Final interaction polish */
+body.pp-world-class .mobile-menu-button{
+ display:none;width:42px;height:40px;padding:9px;border:1px solid var(--pp-line);
+ border-radius:10px;background:#fff;cursor:pointer;flex-direction:column;justify-content:center;gap:4px;
+}
+body.pp-world-class .mobile-menu-button span{display:block;width:100%;height:2px;background:var(--pp-ink);border-radius:2px}
+body.pp-world-class .nav nav a.active{font-weight:850;color:var(--pp-accent)}
+body.pp-world-class .pp-context b{color:var(--pp-ink)}
+body.pp-world-class .pp-command-item{
+ display:flex;flex-direction:column;gap:3px;padding:13px 15px;border-radius:10px;text-decoration:none;
+}
+body.pp-world-class .pp-command-item:hover,
+body.pp-world-class .pp-command-item:focus-visible{background:var(--pp-accent-soft)}
+body.pp-world-class .pp-command-item b{font-size:13px;color:var(--pp-ink)}
+body.pp-world-class .pp-command-item span{font-size:11px;color:var(--pp-muted)}
+body.pp-world-class button,a{ -webkit-tap-highlight-color:transparent}
+@media(max-width:900px){
+ body.pp-world-class .mobile-menu-button{display:flex}
+}
