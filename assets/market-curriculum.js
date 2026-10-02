@@ -1,5 +1,9 @@
 (()=>{"use strict";
-const root=document.querySelector(".country-curriculum[data-market]"); if(!root)return;
+const boot=()=>{
+const root=document.querySelector(".country-curriculum[data-market]");
+if(!root)return;
+if(root.dataset.mccBooted==="1" && root.querySelector(".mcc-hero"))return;
+root.dataset.mccBooted="1";
 const market=root.dataset.market;
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const slug=s=>String(s).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
@@ -279,6 +283,11 @@ function render(nodes){
  root.querySelector("#mccStart").onclick=()=>openLesson(String(first?.id||first?.number));
 }
 
-const fallback=fallbackNodes(); render(fallback);
+const fallback=fallbackNodes();
+render(fallback);
 fetch("../data/market-catalog.json",{cache:"no-store"}).then(r=>r.ok?r.text():Promise.reject()).then(t=>{if(!t.trim())return null;return JSON.parse(t)}).then(c=>{const m=c?.markets?.[market]||Object.entries(c?.markets||{}).find(([k])=>slug(k)===slug(market))?.[1];const n=m?.learningPath?.nodes||m?.nodes||[];if(n.length>=300 && n[0]?.explanation && n[0]?.whyItMatters && n[0]?.action)render(n.slice(0,300));}).catch(()=>{});
+};
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot,{once:true});else boot();
+setTimeout(boot,250);
+setTimeout(boot,1200);
 })();
