@@ -287,11 +287,27 @@ function renderMarketStep(z){
  const list=marketChoices().filter(x=>x[0].toLowerCase().includes(search)),custom=current==="Other";
  q.innerHTML='<div class="r-step-label">'+z[1]+'</div><h2 class="r-question">'+z[2]+'</h2><p class="r-hint">'+(kind==="sourceMarket"?"Choose the market whose rules and research habits you already know. If it is not listed, enter it exactly as you know it.":"Choose the destination market. PirePoint will build the learning map around its institutions, rules, evidence, economics and company research.")+'</p><div class="r-market-picker"><input class="r-market-search" id="marketSearch" placeholder="Search a country or market…" value="'+esc(search)+'"><div class="r-market-grid">'+list.map(o=>'<button class="r-market-option '+(current===o[0]?"selected":"")+'" data-v="'+esc(o[0])+'"><b>'+esc(o[1])+'</b><small>Dedicated market guide + local learning map</small></button>').join("")+'<button class="r-market-option '+(custom?"selected":"")+'" data-v="Other"><b>Another market</b><small>Enter any country, exchange or market PirePoint should prepare you for</small></button></div><div class="r-custom-market '+(custom?"show":"")+'" id="customMarket"><label>Market name</label><input id="customMarketInput" placeholder="e.g. Taiwan, Brazil, Switzerland, Indonesia…" value="'+esc(kind==="sourceMarket"?s.a.sourceMarketCustom||"":s.a.targetMarketCustom||"")+'"></div></div>';
  q.querySelector("#marketSearch").oninput=e=>{s.a[kind+"Search"]=e.target.value;render()};
- q.querySelectorAll(".r-market-option").forEach(b=>b.onclick=()=>{s.a[kind]=b.dataset.v;render();returnToQuestion()});
+ q.querySelectorAll(".r-market-option").forEach(b=>b.onclick=()=>{s.a[kind]=b.dataset.v;saveDraft();render();returnToQuestion()});
  q.querySelector("#customMarketInput")?.addEventListener("input",e=>{if(kind==="sourceMarket")s.a.sourceMarketCustom=e.target.value.trim();else s.a.targetMarketCustom=e.target.value.trim();next.disabled=!marketReady(kind);renderTransferPreview();side()});
 }
 function updateMarketState(){next.disabled=!(s.a[steps[s.i][0]]&&marketReady(steps[s.i][0]));renderTransferPreview();side()}
+const ROUTINE_DRAFT="ppRoutineDraftV5";
 let s={i:0,a:{},queue:[],ci:0,answers:{},confidence:{},selectedDomains:[]};
+function saveDraft(){
+ try{localStorage.setItem(ROUTINE_DRAFT,JSON.stringify({i:s.i,a:s.a,queue:s.queue,ci:s.ci,answers:s.answers,confidence:s.confidence,updatedAt:new Date().toISOString()}))}catch(e){}
+}
+function loadDraft(){
+ try{
+  const d=JSON.parse(localStorage.getItem(ROUTINE_DRAFT)||"null");
+  if(d&&d.a&&Number.isInteger(d.i)&&d.i>=0&&d.i<steps.length){
+   s={...s,...d,i:d.i,a:d.a,queue:Array.isArray(d.queue)?d.queue:[],ci:Number(d.ci)||0,answers:d.answers||{},confidence:d.confidence||{}};
+   return true;
+  }
+ }catch(e){}
+ return false;
+}
+function clearDraft(){try{localStorage.removeItem(ROUTINE_DRAFT)}catch(e){}}
+
 const q=document.getElementById("questionView"),cal=document.getElementById("calibration"),res=document.getElementById("result"),next=document.getElementById("next"),back=document.getElementById("back"),bar=document.getElementById("progress");
 const esc=x=>String(x??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;");
 const getStep=k=>steps.find(x=>x[0]===k);
@@ -358,10 +374,10 @@ function buildQueue(){
 function renderCase(){
  const c=s.queue[s.ci],ans=s.answers[c.id],cf=s.confidence[c.id];
  cal.innerHTML='<div class="r-step-label">CALIBRATION '+(s.ci+1)+' / '+s.queue.length+'</div><h2 class="r-question">'+esc(c.title)+'</h2><p class="r-hint">'+esc(c.body)+' Choose the move you would make first. Then tell us how confident you are.</p><div class="r-case"><span class="case-kicker">Applied reasoning · '+c.domains.map(d=>domains[d]?.label||d).join(" · ")+'</span><div class="r-options">'+c.options.map((o,i)=>'<button class="r-option '+(ans===i?"selected":"")+'" data-i="'+i+'"><b>'+esc(o)+'</b></button>').join("")+'</div><div class="r-confidence">'+["low","mid","high"].map((x,i)=>'<button class="'+(cf===x?"selected":"")+'" data-c="'+x+'">'+["Not sure","Fairly confident","Very confident"][i]+'</button>').join("")+'</div></div><div class="r-actions"><button class="r-btn secondary" id="cb">Back</button><button class="r-btn" id="cn" disabled>Continue</button></div>';
- cal.querySelectorAll(".r-option").forEach(b=>b.onclick=()=>{s.answers[c.id]=+b.dataset.i;renderCase();returnToCalibration()});
- cal.querySelectorAll(".r-confidence button").forEach(b=>b.onclick=()=>{s.confidence[c.id]=b.dataset.c;renderCase();returnToCalibration()});
- const cn=document.getElementById("cn");cn.disabled=s.answers[c.id]===undefined||!s.confidence[c.id];cn.onclick=()=>s.ci<s.queue.length-1?(s.ci++,renderCase(),returnToCalibration()):(result(),setTimeout(()=>res.scrollIntoView({behavior:"smooth",block:"start"}),60));
- document.getElementById("cb").onclick=()=>s.ci?(s.ci--,renderCase()):(cal.classList.remove("show"),q.style.display="block",document.querySelector("#builder .r-actions").style.display="flex",s.i=steps.length-1,render());
+ cal.querySelectorAll(".r-option").forEach(b=>b.onclick=()=>{s.answers[c.id]=+b.dataset.i;saveDraft();renderCase();returnToCalibration()});
+ cal.querySelectorAll(".r-confidence button").forEach(b=>b.onclick=()=>{s.confidence[c.id]=b.dataset.c;saveDraft();renderCase();returnToCalibration()});
+ const cn=document.getElementById("cn");cn.disabled=s.answers[c.id]===undefined||!s.confidence[c.id];cn.onclick=()=>s.ci<s.queue.length-1?(s.ci++,saveDraft(),renderCase(),returnToCalibration()):(result(),setTimeout(()=>res.scrollIntoView({behavior:"smooth",block:"start"}),60));
+ document.getElementById("cb").onclick=()=>s.ci?(s.ci--,saveDraft(),renderCase()):(cal.classList.remove("show"),q.style.display="block",document.querySelector("#builder .r-actions").style.display="flex",s.i=steps.length-1,saveDraft(),render());
  bar.style.width=(steps.length+s.ci+1)/(steps.length+s.queue.length)*100+"%"
 }
 function buildBridge(){
@@ -424,7 +440,7 @@ function result(){
  base.forEach(k=>add(k,"Dependency in the research-learning graph; it is included only as needed."));
  const bridge=buildBridge();
  const uniq=route.slice(0,8);
- let sys={};try{sys=JSON.parse(localStorage.getItem(STORE)||"{}")}catch(e){}sys.profile={...(sys.profile||{}),stage:s.a.level,goal:s.a.goal,sourceMarket:marketDisplay("sourceMarket"),targetMarket:marketDisplay("targetMarket"),sourceMarketKey:s.a.sourceMarket,targetMarketKey:s.a.targetMarket,sourceMarketCustom:s.a.sourceMarketCustom||null,targetMarketCustom:s.a.targetMarketCustom||null,depth:s.a.time,mode:s.a.mode,knownDomains:s.a.knowledge,updatedAt:new Date().toISOString()};sys.routine={version:4,calibrated:true,updatedAt:new Date().toISOString(),profile:sys.profile,domains:stats,route:uniq,transfer:bridge,results:s.queue.map(c=>({id:c.id,correct:s.answers[c.id]===c.correct,confidence:s.confidence[c.id],domains:c.domains}))};localStorage.setItem(STORE,JSON.stringify(sys));localStorage.setItem("pirepointRoutine",JSON.stringify(sys.routine));
+ let sys={};try{sys=JSON.parse(localStorage.getItem(STORE)||"{}")}catch(e){}sys.profile={...(sys.profile||{}),stage:s.a.level,goal:s.a.goal,sourceMarket:marketDisplay("sourceMarket"),targetMarket:marketDisplay("targetMarket"),sourceMarketKey:s.a.sourceMarket,targetMarketKey:s.a.targetMarket,sourceMarketCustom:s.a.sourceMarketCustom||null,targetMarketCustom:s.a.targetMarketCustom||null,depth:s.a.time,mode:s.a.mode,knownDomains:s.a.knowledge,updatedAt:new Date().toISOString()};clearDraft();\nsys.routine={version:5,calibrated:true,updatedAt:new Date().toISOString(),profile:sys.profile,domains:stats,route:uniq,transfer:bridge,results:s.queue.map(c=>({id:c.id,correct:s.answers[c.id]===c.correct,confidence:s.confidence[c.id],domains:c.domains}))};localStorage.setItem(STORE,JSON.stringify(sys));localStorage.setItem("pirepointRoutine",JSON.stringify(sys.routine));
  q.style.display="none";cal.classList.remove("show");res.classList.add("show");document.querySelector("#builder .r-actions").style.display="none";bar.style.width="100%";
  const first=uniq[0]||{label:"Market orientation",resource:marketProfile("targetMarket")?.guide||"countries.html",why:"Build the destination-market map before adding complexity."};
  const bridgeHtml=bridge.length?'<div class="routine-hero-card" style="margin-top:14px"><span class="eyebrow">MARKET TRANSFER MAP</span><h2>Same · Different · New · Potentially misleading</h2><div class="r-route-grid">'+bridge.map(x=>'<div class="r-route"><b>'+esc(x[0].toUpperCase())+'</b><span>'+esc(x[1])+'</span></div>').join("")+'</div><p style="margin-top:14px;color:#d0d5dd">Destination focus is generated from PirePoint’s market-transfer framework. Primary-source checkpoints are kept separate from general learning so a rule can be verified before it becomes part of the learner’s model.</p></div>':'';
@@ -433,7 +449,7 @@ function result(){
  res.innerHTML='<span class="r-step-label">YOUR ROUTINE IS READY</span><div class="routine-hero-card"><span class="eyebrow">NEXT BEST STEP</span><h2>'+esc(first.label)+'</h2><p>'+esc(first.why)+' The route is evidence-based and will change when later work gives PirePoint new evidence.</p><div class="r-route-grid">'+uniq.map((x,i)=>'<div class="r-route"><b>'+String(i+1).padStart(2,"0")+" · "+esc(x.label)+'</b><span>'+esc(x.why)+'</span></div>').join("")+'</div><div class="r-next"><div><small>Routine depth</small><b>'+esc(s.a.time==="5"?"5 min":s.a.time==="15"?"15 min":s.a.time==="30"?"30 min":"60+ min")+'</b></div><a class="r-btn r-link" href="'+esc(first.resource)+'">Start this step →</a></div></div>'+bridgeHtml+learningHtml+'<p class="muted" style="font-size:12px;margin-top:18px">This is not a permanent score. It is a working diagnosis: what appears reliable, what needs verification, and what should be tested next.</p><div class="r-route-grid">'+cards+'</div><div class="r-result-nav" style="position:sticky;bottom:10px;z-index:20;margin-top:16px;padding:8px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);display:flex;gap:7px;flex-wrap:wrap"><a class="r-btn r-link" href="#result">Your route ↑</a><a class="r-btn secondary r-link" href="#transferPreview">Transfer map</a><a class="r-btn secondary r-link" href="#learning">Lessons</a><a class="r-btn secondary r-link" href="system.html#route">Learning system</a><button class="r-btn secondary" id="again">Recalibrate</button></div>';
  document.getElementById("again").onclick=()=>location.reload()
 }
-next.onclick=()=>s.i<steps.length-1?(s.i++,render()):(s.queue=buildQueue(),s.ci=0,q.style.display="none",document.querySelector("#builder .r-actions").style.display="none",cal.classList.add("show"),renderCase());
+next.onclick=()=>s.i<steps.length-1?(s.i++,saveDraft(),render()):(s.queue=buildQueue(),s.ci=0,saveDraft(),q.style.display="none",document.querySelector("#builder .r-actions").style.display="none",cal.classList.add("show"),renderCase());
 back.onclick=()=>s.i?(s.i--,render()):null;
 render();
 })()</script>
