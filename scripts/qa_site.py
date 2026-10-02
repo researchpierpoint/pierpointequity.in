@@ -4,7 +4,7 @@ import re, sys, json
 ROOT=Path(__file__).resolve().parents[1]
 errors=[]
 
-html_files=list(ROOT.glob("*.html"))+list((ROOT/"countries").glob("*.html"))+list((ROOT/"guides").glob("*.html"))
+PUBLIC=ROOT/"_site" if (ROOT/"_site").exists() else ROOT\nhtml_files=list(PUBLIC.glob("*.html"))+list((PUBLIC/"countries").glob("*.html"))+list((PUBLIC/"guides").glob("*.html"))
 required_countries=["australia","canada","china","germany","hong-kong","india","japan","singapore","south-korea","uae","united-kingdom","united-states"]
 
 def clean(ref):
