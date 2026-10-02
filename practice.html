@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Practice Lab — PirePoint Equity</title>
+<meta name="description" content="Practice market knowledge, research thinking, evidence evaluation and cross-market reasoning with fictional cases.">
+<link rel="stylesheet" href="assets/style.css?v=20261020"><link rel="stylesheet" href="assets/world-class.css?v=20261020">
+<style>
+.practice-hero{padding:72px 0 42px}.lab-shell{display:grid;grid-template-columns:230px 1fr;gap:22px;align-items:start}
+.lab-nav{position:sticky;top:90px}.lab-nav button{display:block;width:100%;text-align:left;border:1px solid var(--line);background:var(--paper,#fff);padding:14px 16px;border-radius:14px;margin-bottom:8px;cursor:pointer;font-weight:700}.lab-nav button.active{background:#17251f;color:#fff;border-color:#17251f}
+.lab-panel{border:1px solid var(--line);border-radius:24px;background:#fff;padding:30px;box-shadow:0 16px 45px rgba(20,30,25,.06)}
+.drill{display:grid;gap:16px}.choice{border:1px solid var(--line);background:#fff;border-radius:16px;padding:17px;text-align:left;cursor:pointer}.choice:hover{transform:translateY(-1px)}.choice.correct{border-color:#3b7659;background:#eef7f0}.choice.wrong{border-color:#a85b5b;background:#fff2f2}
+.feedback{margin-top:16px;padding:18px;border-radius:16px;background:#f5f7f4;line-height:1.65}.scorebar{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-bottom:22px}.meter{height:8px;background:#e8ece8;border-radius:99px;overflow:hidden;flex:1}.meter span{display:block;height:100%;width:0;background:#294d3d;transition:width .3s}
+.case-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.case-grid button{padding:18px;border:1px solid var(--line);border-radius:16px;background:#fff;text-align:left;cursor:pointer}.case-grid b{display:block;margin-bottom:5px}
+.progress-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.stat{padding:18px;border:1px solid var(--line);border-radius:16px}.stat strong{display:block;font-size:28px}.pill{display:inline-flex;padding:6px 10px;border-radius:99px;background:#edf2ee;font-size:12px;font-weight:800;letter-spacing:.04em}
+@media(max-width:800px){.lab-shell{grid-template-columns:1fr}.lab-nav{position:static;display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.lab-nav button{margin:0}.case-grid,.progress-grid{grid-template-columns:1fr}.practice-hero{padding-top:42px}}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="wrap nav">
+<a class="brand" href="index.html"><span class="mark">P</span><span>PirePoint <b>Equity</b></span></a>
+<nav aria-label="Primary navigation"><a href="learn.html">Learn</a><a href="countries.html">Markets</a><a href="research-hub.html">Research</a><a class="active" href="practice.html">Practice</a><a href="tools.html">Tools</a><a href="system.html">System</a></nav>
+<a class="nav-search" href="index.html#searchInput">Search</a>
+</div></header>
+<main>
+<section class="wrap practice-hero"><span class="eyebrow">THE PRACTICE LAYER</span><h1>Don't just learn it.<br><em>Prove you understand it.</em></h1><p class="hero-copy">PirePoint Practice Lab turns knowledge into a skill: retrieve the idea, apply it to a new situation, challenge an assumption, and explain your reasoning.</p></section>
+<section class="wrap section"><div class="progress-grid">
+<div class="stat"><span class="pill">STREAK</span><strong id="streak">0</strong><small>practice sessions</small></div>
+<div class="stat"><span class="pill">ACCURACY</span><strong id="accuracy">—</strong><small>answered correctly</small></div>
+<div class="stat"><span class="pill">MASTERED</span><strong id="mastered">0</strong><small>concepts revisited</small></div>
+<div class="stat"><span class="pill">TODAY</span><strong id="today">0</strong><small>drills completed</small></div>
+</div></section>
+<section class="wrap section lab-shell">
+<aside class="lab-nav" aria-label="Practice modes">
+<button class="active" data-mode="concept">Concept Drills</button>
+<button data-mode="research">Research Drills</button>
+<button data-mode="evidence">Evidence Check</button>
+<button data-mode="bridge">Market Bridge</button>
+<button data-mode="teach">Teach-Back</button>
+</aside>
+<div class="lab-panel" id="lab"></div>
+</section>
+<section class="wrap section"><div class="daily-card"><div><span class="eyebrow">WHY THIS EXISTS</span><h2>Reading creates familiarity. Retrieval creates knowledge.</h2><p>Every practice mode is designed to make you make a decision, state an assumption, or explain a mechanism before PirePoint reveals the next layer.</p></div><a class="button" href="learn.html">Return to learning map →</a></div></section>
+</main>
+<footer class="footer"><div class="wrap fine">PirePoint Equity · Educational information, not personalised investment advice.</div></footer>
+<script>
+const drills=[
+{q:"A company reports higher accounting profit, but operating cash flow falls sharply. What should you investigate first?",a:["Whether working capital absorbed cash","Whether the share price is high","Whether the company has a famous brand","Whether the dividend is popular"],c:0,e:"Profit and cash can diverge because receivables, inventory and other working-capital movements can consume cash. The next step is to inspect the bridge rather than assume either number is wrong."},
+{q:"A low P/E is observed for a cyclical business near the top of its cycle. What is the key danger?",a:["The denominator may be unusually high","P/E cannot be calculated","The exchange must be closed","Low P/E always means high risk"],c:0,e:"A depressed-looking multiple can occur when earnings are temporarily elevated. The useful question is what earnings level the price is actually implying."},
+{q:"A research claim comes from a secondary article quoting an unnamed source. What should happen next?",a:["Trace the claim to the primary evidence","Treat the article as proven","Delete the claim permanently","Use the headline as the fact"],c:0,e:"Evidence quality matters. Trace important claims to filings, regulators, exchanges, audited reports or other identifiable primary material when possible."},
+{q:"A valuation model produces a precise target despite uncertain growth and margins. What should you challenge?",a:["The precision of the assumptions","The font used in the model","The existence of accounting","The number of spreadsheet cells"],c:0,e:"A model can calculate precisely while its assumptions remain uncertain. Good research exposes sensitivity and uncertainty instead of hiding them behind a precise output."}
+];
+let idx=0,stats=JSON.parse(localStorage.getItem("ppPractice")||'{"answered":0,"correct":0,"sessions":0,"mastered":0,"today":0,"day":""}');
+const todayKey=new Date().toISOString().slice(0,10);if(stats.day!==todayKey){stats.day=todayKey;stats.today=0;save();}
+function save(){localStorage.setItem("ppPractice",JSON.stringify(stats));renderStats()}
+function renderStats(){document.getElementById("streak").textContent=stats.sessions;document.getElementById("accuracy").textContent=stats.answered?Math.round(stats.correct/stats.answered*100)+"%":"—";document.getElementById("mastered").textContent=stats.mastered;document.getElementById("today").textContent=stats.today}
+function concept(){const d=drills[idx%drills.length];document.getElementById("lab").innerHTML='<div class="scorebar"><b>Concept drill '+((idx%drills.length)+1)+' / '+drills.length+'</b><div class="meter"><span style="width:'+((idx%drills.length)/drills.length*100)+'%"></span></div></div><div class="drill"><span class="eyebrow">RETRIEVE FIRST</span><h2>'+d.q+'</h2><div id="choices">'+d.a.map((x,i)=>'<button class="choice" data-i="'+i+'">'+x+'</button>').join("")+'</div><div id="feedback" class="feedback" hidden></div></div>';document.querySelectorAll(".choice").forEach(b=>b.onclick=()=>answer(+b.dataset.i,d))}
+function answer(i,d){const bs=document.querySelectorAll(".choice");bs.forEach(b=>b.disabled=true);const ok=i===d.c;bs[i].classList.add(ok?"correct":"wrong");if(!ok)bs[d.c].classList.add("correct");stats.answered++;if(ok){stats.correct++;stats.mastered++;}stats.today++;stats.sessions++;save();const f=document.getElementById("feedback");f.hidden=false;f.innerHTML='<b>'+(ok?"Correct.":"Not quite.")+'</b><br>'+d.e+'<br><button class="button" style="margin-top:12px" onclick="idx++;concept()">Next drill →</button>'}
+const panels={
+research:'<span class="eyebrow">FICTIONAL CASE</span><h2>Attack the research question</h2><p>A fictional business says revenue grew 20%, margins expanded, and management expects another strong year. You are not allowed to decide whether it is attractive.</p><div class="case-grid"><button onclick="researchCase(0)"><b>01 · Ask what changed</b>Which operating driver produced the growth?</button><button onclick="researchCase(1)"><b>02 · Check the cash</b>Did the improvement reach cash flow?</button><button onclick="researchCase(2)"><b>03 · Attack the forecast</b>What assumption would make the outlook fail?</button></div><div id="researchFeedback" class="feedback" hidden></div>',
+evidence:'<span class="eyebrow">EVIDENCE CHECK</span><h2>Can you separate fact from interpretation?</h2><p><b>Statement:</b> “The market fell because investors lost confidence.”</p><div class="case-grid"><button onclick="ev(0)"><b>Fact</b>The index declined by 3%.</button><button onclick="ev(1)"><b>Interpretation</b>Investors lost confidence.</button><button onclick="ev(2)"><b>Next evidence</b>Look for contemporaneous market data and attributable explanations.</button></div><div id="evf" class="feedback" hidden></div>',
+bridge:'<span class="eyebrow">CROSS-MARKET REASONING</span><h2>What stays the same—and what changes?</h2><p>You understand one equity market and enter another. Which items should you deliberately re-check?</p><div class="case-grid"><button onclick="bridgeCase(0)"><b>Market mechanics</b>Exchange structure, settlement and trading sessions.</button><button onclick="bridgeCase(1)"><b>Research conventions</b>Reporting, accounting, disclosures and corporate actions.</button><button onclick="bridgeCase(2)"><b>Access & rules</b>Investor eligibility, currency, taxes and ownership rules.</button></div><div id="bf" class="feedback" hidden></div>',
+teach:'<span class="eyebrow">TEACH-BACK</span><h2>Explain one concept without jargon.</h2><p>Choose a concept. Explain it to an intelligent beginner in three sentences. Then name the evidence you would check in real research.</p><div class="case-grid"><button onclick="teach('P/E')"><b>P/E</b>What does the multiple compare?</button><button onclick="teach('Cash flow')"><b>Cash flow</b>Why can profit and cash differ?</button><button onclick="teach('Diversification')"><b>Diversification</b>What risk does it address?</button></div><div id="tf" class="feedback" hidden></div>'
+};
+function researchCase(i){document.getElementById("researchFeedback").hidden=false;document.getElementById("researchFeedback").innerHTML='<b>Good research sequence.</b><br>'+["Start with the operating mechanism, not the headline percentage. Ask what volume, price, mix or other driver changed.","Profit growth is not enough. Trace the economics into cash generation, working capital and reinvestment.","Forecasts are conditional. Write the assumptions and ask what evidence would falsify them."][i];stats.sessions++;save()}
+function ev(i){document.getElementById("evf").hidden=false;document.getElementById("evf").innerHTML='<b>'+["This is a directly measurable fact when supported by market data.","This is an interpretation of why the move occurred, not the observed move itself.","This is the next research step: identify evidence and attribute explanations rather than converting a narrative into a fact."][i]+'</b>';stats.sessions++;save()}
+function bridgeCase(i){document.getElementById("bf").hidden=false;document.getElementById("bf").innerHTML='<b>Re-check the destination market.</b><br>'+["Mechanics can change even when the economic idea is familiar.","The same ratio or statement can require different context and disclosure conventions.","Cross-border access can introduce currency, tax, ownership, settlement and regulatory differences."][i];stats.sessions++;save()}
+function teach(x){document.getElementById("tf").hidden=false;document.getElementById("tf").innerHTML='<b>Your task: '+x+'.</b><br>Write your three-sentence explanation before reading a definition. Then ask: “What evidence would make me revise this explanation?” This is where familiarity becomes understanding.';stats.sessions++;save()}
+function show(mode){document.querySelectorAll(".lab-nav button").forEach(b=>b.classList.toggle("active",b.dataset.mode===mode));if(mode==="concept")concept();else document.getElementById("lab").innerHTML=panels[mode]}
+document.querySelectorAll(".lab-nav button").forEach(b=>b.onclick=()=>show(b.dataset.mode));renderStats();concept();
+</script>
+<script src="assets/app.js?v=20261009"></script><script src="assets/world-class.js?v=20261014"></script>
+</body></html>
