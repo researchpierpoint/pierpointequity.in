@@ -80,6 +80,17 @@
  .r-actions .r-btn{flex:1}
  .r-after-question{margin-bottom:2px}
 }
+</style><style id="routine-result-ux">
+/* Learning reveal: show the lesson map first, detail on demand. */
+.r-learning{margin-top:18px}.r-learning-head{padding:20px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,#f8faf8,#fff)}
+.r-learning-head h2{font-size:clamp(24px,4vw,38px);margin:7px 0}.r-learning-head p{font-size:12px;line-height:1.55;color:var(--muted);max-width:760px}
+.r-learning-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:10px}
+.r-learning-card{padding:14px;border:1px solid var(--line);border-radius:13px;background:#fff}
+.r-learning-card b{font-size:11px}.r-learning-card p{font-size:10px;line-height:1.45;color:var(--muted);margin:5px 0}.r-learning-card .teach{font-size:9px;line-height:1.45;padding:8px;background:#f6f8f5;border-radius:8px;margin-top:7px}.r-learning-card a{display:inline-block;margin-top:8px;font-size:9px;font-weight:850;color:var(--routine-accent);text-decoration:none}
+.r-local-sources{margin-top:10px;padding:13px 15px;border:1px solid var(--line);border-radius:13px;background:#fff}.r-local-sources h3{font-size:12px;margin:0 0 8px}.r-source-list{display:flex;gap:6px;flex-wrap:wrap}.r-source-list a{font-size:9px;padding:6px 8px;border:1px solid var(--line);border-radius:999px;text-decoration:none}
+.r-market-curriculum,.r-deep-map{margin-top:10px}.r-market-curriculum summary,.r-deep-map summary{padding:13px 15px;font-size:11px}.r-node{padding:11px 13px}.r-node b{font-size:10px}
+@media(max-width:850px){.r-learning-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.r-learning-grid{grid-template-columns:1fr}}
 </style></head>
 <body>
 <header class="site-header"><div class="wrap nav">
