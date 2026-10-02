@@ -71,6 +71,12 @@ if ASSETS.exists():
 else:
     raise SystemExit("Build failed: required assets/ directory is missing")
 
+DATA=ROOT/"data"
+if DATA.exists():
+    shutil.copytree(DATA, OUT/"data")
+else:
+    raise SystemExit("Build failed: required data/ directory is missing")
+
 for name in ("CNAME","robots.txt","sitemap.xml"):
     p=ROOT/name
     if p.exists(): shutil.copy2(p,OUT/p.name)
