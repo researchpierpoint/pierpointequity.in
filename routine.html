@@ -450,7 +450,8 @@ function result(){
  document.getElementById("again").onclick=()=>location.reload()
 }
 next.onclick=()=>s.i<steps.length-1?(s.i++,saveDraft(),render()):(s.queue=buildQueue(),s.ci=0,saveDraft(),q.style.display="none",document.querySelector("#builder .r-actions").style.display="none",cal.classList.add("show"),renderCase());
-back.onclick=()=>s.i?(s.i--,render()):null;
-render();
+back.onclick=()=>s.i?(s.i--,saveDraft(),render()):null;
+const resumed=loadDraft();
+if(resumed && s.queue.length && s.ci<s.queue.length){q.style.display="none";document.querySelector("#builder .r-actions").style.display="none";cal.classList.add("show");renderCase()}else{render()}
 })()</script>
 <script src="assets/world-class.js?v=20261001"></script></body></html>
