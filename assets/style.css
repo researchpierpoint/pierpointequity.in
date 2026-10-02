@@ -2210,3 +2210,8 @@ body > .mcc-portal .mcc-drawer-actions{
     padding-bottom:110px!important;
   }
 }
+
+/* Curriculum boot guard: this learning system is essential content. */
+.country-curriculum{display:block!important;visibility:visible!important;}
+.country-curriculum .mcc-emergency{padding:24px;border:1px solid var(--line);border-radius:16px;background:var(--panel,#fff);color:var(--ink,#171a14)}
+.country-curriculum .mcc-emergency p{margin:8px 0 0;color:var(--muted,#66705f);line-height:1.6}
