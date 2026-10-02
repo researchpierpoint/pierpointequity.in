@@ -15,9 +15,9 @@ ASSET_VERSION="20261009"
 
 def copy_html(src, dst):
     html=src.read_text(encoding="utf-8")
-    html=re.sub(r"(assets/style\.css)(?:\?v=[^"]*)?", rf"\1?v={ASSET_VERSION}", html)
-    html=re.sub(r"(assets/app\.js)(?:\?v=[^"]*)?", rf"\1?v={ASSET_VERSION}", html)
-    html=re.sub(r"(assets/market-curriculum\.js)(?:\?v=[^"]*)?", rf"\1?v={ASSET_VERSION}", html)
+    html=re.sub(r'(assets/style\\.css)(?:\\?v=[^"]*)?', rf"\\1?v={ASSET_VERSION}", html)
+    html=re.sub(r'(assets/app\\.js)(?:\\?v=[^"]*)?', rf"\\1?v={ASSET_VERSION}", html)
+    html=re.sub(r'(assets/market-curriculum\\.js)(?:\\?v=[^"]*)?', rf"\\1?v={ASSET_VERSION}", html)
 
     if "pp-footer-contact" not in html and '<div class="footer-grid">' in html:
         marker='</div></div><div class="wrap fine">'
