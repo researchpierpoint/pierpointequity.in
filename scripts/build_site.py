@@ -23,7 +23,6 @@ def copy_html(src, dst):
         marker='</div></div><div class="wrap fine">'
         if marker in html:
             html=html.replace(marker, '</div>'+CONTACT+'</div><div class="wrap fine">', 1)
-
     from html import unescape
     title_match=re.search(r"<title>(.*?)</title>", html, re.I|re.S)
     desc_match=re.search(r'<meta[^>]+name=["\']description["\'][^>]+content=["\'](.*?)["\']', html, re.I|re.S)
@@ -70,7 +69,7 @@ for name in ("CNAME","robots.txt","sitemap.xml"):
 
 for page in OUT.rglob("*.html"):
     page_text=page.read_text(encoding="utf-8")
-    refs=re.findall(r"(?:href|src)=['"]([^'"]+)['"]", page_text, flags=re.I)
+    refs=re.findall(r'(?:href|src)=[\'"]([^\'"]+)[\'"]', page_text, flags=re.I)
     for ref in refs:
         clean=ref.split("#",1)[0].split("?",1)[0]
         if not clean or clean.startswith(("#","/","http://","https://","mailto:","tel:","javascript:","data:")):
