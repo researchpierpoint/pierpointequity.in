@@ -2134,3 +2134,75 @@ html.mcc-drawer-lock body{
     padding-bottom:32px!important;
   }
 }
+
+/* =========================================================
+   LESSON READER — BODY PORTAL / SINGLE SCROLL OWNER
+   The drawer is portalled outside the curriculum content so
+   transforms, clipping and nested scroll containers cannot
+   interfere with reading on any country page.
+   ========================================================= */
+body > .mcc-portal{
+  display:block!important;
+  position:static!important;
+  width:auto!important;
+  height:auto!important;
+  overflow:visible!important;
+  transform:none!important;
+  contain:none!important;
+}
+body > .mcc-portal .mcc-drawer{
+  position:fixed!important;
+  inset:0!important;
+  width:100vw!important;
+  height:100svh!important;
+  min-height:100svh!important;
+  max-height:100svh!important;
+  overflow:hidden!important;
+  isolation:isolate!important;
+  z-index:2147483000!important;
+}
+body > .mcc-portal .mcc-drawer-panel{
+  position:absolute!important;
+  inset:0 0 0 auto!important;
+  height:100%!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  overscroll-behavior:contain!important;
+  -webkit-overflow-scrolling:touch!important;
+  box-sizing:border-box!important;
+  scrollbar-gutter:stable!important;
+  padding-bottom:96px!important;
+}
+body > .mcc-portal .mcc-drawer-panel .mcc-reader{
+  min-height:0!important;
+  padding-bottom:24px!important;
+}
+body > .mcc-portal .mcc-drawer-actions{
+  padding-bottom:max(12px,env(safe-area-inset-bottom))!important;
+}
+@supports (height:100dvh){
+  body > .mcc-portal .mcc-drawer{
+    height:100dvh!important;
+    min-height:100dvh!important;
+    max-height:100dvh!important;
+  }
+}
+@media(max-width:700px){
+  body > .mcc-portal .mcc-drawer-panel{
+    width:100%!important;
+    max-width:none!important;
+    padding:78px 20px calc(110px + env(safe-area-inset-bottom))!important;
+  }
+  body > .mcc-portal .mcc-drawer-panel .mcc-reader{
+    width:100%!important;
+    max-width:none!important;
+  }
+}
+@media(min-width:701px) and (max-width:900px){
+  body > .mcc-portal .mcc-drawer-panel{
+    width:min(760px,94vw)!important;
+    padding-bottom:110px!important;
+  }
+}
