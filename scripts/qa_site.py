@@ -1,0 +1,46 @@
+from pathlib import Path
+import re, sys, json
+
+ROOT=Path(__file__).resolve().parents[1]
+errors=[]
+
+html_files=list(ROOT.glob("*.html"))+list((ROOT/"countries").glob("*.html"))+list((ROOT/"guides").glob("*.html"))
+required_countries=["australia","canada","china","germany","hong-kong","india","japan","singapore","south-korea","uae","united-kingdom","united-states"]
+
+def clean(ref):
+    return ref.split("#",1)[0].split("?",1)[0]
+
+for page in html_files:
+    text=page.read_text(encoding="utf-8")
+    if "<title>" not in text: errors.append(f"{page}: missing title")
+    if 'name="viewport"' not in text: errors.append(f"{page}: missing viewport")
+    if "assets/style.css" not in text: errors.append(f"{page}: missing shared stylesheet")
+    if "world-class.css" not in text: errors.append(f"{page}: missing world-class stylesheet")
+    for ref in re.findall(r'(?:href|src)=[\'"]([^\'"]+)[\'"]',text,re.I):
+        c=clean(ref)
+        if not c or c.startswith(("#","/","http://","https://","mailto:","tel:","javascript:","data:")): continue
+        target=(page.parent/c).resolve()
+        if c.lower().endswith((".html",".css",".js",".json",".xml",".txt")) and not target.exists():
+            errors.append(f"{page}: missing local asset {c}")
+
+for slug in required_countries:
+    p=ROOT/"countries"/f"{slug}.html"
+    if not p.exists(): errors.append(f"missing country page: {slug}")
+    else:
+        t=p.read_text(encoding="utf-8")
+        for needle in ("data-market=","market-curriculum.js","Learn "):
+            if needle not in t: errors.append(f"{p}: missing curriculum hook {needle}")
+
+# The public Learn Before You Invest contract is exactly 300 nodes per home/target pair.
+js=(ROOT/"data"/"learn-before-invest.js").read_text(encoding="utf-8")
+for required in ("targetLessons","homeLessons","total","makeTargetNodes","makeHomeNodes"):
+    if required not in js: errors.append(f"learning engine: missing {required}")
+data=json.loads((ROOT/"data"/"learn-before-invest.json").read_text(encoding="utf-8"))
+contract=data.get("contract",{})
+if contract.get("total")!=300 or contract.get("targetLessons")!=240 or contract.get("homeLessons")!=60:
+    errors.append("learning contract is not 240 + 60 = 300")
+
+if errors:
+    print("\n".join("ERROR: "+e for e in errors))
+    sys.exit(1)
+print(f"QA passed: {len(html_files)} HTML pages checked, {len(required_countries)} country routes checked, 300-node learning contract verified.")
