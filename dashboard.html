@@ -12,7 +12,7 @@
 <section class="wrap dashboard-hero"><span class="eyebrow">YOUR PRIVATE LEARNING SPACE</span><h1>My Learning.</h1><p class="lead">PirePoint should not only teach you. It should remember where you are, show what needs review, and help you prove that you understand it.</p></section>
 <section class="wrap section" style="padding-top:20px"><div class="dash-grid">
 <article class="dash-panel"><span class="eyebrow">LEARNING MAP</span><h2 id="headline">Start your first 300-node route.</h2><p id="subhead" class="muted">Choose a market and complete lessons in the Learn Before You Invest system.</p><div class="progress-track"><div id="progress" class="progress-fill"></div></div><div class="dash-stat"><span>Lessons learned</span><b id="count">0</b></div><div class="dash-stat"><span>Routes started</span><b id="routes">0</b></div><div class="dash-stat"><span>Completion</span><b id="pct">0%</b></div><div class="dash-actions"><a href="countries/india.html">Start a market route →</a><a href="routine.html">Build my routine →</a></div></article>
-<aside class="dash-panel"><span class="eyebrow">NEXT ACTION</span><h2 id="nextTitle">Pick one market.</h2><p id="nextCopy" class="muted">The best dashboard action is always concrete: continue, review, or start.</p><div class="private-note">Progress, notes and review state are stored locally in this browser. PirePoint does not need an account to make the learning system useful.</div><p class="privacy">Clearing browser storage can erase local progress.</p></aside>
+<aside class="dash-panel"><span class="eyebrow">NEXT ACTION</span><h2 id="nextTitle">Pick one market.</h2><p id="nextCopy" class="muted">The best dashboard action is always concrete: continue, review, or start.</p><div id="routineStatus" class="private-note">Your routine is local to this browser. Once calibrated, this card will show your current stage, target market and next learning action.</div><p class="privacy">Clearing browser storage can erase local progress.</p></aside>
 </div></section>
 <section class="wrap section"><div class="section-head"><div><span class="eyebrow">YOUR ROUTES</span><h2>Continue without hunting.</h2><p class="muted">Every home → target combination has its own 300-lesson state.</p></div></div><div id="routesList" class="dash-panel"></div></section>
 <section class="wrap section"><div class="dash-grid">
@@ -34,6 +34,18 @@
 routes.sort((a,b)=>b.done-a.done);const total=routes.reduce((s,r)=>s+r.done,0),pct=routes.length?Math.round(total/(routes.length*300)*100):0;
 document.getElementById('count').textContent=total;document.getElementById('routes').textContent=routes.length;document.getElementById('pct').textContent=pct+'%';document.getElementById('progress').style.width=pct+'%';
 if(routes.length){const r=routes[0];document.getElementById('headline').textContent='Keep going: '+r.home+' → '+r.target;document.getElementById('subhead').textContent=r.done+' of 300 lessons learned on your most advanced route.';document.getElementById('nextTitle').textContent=r.done>=300?'Choose your next market.':'Continue lesson '+(r.done+1)+' of 300.';document.getElementById('nextCopy').textContent=r.done>=300?'Use the market bridge to transfer what you know.':'Open the route and PirePoint will take you to the next unfinished lesson.'}
+try{
+ const sys=JSON.parse(localStorage.getItem("ppSystemV2")||"{}"),p=sys.profile||{},r=sys.routine||{};
+ if(p.targetMarket){
+  const status=document.getElementById("routineStatus");
+  if(status)status.innerHTML="<b>"+(p.stage||"Learner")+" · "+(p.goal||"Learning")+"</b><br>"+(p.sourceMarket||"No reference market")+" → "+p.targetMarket+" · "+(p.depth==="5"?"5 min":p.depth==="15"?"15 min":p.depth==="30"?"30 min":"60+ min")+" mode.";
+  const next=(r.route&&r.route[0])||null;
+  if(next){
+   document.getElementById("nextTitle").textContent="Next: "+next.label;
+   document.getElementById("nextCopy").textContent=next.why||"Continue your adaptive learning route.";
+  }
+ }
+}catch(e){}
 const list=document.getElementById('routesList');list.innerHTML=routes.length?routes.map(r=>'<div class="route-row"><div><strong>'+r.home+' → '+r.target+'</strong><small>'+r.done+' / 300 lessons learned</small></div><a href="countries/'+(r.target.replace(/ /g,'-'))+'.html">Continue →</a></div>').join(''):'<div class="empty">No route has been started yet. Pick a market and begin. Your progress will appear here automatically.</div>';
 })();
 </script><script>
