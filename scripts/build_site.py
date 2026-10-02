@@ -20,7 +20,7 @@ def copy_html(src, dst):
     html=re.sub(r'(assets/market-curriculum\\.js)(?:\\?v=[^"]*)?', rf"\\1?v={ASSET_VERSION}", html)
     # Normalize shared asset paths so nested pages cannot deploy with broken relative URLs.
     html=html.replace('src="../app.js"', 'src="../assets/app.js"').replace('src="./app.js"', 'src="assets/app.js"')
-    rel=src.relative_to(ROOT).as_posix()
+    rel=(src.relative_to(ROOT).as_posix() if not str(src).startswith(str(OUT)) else dst.relative_to(OUT).as_posix())
     asset_root="../assets/" if rel.startswith(("countries/","guides/")) else "assets/"
     if 'world-class.css' not in html:
         html=html.replace("</head>", f'<link rel="stylesheet" href="{asset_root}world-class.css?v={ASSET_VERSION}">\\n</head>', 1)
