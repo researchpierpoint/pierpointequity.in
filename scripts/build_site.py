@@ -15,14 +15,17 @@ ASSET_VERSION="20261009"
 
 def copy_html(src, dst):
     html=src.read_text(encoding="utf-8")
-    html=re.sub(r"(assets/style\.css)(?:\?v=[^"]*)?", rf"\1?v={ASSET_VERSION}", html)
-    html=re.sub(r"(assets/app\.js)(?:\?v=[^"]*)?", rf"\1?v={ASSET_VERSION}", html)
-    html=re.sub(r"(assets/market-curriculum\.js)(?:\?v=[^"]*)?", rf"\1?v={ASSET_VERSION}", html)
+    html=re.sub(r'(assets/style\\.css)(?:\\?v=[^"]*)?', rf"\\1?v={ASSET_VERSION}", html)
+    html=re.sub(r'(assets/app\\.js)(?:\\?v=[^"]*)?', rf"\\1?v={ASSET_VERSION}", html)
+    html=re.sub(r'(assets/market-curriculum\\.js)(?:\\?v=[^"]*)?', rf"\\1?v={ASSET_VERSION}", html)
 
     if "pp-footer-contact" not in html and '<div class="footer-grid">' in html:
         marker='</div></div><div class="wrap fine">'
         if marker in html:
             html=html.replace(marker, '</div>'+CONTACT+'</div><div class="wrap fine">', 1)
+    if src.name == "index.html":
+        welcome = '<div id="pp-aryan-welcome" style="position:relative;z-index:9999;margin:14px auto 0;max-width:1200px;padding:16px 22px;border-radius:16px;background:#111;color:#fff;text-align:center;font-weight:800;font-size:clamp(20px,3vw,30px);box-shadow:0 10px 30px rgba(0,0,0,.16)">Welcome Aryan kaka 💪</div>'
+        html=html.replace("<body>", "<body>"+welcome, 1)
 
     from html import unescape
     title_match=re.search(r"<title>(.*?)</title>", html, re.I|re.S)
