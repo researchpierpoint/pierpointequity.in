@@ -3,8 +3,10 @@
 "use strict";
 if(document.body.dataset.ppWorldClass)return;
 const root=document.documentElement, body=document.body;
-body.dataset.ppWorldClass="1"; body.classList.add("pp-world-class");
 const q=(s,r=document)=>r.querySelector(s), qa=(s,r=document)=>[...r.querySelectorAll(s)];
+const main=q("main");
+const currentPath=location.pathname.split("/").pop().replace(/\.html$/,"")||"index";
+body.dataset.ppWorldClass="1"; body.classList.add("pp-world-class");
 const depth=location.pathname.split("/").filter(Boolean).length;
 const rel=depth>1?"../":"./";
 const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -37,7 +39,6 @@ if(nav){
     ["Tools","tools.html","tools"],
     ["About","methodology.html","methodology"]
   ];
-  const currentPath=location.pathname.split("/").pop().replace(/\\.html$/,"")||"index";
   nav.innerHTML=navLinks.map(x=>'<a href="'+rel+x[1]+'"'+(currentPath===x[2]?' class="active" aria-current="page"':'')+'>'+x[0]+'</a>').join("");
   let mobile=q(".mobile-menu-button");
   if(!mobile){
@@ -64,7 +65,6 @@ if(main && !q(".pp-context") && !/^(index|learn|countries|academy|routine|market
 }
 
 /* A concise page briefing for fast readers. Never blocks the content. */
-const main=q("main");
 if(main && !q(".pp-page-brief") && !/^(index|countries|learn|academy|routine|market-university)\.html?$/.test(location.pathname.split("/").pop()||"")){
  const h=q("h1",main), lead=q(".lead,.hero-copy,.intro",main);
  if(h){
