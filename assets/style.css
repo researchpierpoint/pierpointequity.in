@@ -2109,3 +2109,90 @@ html.mcc-drawer-lock body{
     padding-bottom:calc(32px + env(safe-area-inset-bottom))!important;
   }
 }
+
+
+/* =========================================================
+   LESSON READER — TABLET + MOBILE HARDENING
+   The curriculum reader must become a real viewport surface
+   at tablet widths too; never trap lesson content in a clipped
+   side-sheet.
+   ========================================================= */
+@media (max-width: 900px){
+  html.mcc-drawer-lock,
+  html.mcc-drawer-lock body{
+    width:100%!important;
+    max-width:100%!important;
+    overflow:hidden!important;
+    overscroll-behavior:none!important;
+  }
+
+  .market-curriculum-shell .mcc-drawer{
+    position:fixed!important;
+    inset:0!important;
+    width:100vw!important;
+    max-width:100vw!important;
+    height:100dvh!important;
+    min-height:100dvh!important;
+    max-height:100dvh!important;
+    overflow:hidden!important;
+    overscroll-behavior:contain!important;
+    touch-action:none!important;
+  }
+
+  .market-curriculum-shell .mcc-drawer-backdrop{
+    position:fixed!important;
+    inset:0!important;
+    width:100vw!important;
+    height:100dvh!important;
+  }
+
+  .market-curriculum-shell .mcc-drawer-panel{
+    position:fixed!important;
+    inset:0!important;
+    width:100vw!important;
+    max-width:none!important;
+    height:100dvh!important;
+    min-height:100dvh!important;
+    max-height:100dvh!important;
+    margin:0!important;
+    box-sizing:border-box!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+    -webkit-overflow-scrolling:touch!important;
+    overscroll-behavior-y:contain!important;
+    overscroll-behavior-x:none!important;
+    touch-action:pan-y!important;
+    padding:calc(72px + env(safe-area-inset-top)) 22px
+             calc(88px + env(safe-area-inset-bottom))!important;
+  }
+
+  .market-curriculum-shell .mcc-drawer-panel .mcc-reader{
+    width:100%!important;
+    max-width:680px!important;
+    margin:0 auto!important;
+    padding-bottom:calc(40px + env(safe-area-inset-bottom))!important;
+  }
+
+  .market-curriculum-shell .mcc-drawer-close{
+    position:fixed!important;
+    top:max(12px,env(safe-area-inset-top))!important;
+    right:14px!important;
+    width:44px!important;
+    height:44px!important;
+    z-index:100!important;
+  }
+
+  .market-curriculum-shell .mcc-drawer-panel .mcc-drawer-actions{
+    position:static!important;
+    margin-top:24px!important;
+    padding:18px 0 calc(8px + env(safe-area-inset-bottom))!important;
+  }
+}
+
+/* A little extra breathing room on very narrow phones. */
+@media (max-width: 480px){
+  .market-curriculum-shell .mcc-drawer-panel{
+    padding-left:18px!important;
+    padding-right:18px!important;
+  }
+}
