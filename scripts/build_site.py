@@ -36,7 +36,7 @@ def copy_html(src, dst):
     desc_match=re.search(r'<meta[^>]+name=["\']description["\'][^>]+content=["\'](.*?)["\']', html, re.I|re.S)
     title=unescape(title_match.group(1).strip()) if title_match else "PirePoint Equity"
     desc=unescape(desc_match.group(1).strip()) if desc_match else "Educational resources for understanding markets and researching investments."
-    rel=src.relative_to(ROOT).as_posix()
+    rel=(src.relative_to(ROOT).as_posix() if not str(src).startswith(str(OUT)) else dst.relative_to(OUT).as_posix())
     url="https://pierpointequity.in/" if rel=="index.html" else "https://pierpointequity.in/"+rel
 
     if '<link rel="canonical"' not in html:
