@@ -2049,3 +2049,63 @@ body .reading-progress span{background:var(--pp4-green)!important}
   html{scroll-behavior:auto}
   body *,body *::before,body *::after{animation:none!important;transition:none!important}
 }
+
+/* =========================================================
+   LESSON DRAWER — MOBILE VIEWPORT / SCROLL INTEGRITY
+   Shared by every country market curriculum.
+   ========================================================= */
+html.mcc-drawer-lock,
+html.mcc-drawer-lock body{
+  overflow:hidden!important;
+  overscroll-behavior:none!important;
+}
+.market-curriculum-shell .mcc-drawer{
+  position:fixed!important;
+  inset:0!important;
+  width:100%!important;
+  height:100dvh!important;
+  max-height:100dvh!important;
+  overflow:hidden!important;
+  overscroll-behavior:contain!important;
+}
+.market-curriculum-shell .mcc-drawer-panel{
+  overscroll-behavior:contain!important;
+  -webkit-overflow-scrolling:touch!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  scrollbar-gutter:stable;
+}
+.market-curriculum-shell .mcc-drawer-close{
+  position:sticky!important;
+  top:0!important;
+  float:right;
+  z-index:20!important;
+}
+@media(max-width:700px){
+  .market-curriculum-shell .mcc-drawer-panel{
+    position:fixed!important;
+    inset:0!important;
+    width:100%!important;
+    max-width:none!important;
+    height:100dvh!important;
+    max-height:100dvh!important;
+    min-height:0!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    -webkit-overflow-scrolling:touch!important;
+    overscroll-behavior:contain!important;
+    padding:72px 22px calc(72px + env(safe-area-inset-bottom))!important;
+    box-sizing:border-box!important;
+  }
+  .market-curriculum-shell .mcc-drawer-close{
+    position:fixed!important;
+    top:max(12px,env(safe-area-inset-top))!important;
+    right:14px!important;
+    width:44px!important;
+    height:44px!important;
+    z-index:50!important;
+  }
+  .market-curriculum-shell .mcc-drawer-panel .mcc-reader{
+    padding-bottom:calc(32px + env(safe-area-inset-bottom))!important;
+  }
+}
