@@ -73,7 +73,7 @@ for name in ("CNAME","robots.txt","sitemap.xml"):
 
 for page in OUT.rglob("*.html"):
     page_text=page.read_text(encoding="utf-8")
-    refs=re.findall(r"(?:href|src)=['"]([^'"]+)['"]", page_text, flags=re.I)
+    refs=re.findall(r'(?:href|src)=[\'"]([^\'"]+)[\'"]', page_text, flags=re.I)
     for ref in refs:
         clean=ref.split("#",1)[0].split("?",1)[0]
         if not clean or clean.startswith(("#","/","http://","https://","mailto:","tel:","javascript:","data:")):
