@@ -27,6 +27,42 @@ if(nav){
  });
 }
 
+/* Consistent global navigation + accessible mobile control. */
+if(nav){
+  const navLinks=[
+    ["Learn","learn.html","learn"],
+    ["Markets","countries.html","countries"],
+    ["Questions","questions.html","questions"],
+    ["Research","research-hub.html","research-hub"],
+    ["Tools","tools.html","tools"],
+    ["About","methodology.html","methodology"]
+  ];
+  const currentPath=location.pathname.split("/").pop().replace(/\\.html$/,"")||"index";
+  nav.innerHTML=navLinks.map(x=>'<a href="'+rel+x[1]+'"'+(currentPath===x[2]?' class="active" aria-current="page"':'')+'>'+x[0]+'</a>').join("");
+  let mobile=q(".mobile-menu-button");
+  if(!mobile){
+    mobile=document.createElement("button"); mobile.className="mobile-menu-button"; mobile.type="button";
+    mobile.setAttribute("aria-label","Open navigation"); mobile.setAttribute("aria-expanded","false");
+    mobile.innerHTML='<span></span><span></span><span></span>';
+    nav.parentElement.appendChild(mobile);
+  }
+  mobile.onclick=()=>{
+    const open=!nav.classList.contains("open");
+    nav.classList.toggle("open",open); mobile.setAttribute("aria-expanded",String(open));
+    mobile.setAttribute("aria-label",open?"Close navigation":"Open navigation");
+  };
+  qa("a",nav).forEach(a=>a.addEventListener("click",()=>{nav.classList.remove("open");mobile.setAttribute("aria-expanded","false");mobile.setAttribute("aria-label","Open navigation")}));
+}
+/* Give every page a quiet orientation line and a useful next step. */
+if(main && !q(".pp-context") && !/^(index|learn|countries|academy|routine|market-university)$/.test(currentPath)){
+  const h=q("h1",main);
+  if(h){
+    const context=document.createElement("div"); context.className="pp-context";
+    context.innerHTML="<b>You are here.</b> Read this page for the core answer, then use the next step below if you want to continue.";
+    h.insertAdjacentElement("afterend",context);
+  }
+}
+
 /* A concise page briefing for fast readers. Never blocks the content. */
 const main=q("main");
 if(main && !q(".pp-page-brief") && !/^(index|countries|learn|academy|routine|market-university)\.html?$/.test(location.pathname.split("/").pop()||"")){
@@ -104,13 +140,4 @@ qa('a[href^="http"]').forEach(a=>{
 function h1ish(r){return q("h1",r)||q(".lead,.hero-copy",r)}
 function esc(s){return String(s??"").replace(/[<>&"]/g,c=>({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[c]))}
 })();
- /* PirePoint world-class navigation correction */
-(function(){
-  const nav=document.querySelector(".nav nav");
-  if(!nav)return;
-  const links=[["Learn","learn.html","learn"],["Markets","countries.html","countries"],["Intelligence","intelligence.html","intelligence"],["Research","research-hub.html","research"],["Tools","tools.html","tools"],["System","system.html","system"]];
-  const depth=location.pathname.split("/").filter(Boolean).length;
-  const root=depth>1?"../":"./";
-  const current=location.pathname.split("/").pop().replace(/\.html$/,"")||"index";
-  nav.innerHTML=links.map(x=>'<a href="'+root+x[1]+'"'+(current===x[2]?' class="active" aria-current="page"':'')+'>'+x[0]+'</a>').join("");
-})();
+ 
