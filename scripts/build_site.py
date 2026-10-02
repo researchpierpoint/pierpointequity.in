@@ -18,6 +18,14 @@ def copy_html(src, dst):
     html=re.sub(r'(assets/style\\.css)(?:\\?v=[^"]*)?', rf"\\1?v={ASSET_VERSION}", html)
     html=re.sub(r'(assets/app\\.js)(?:\\?v=[^"]*)?', rf"\\1?v={ASSET_VERSION}", html)
     html=re.sub(r'(assets/market-curriculum\\.js)(?:\\?v=[^"]*)?', rf"\\1?v={ASSET_VERSION}", html)
+    # Normalize shared asset paths so nested pages cannot deploy with broken relative URLs.
+    html=html.replace('src="../app.js"', 'src="../assets/app.js"').replace('src="./app.js"', 'src="assets/app.js"')
+    rel=src.relative_to(ROOT).as_posix()
+    asset_root="../assets/" if rel.startswith(("countries/","guides/")) else "assets/"
+    if 'world-class.css' not in html:
+        html=html.replace("</head>", f'<link rel="stylesheet" href="{asset_root}world-class.css?v={ASSET_VERSION}">\\n</head>', 1)
+    if rel.startswith("countries/") and 'market-curriculum.js' not in html:
+        html=html.replace("</body>", f'<script src="{asset_root}market-curriculum.js?v={ASSET_VERSION}"></script>\\n</body>', 1)
 
     if "pp-footer-contact" not in html and '<div class="footer-grid">' in html:
         marker='</div></div><div class="wrap fine">'
