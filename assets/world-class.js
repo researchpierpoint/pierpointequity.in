@@ -37,6 +37,7 @@ if(nav){
     ["Questions","questions.html","questions"],
     ["Research","research-hub.html","research-hub"],
     ["Tools","tools.html","tools"],
+    ["Library","library.html","library"],
     ["About","methodology.html","methodology"]
   ];
   nav.innerHTML=navLinks.map(x=>'<a href="'+rel+x[1]+'"'+(currentPath===x[2]?' class="active" aria-current="page"':'')+'>'+x[0]+'</a>').join("");
