@@ -18,3 +18,7 @@ jobs:
         run: python scripts/normalize_guides.py
       - name: Validate guide pages and internal links
         run: python scripts/validate_guides.py
+      - name: Build the public site
+        run: python scripts/build_site.py
+      - name: Audit the built public site
+        run: python scripts/qa_site.py

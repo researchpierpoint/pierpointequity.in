@@ -18,6 +18,14 @@ def copy_html(src, dst):
     html=re.sub(r'(assets/style\\.css)(?:\\?v=[^"]*)?', rf"\\1?v={ASSET_VERSION}", html)
     html=re.sub(r'(assets/app\\.js)(?:\\?v=[^"]*)?', rf"\\1?v={ASSET_VERSION}", html)
     html=re.sub(r'(assets/market-curriculum\\.js)(?:\\?v=[^"]*)?', rf"\\1?v={ASSET_VERSION}", html)
+    # Normalize shared asset paths so nested pages cannot deploy with broken relative URLs.
+    html=html.replace('src="../app.js"', 'src="../assets/app.js"').replace('src="./app.js"', 'src="assets/app.js"')
+    rel=(src.relative_to(ROOT).as_posix() if not str(src).startswith(str(OUT)) else dst.relative_to(OUT).as_posix())
+    asset_root="../assets/" if rel.startswith(("countries/","guides/")) else "assets/"
+    if 'world-class.css' not in html:
+        html=html.replace("</head>", f'<link rel="stylesheet" href="{asset_root}world-class.css?v={ASSET_VERSION}">\\n</head>', 1)
+    if rel.startswith("countries/") and 'market-curriculum.js' not in html:
+        html=html.replace("</body>", f'<script src="{asset_root}market-curriculum.js?v={ASSET_VERSION}"></script>\\n</body>', 1)
 
     if "pp-footer-contact" not in html and '<div class="footer-grid">' in html:
         marker='</div></div><div class="wrap fine">'
@@ -28,7 +36,7 @@ def copy_html(src, dst):
     desc_match=re.search(r'<meta[^>]+name=["\']description["\'][^>]+content=["\'](.*?)["\']', html, re.I|re.S)
     title=unescape(title_match.group(1).strip()) if title_match else "PirePoint Equity"
     desc=unescape(desc_match.group(1).strip()) if desc_match else "Educational resources for understanding markets and researching investments."
-    rel=src.relative_to(ROOT).as_posix()
+    rel=(src.relative_to(ROOT).as_posix() if not str(src).startswith(str(OUT)) else dst.relative_to(OUT).as_posix())
     url="https://pierpointequity.in/" if rel=="index.html" else "https://pierpointequity.in/"+rel
 
     if '<link rel="canonical"' not in html:
@@ -62,6 +70,12 @@ if ASSETS.exists():
     shutil.copytree(ASSETS, OUT/"assets")
 else:
     raise SystemExit("Build failed: required assets/ directory is missing")
+
+DATA=ROOT/"data"
+if DATA.exists():
+    shutil.copytree(DATA, OUT/"data")
+else:
+    raise SystemExit("Build failed: required data/ directory is missing")
 
 for name in ("CNAME","robots.txt","sitemap.xml"):
     p=ROOT/name

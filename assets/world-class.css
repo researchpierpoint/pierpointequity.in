@@ -990,3 +990,69 @@ body .reading-progress span{background:var(--pp4-green)!important}
   html{scroll-behavior:auto}
   body *,body *::before,body *::after{animation:none!important;transition:none!important}
 }
+
+
+/* =========================================================
+   PIREPOINT WORLD-CLASS LAYER — 2026-10-02
+   Final shared rules: calm authority, reading comfort, responsive integrity.
+   ========================================================= */
+:root{
+  --ppx-ink:#172019;--ppx-body:#344039;--ppx-muted:#66716a;--ppx-line:#dfe4df;
+  --ppx-surface:#ffffff;--ppx-soft:#f4f6f3;--ppx-dark:#142019;--ppx-accent:#2f5d43;
+  --ppx-max:1240px;--ppx-radius:16px;
+}
+html{scroll-padding-top:84px;background:#f5f6f3}
+body{background:#f5f6f3!important;color:var(--ppx-ink)!important;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;line-height:1.68!important}
+body .wrap{width:min(calc(100% - 40px),var(--ppx-max))}
+body .site-header{background:rgba(250,251,249,.96)!important;border-bottom:1px solid var(--ppx-line)!important;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+body .brand{color:var(--ppx-ink)!important}
+body h1,body h2,body h3,body h4{color:var(--ppx-ink)!important;letter-spacing:-.035em!important;text-wrap:balance}
+body p,body li{color:var(--ppx-body)}
+body .eyebrow{color:var(--ppx-accent)!important;font-weight:850!important;letter-spacing:.14em!important}
+body .card,body .country-card,body .command-card,body .feature,body .guide-card,body .source-card{border:1px solid var(--ppx-line)!important;background:var(--ppx-surface)!important;border-radius:var(--ppx-radius)!important;box-shadow:none!important}
+body .card:hover,body .country-card:hover,body .command-card:hover,body .feature:hover,body .guide-card:hover{border-color:#c6cec7!important;box-shadow:0 12px 30px rgba(23,32,25,.07)!important;transform:translateY(-1px)}
+body .button{background:var(--ppx-dark)!important;color:#fff!important;border-color:var(--ppx-dark)!important;border-radius:10px!important;min-height:44px}
+body .button.secondary{background:#fff!important;color:var(--ppx-ink)!important;border-color:#cbd3cc!important}
+body input,body select,body textarea{color:var(--ppx-ink)!important;background:#fff!important;border:1px solid #cbd3cc!important;border-radius:10px!important;min-height:44px}
+body :focus-visible{outline:3px solid rgba(47,93,67,.34)!important;outline-offset:3px}
+body .footer{background:#e9ede9!important;border-top:1px solid #d6ddd6!important}
+/* Country curriculum: the learning system is a first-class reading surface. */
+body .market-curriculum-shell{margin-top:26px}
+body .mcc-hero{display:grid!important;grid-template-columns:minmax(0,1fr) 300px;gap:22px!important;padding:28px!important;border:1px solid var(--ppx-line)!important;border-radius:20px!important;background:linear-gradient(135deg,#f8faf8,#fff)!important}
+body .mcc-hero h2{font-size:clamp(32px,5vw,56px)!important;margin:12px 0 12px!important}
+body .mcc-hero h2 em{font-style:normal;color:var(--ppx-accent)!important}
+body .mcc-progress-card{border:1px solid var(--ppx-line)!important;border-radius:16px!important;background:#fff!important;padding:20px!important;align-self:start}
+body .market-progress{background:#e7ece7!important;height:7px!important;border-radius:99px!important;overflow:hidden}
+body .market-progress i{background:var(--ppx-accent)!important}
+body .mcc-next{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:18px!important;margin:14px 0!important;padding:20px!important;border:1px solid var(--ppx-line)!important;border-radius:16px!important;background:#fff!important}
+body .mcc-next h3{margin:5px 0!important;font-size:20px!important}
+body .market-curriculum-actions{display:grid!important;grid-template-columns:minmax(0,1fr) 180px auto!important;gap:10px!important;margin:14px 0!important}
+body .mcc-search{display:flex!important;align-items:center!important;gap:8px!important;border:1px solid #cbd3cc!important;border-radius:10px!important;background:#fff!important;padding:0 12px!important}
+body .mcc-search input{border:0!important;outline:0!important;box-shadow:none!important;width:100%!important}
+body .mcc-principle{display:grid!important;gap:5px!important;margin:14px 0!important;padding:17px 18px!important;border-left:4px solid var(--ppx-accent)!important;background:#eef4ef!important;border-radius:10px!important}
+body .country-curriculum-group{border:1px solid var(--ppx-line)!important;border-radius:14px!important;background:#fff!important;overflow:hidden!important}
+body .country-curriculum-group summary{min-height:58px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;padding:15px 18px!important;color:var(--ppx-ink)!important}
+body .country-node-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;background:var(--ppx-line)!important}
+body .country-node{border-radius:0!important;padding:18px!important;min-width:0!important}
+body .country-node h3{font-size:15px!important;line-height:1.3!important}
+body .country-node p{font-size:12px!important;line-height:1.55!important}
+body .mcc-card-tease{margin-top:10px!important;padding-top:10px!important;border-top:1px solid #edf0ed!important}
+body .mcc-drawer-panel{background:#fff!important}
+@media(max-width:900px){
+ body .wrap{width:min(calc(100% - 32px),var(--ppx-max))}
+ body .mcc-hero{grid-template-columns:1fr!important}
+ body .market-curriculum-actions{grid-template-columns:1fr 1fr!important}
+ body .market-curriculum-actions .button{grid-column:1/-1}
+}
+@media(max-width:640px){
+ body .wrap{width:calc(100% - 24px)}
+ body .mcc-hero{padding:20px!important;border-radius:16px!important}
+ body .mcc-next{display:block!important}
+ body .mcc-next .button{width:100%!important;margin-top:12px!important}
+ body .market-curriculum-actions{grid-template-columns:1fr!important}
+ body .market-curriculum-actions .button{grid-column:auto}
+ body .country-node-grid{grid-template-columns:1fr!important}
+ body .country-curriculum-group summary{font-size:13px!important}
+ body .country-node{padding:16px!important}
+}
+@media(prefers-reduced-motion:reduce){body *,body *::before,body *::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}

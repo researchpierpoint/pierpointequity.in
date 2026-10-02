@@ -6,7 +6,7 @@
     "mechanics":{"label":"Mechanics","prerequisites":["market"],"resources":["guides/how-to-buy-stocks.html"]},
     "business":{"label":"Business","prerequisites":["market"],"resources":["guides/fundamental-analysis.html"]},
     "financials":{"label":"Financials","prerequisites":["business"],"resources":["guides/balance-sheet.html","guides/cash-flow-statement.html"]},
-    "valuation":{"label":"Valuation","prerequisites":["financials"],"resources":["guides/pe-ratio.html","guides/dcf.html"]},
+    "valuation":{"label":"Valuation","prerequisites":["financials"],"resources":["guides/pe-ratio.html","guides/dcf-valuation.html"]},
     "risk":{"label":"Risk","prerequisites":["business","financials","valuation"],"resources":["intelligence.html","methodology.html"]},
     "global":{"label":"Global markets","prerequisites":["market","mechanics"],"resources":["countries.html"]},
     "research":{"label":"Research","prerequisites":["business","financials","valuation","risk"],"resources":["intelligence.html","research-hub.html"]},
