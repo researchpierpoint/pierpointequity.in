@@ -2,9 +2,9 @@ from pathlib import Path
 import re, sys, json
 
 ROOT=Path(__file__).resolve().parents[1]
+PUBLIC=ROOT/"_site" if (ROOT/"_site").exists() else ROOT
 errors=[]
 
-PUBLIC=ROOT/"_site" if (ROOT/"_site").exists() else ROOT
 html_files=list(PUBLIC.glob("*.html"))+list((PUBLIC/"countries").glob("*.html"))+list((PUBLIC/"guides").glob("*.html"))
 required_countries=["australia","canada","china","germany","hong-kong","india","japan","singapore","south-korea","uae","united-kingdom","united-states"]
 
@@ -25,23 +25,26 @@ for page in html_files:
             errors.append(f"{page}: missing local asset {c}")
 
 for slug in required_countries:
-    p=ROOT/"countries"/f"{slug}.html"
+    p=PUBLIC/"countries"/f"{slug}.html"
     if not p.exists(): errors.append(f"missing country page: {slug}")
     else:
         t=p.read_text(encoding="utf-8")
         for needle in ("data-market=","market-curriculum.js","Learn "):
             if needle not in t: errors.append(f"{p}: missing curriculum hook {needle}")
 
-# The public Learn Before You Invest contract is exactly 300 nodes per home/target pair.
 js=(ROOT/"data"/"learn-before-invest.js").read_text(encoding="utf-8")
-for required in ("targetLessons","homeLessons","total","makeTargetNodes","makeHomeNodes"):
+for required in ("makeTargetNodes","makeHomeNodes","stateKey"):
     if required not in js: errors.append(f"learning engine: missing {required}")
 data=json.loads((ROOT/"data"/"learn-before-invest.json").read_text(encoding="utf-8"))
 contract=data.get("contract",{})
-if contract.get("total")!=300 or contract.get("targetLessons")!=240 or contract.get("homeLessons")!=60:
+if (contract.get("total"),contract.get("targetLessons"),contract.get("homeLessons"))!=(300,240,60):
     errors.append("learning contract is not 240 + 60 = 300")
+if not (PUBLIC/"data"/"learn-before-invest.js").exists():
+    errors.append("public build is missing data/learn-before-invest.js")
+if not (PUBLIC/"data"/"market-catalog.json").exists():
+    errors.append("public build is missing data/market-catalog.json")
 
 if errors:
     print("\n".join("ERROR: "+e for e in errors))
     sys.exit(1)
-print(f"QA passed: {len(html_files)} HTML pages checked, {len(required_countries)} country routes checked, 300-node learning contract verified.")
+print(f"QA passed: {len(html_files)} HTML pages checked, {len(required_countries)} country routes checked, data assets present, and 300-node learning contract verified.")
